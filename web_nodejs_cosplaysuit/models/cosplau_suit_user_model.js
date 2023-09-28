@@ -11,7 +11,7 @@ const tb_user = new db.mongoose.Schema(
         role: {type: String, require: true},
     },
     {
-        collection: 'users'
+        collection: 'User'
     }
 );
 
