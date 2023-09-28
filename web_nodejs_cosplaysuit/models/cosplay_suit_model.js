@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const tb_category = new db.mongoose.Schema(
     {
         name: {type: String, require: true},
-        time_product : {type : String,require : true}
+        time_category : {type : String,require : true}
     },
     {
         collection: "categorys"
