@@ -14,5 +14,6 @@ routes.post('/addcategory', tb_productCtrl.AddCategory);
 routes.post('/regapp',tb_userCtrl.regApp);
 routes.post('/login',tb_userCtrl.login);
 routes.get('/login/:email',tb_userCtrl.loginUser);
+routes.post('/reg',tb_userCtrl.regApp);
 
 module.exports = routes;
