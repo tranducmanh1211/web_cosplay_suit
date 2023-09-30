@@ -19,7 +19,7 @@ exports.SendMess = async (req, res, next) => {
 
         const savedMessage = await newMessage.save();
        
-        sk.io.emit("receive_message",savedMessage);
+        sk.io.to(id_shop).emit("receive_message",savedMessage);
        
         res.status(201).json(savedMessage);
     } catch (error) {
