@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+const socketapi = require('../socket_server');
 var app = require('../app');
 var debug = require('debug')('web-nodejs-cosplaysuit:server');
 var http = require('http');
@@ -88,3 +88,4 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+socketapi.io.attach(server);
