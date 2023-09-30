@@ -10,7 +10,6 @@ var objReturn = {
 exports.login = async (req, res, next) => {
     let msg = "Dang nhap thanh cong";
 
-
     try {
 
         const exitEmail = await myMD.tb_userModel.findOne({ email: req.body.email });
