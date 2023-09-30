@@ -9,31 +9,44 @@ var objReturn = {
 
 exports.login = async (req, res, next) => {
     let msg = "Dang nhap thanh cong";
-    if ((req.body.email || req.body.phone) && req.body.passwd) {
-        let user = await myMD.tb_userModel.findOne(req.body);
-        if (user) {
-            res.send(user);
-            // msg = "Dang nhap thanh cong"
-        } else {
-            res.send("");
+
+
+    try {
+
+        const exitEmail = await myMD.tb_userModel.findOne({ email: req.body.email });
+        const exitPhone = await myMD.tb_userModel.findOne({ phone: req.body.phone });
+        if (!exitPhone) {
+            return res.json({ message: "Phone number not found!" });
         }
-    } else {
-        res.send("");
+        if (req.body.phone && req.body.passwd) {
+            let user = await myMD.tb_userModel.findOne(req.body);
+            if (user) {
+                res.status(201).json({ user: user, message: "Sign Up Successfull!" });
+                // msg = "Dang nhap thanh cong"
+            } else {
+                res.json({ message: "Password is incorrect!" });
+            }
+        }
+
+
+    } catch (error) {
+        console.log(error);
     }
+
 }
 
-exports.loginUser = async (req,res,next) => {
+
+exports.loginUser = async (req, res, next) => {
     let list = null;
     try {
-        list = await myMD.tb_userModel.findOne({email : req.params.email});
+        list = await myMD.tb_userModel.findOne({ email: req.params.email });
 
-
-        if(list){
+        if (list) {
             objReturn.data = list;
             objReturn.status = 1;
             objReturn.msg = "Lay du lieu thanh cong"
         }
-        else{
+        else {
             objReturn.status = 0;
             objReturn.msg = "Lay du lieu khong thanh cong"
         }
@@ -47,18 +60,47 @@ exports.loginUser = async (req,res,next) => {
 
 
 exports.regApp = async (req, res, next) => {
+
+
+
+
+    let msg = "";
+
+
+
+
     try {
-        const nd = new myMD.tb_userModel(req.body);
-        nd.phone = req.body.phone;
-        nd.passwd = req.body.passwd;
-        nd.email = req.body.email;
-        nd.fullname = req.body.fullname;
-        nd.role = req.body.role;
-        
-        let new_u = await nd.save();
-        return res.status(201).json({ nd: new_u });
+
+
+        const exitEmail = await myMD.tb_userModel.findOne({ email: req.body.email });
+        const exitPhone = await myMD.tb_userModel.findOne({ phone: req.body.phone });
+
+
+        if (exitEmail && exitPhone) {
+            return res.json({ message: "Email and Phone already exitst!" });
+        }
+        if (exitEmail) {
+            return res.json({ message: "Email already exitst!" });
+        }
+        if (exitPhone) {
+            return res.json({ message: "Phone already exitst!" });
+        }
+
+        const user = new myMD.tb_userModel(req.body);
+        user.phone = req.body.phone;
+        user.passwd = req.body.passwd;
+        user.email = req.body.email;
+        user.fullname = req.body.fullname;
+        user.role = req.body.role;
+        let new_u = await user.save();
+        return res.status(201).json({ user: new_u, message: "Sign Up Successfull!" });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ msg: error.message });
+        return res.status(500).json({ message: "Something went wrong!" });
     }
+
+
+
+
+
 }
