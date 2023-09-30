@@ -27,7 +27,22 @@ const tb_shop = new db.mongoose.Schema(
     }
 );
 
+
+const tb_chat = new db.mongoose.Schema(
+    {
+        content: {type: String, require: true},
+        date: {type: String, require: true},
+        id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
+        id_shop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_shopModel'}
+    },
+    {
+        collection: 'chat'
+    }
+);
+
+
 let tb_userModel = db.mongoose.model('tb_userModel', tb_user);
 let tb_shopModel = db.mongoose.model('tb_shopModel', tb_shop);
+let tb_chatModel = db.mongoose.model('tb_chatModel', tb_chat);
 
-module.exports = {tb_userModel,tb_shopModel};
+module.exports = {tb_userModel,tb_shopModel,tb_chatModel};
