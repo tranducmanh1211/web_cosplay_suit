@@ -103,3 +103,51 @@ exports.regApp = async (req, res, next) => {
 
 
 }
+exports.regShopApp = async (req, res, next) => {
+    const shop = await myMD.tb_shopModel();
+    shop.nameshop = req.body.nameshop;
+    shop.address = req.body.address;
+    shop.id_user = req.body.id_user;
+    let newshop = await shop.save();
+    
+    try {
+        if(newshop){
+            objReturn.data = shop;
+            objReturn.stu = 1;
+            objReturn.msg = "Đăng ký thành công"
+        }else{
+            objReturn.stu = 0;
+            objReturn.msg = "Đăng ký thất bại"
+        }
+
+      
+    } catch (error) {
+        res.send(error)
+        console.log(error);
+
+    }
+
+}
+exports.updateRoleUser = async (req, res, next) => {
+    let idrole = req.params.id_user;
+
+    let updateRole = new myMD.tb_userModel();
+        updateRole.role = req.body.role;
+       
+    let new_role = await myMD.tb_userModel.findByIdAndUpdate(idrole, req.body);
+    console.log(new_role);
+    try {
+        if(new_role){
+            objReturn.data = new_role;
+            objReturn.stu = 1;
+            objReturn.msg = 'Sửa thành công';
+        }else{
+            objReturn.stu = 0;
+            objReturn.msg = "Sửa thất bại";
+        }
+    } catch (error) {
+        objReturn.stu = 0;
+        objReturn.msg = error.msg;
+    }
+    res.json(objReturn);
+}
