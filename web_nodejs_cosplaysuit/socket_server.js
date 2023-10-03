@@ -7,7 +7,7 @@ var myMD = require('./models/cosplau_suit_user_model');
 
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+
     console.log("Client connected : " + socket.id);
 
     socket.on('join', (room) => {
