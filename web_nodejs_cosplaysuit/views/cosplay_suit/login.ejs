@@ -25,7 +25,76 @@
                     alt="">
                 </div>
             </section>
+
+            <section class="content">
+                <main data-main-container>
+                    <div class="auth-content">
+                        <div class="row" style="text-align: center;margin-bottom: 30px;">
+                            <div style="font-size: 55px;letter-spacing: 5px;font-weight: bold;">
+                                <script type="text/javascript">
+                                    farbbibliothek = new Array();
+                                    farbbibliothek[0] = new Array("#FF0000", "#FF1100", "#FF2200", "#FF3300", "#FF4400", "#FF5500", "#FF6600", "#FF7700", "#FF8800", "#FF9900", "#FFaa00", "#FFbb00", "#FFcc00", "#FFdd00", "#FFee00", "#FFff00", "#FFee00", "#FFdd00", "#FFcc00", "#FFbb00", "#FFaa00", "#FF9900", "#FF8800", "#FF7700", "#FF6600", "#FF5500", "#FF4400", "#FF3300", "#FF2200", "#FF1100");
+                                    farbbibliothek[1] = new Array("#00FF00", "#000000", "#00FF00", "#00FF00");
+                                    farbbibliothek[2] = new Array("#00FF00", "#FF0000", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00", "#00FF00");
+                                    farbbibliothek[3] = new Array("#FF0000", "#FF4000", "#FF8000", "#FFC000", "#FFFF00", "#C0FF00", "#80FF00", "#40FF00", "#00FF00", "#00FF40", "#00FF80", "#00FFC0", "#00FFFF", "#00C0FF", "#0080FF", "#0040FF", "#0000FF", "#4000FF", "#8000FF", "#C000FF", "#FF00FF", "#FF00C0", "#FF0080", "#FF0040");
+                                    farbbibliothek[4] = new Array("#FF0000", "#EE0000", "#DD0000", "#CC0000", "#BB0000", "#AA0000", "#990000", "#880000", "#770000", "#660000", "#550000", "#440000", "#330000", "#220000", "#110000", "#000000", "#110000", "#220000", "#330000", "#440000", "#550000", "#660000", "#770000", "#880000", "#990000", "#AA0000", "#BB0000", "#CC0000", "#DD0000", "#EE0000");
+                                    farbbibliothek[5] = new Array("#000000", "#000000", "#000000", "#FFFFFF", "#FFFFFF", "#FFFFFF");
+                                    farbbibliothek[6] = new Array("#0000FF", "#FFFF00");
+                                    farben = farbbibliothek[0];
+                                    function farbschrift() { for (var b = 0; b < Buchstabe.length; b++) { document.all["a" + b].style.color = farben[b] } farbverlauf() }
+                                    function string2array(b) { Buchstabe = new Array(); while (farben.length < b.length) { farben = farben.concat(farben) } k = 0; while (k <= b.length) { Buchstabe[k] = b.charAt(k); k++ } }
+                                    function divserzeugen() { for (var b = 0; b < Buchstabe.length; b++) { document.write("<span id='a" + b + "' class='a" + b + "'>" + Buchstabe[b] + "</span>") } farbschrift() }
+                                    var a = 1;
+                                    function farbverlauf() { for (var b = 0; b < farben.length; b++) { farben[b - 1] = farben[b] } farben[farben.length - 1] = farben[-1]; setTimeout("farbschrift()", 30) }
+                                    var farbsatz = 1;
+                                    // function farbtauscher(){farben=farbbibliothek[farbsatz];while(farben.length<text.length){farben=farben.concat(farben)}farbsatz=Math.floor(Math.random()*(farbbibliothek.length-0.0001))}setInterval("farbtauscher()",5000);
+                
+                                    text = "Cosplay Suit"; //h
+                                    string2array(text);
+                                    divserzeugen();
+                                </script>
+                            </div>
+                        </div>
+                        <div class="auth-form sign-in-form">
+                            <ul style="color: red;font-size: 15px;">
+                                <li style="margin: 5px;">
+                                    <%=email%>
+                                </li>
+                                <li style="margin: 5px;">
+                                    <%=passwd%>
+                                </li>
+                                <li style="margin: 5px;">
+                                    <%=msg%>
+                                </li>
+                            </ul>
+                            <!-- <p style="color: rgb(218, 47, 47);"> <%=msg%> </p> -->
+                            <form action="" method="post">
+                                <!-- <input type="hidden" name="authenticity_token" value="WVy+JFExLoGgb3a4LqEAh+p2yizwU27B6AeKsRPu4viw7Ms16y0MszW5PW2Dc/Fvg7pU4IpO/otNdsY0TzhhGA=="/> -->
+                                <div class="form-fields">
+                                    <fieldset>
+                                        <label for="login">Enter Your Email</label>
+                                        <input type="text" name="email" id="login" tabindex="1" class="text-input"  data-cypress="email" />
+                                    </fieldset>
+                                    <fieldset>
+                                        <label for="password" class="password">
+                                            Enter Your Password <a href="/password_resets/new">Forgot?</a>
+                                        </label>
+                                        <input type="password" name="passwd" id="password" value="" tabindex="2" class="text-input" data-cypress="password"/>
+                                    </fieldset>
+                                </div>
+                                <input class="btn2 btn2--large btn2--full-width margin-t-20" type="submit" value="Sign In" tabindex="3" data-cypress="submit-sign-in-btn"/>
+                                
+                            </form>
+                            <p class="auth-link color-deep-blue-sea-light-20">
+                                Don't have an account? <a class="underline" href="/users/signup">Sign up</a>
+                            </p>
+                        </div>
+                    </div>
+                </main>
+            </section>
+
         </div>
         
     </body>
 </html>
+
