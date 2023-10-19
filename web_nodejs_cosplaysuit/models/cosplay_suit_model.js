@@ -1,6 +1,6 @@
 var db = require('./db.model');
 const mongoose = require("mongoose");
-
+const cosplay_user = require('./cosplau_suit_user_model');
 
 const tb_category = new db.mongoose.Schema(
     {
@@ -12,13 +12,10 @@ const tb_category = new db.mongoose.Schema(
     }
 );
 
-
-
-
 const tb_product = new db.mongoose.Schema(
     {
-        id_shop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tbchuyentranhModel'},
-        id_category: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tbchuyentranhModel'},
+        id_shop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_shopModel'},
+        id_category: {type: db.mongoose.Schema.Types.ObjectId, ref: 'categoryModel'},
         nameproduct: {type: String, require: true},
         price: {type: Number, require: true},
         amount: {type: String, require: true},
@@ -31,9 +28,22 @@ const tb_product = new db.mongoose.Schema(
     }
 );
 
+const tb_properties = new db.mongoose.Schema(
+    {
+        id_shop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_shopModel'},
+        nameproperties: {type: String, require: true},
+        amount: {type: String, require: true}
+    },
+    {
+        collection: 'properties'
+    }
+);
+
+
+
 //tạo model
-let tb_categoryModel = mongoose.model('categoryModel', tb_category);
-
+let tb_categoryModel = db.mongoose.model('categoryModel', tb_category);
 let tb_productModel = db.mongoose.model('prodcutModel', tb_product);
+let tb_propertiesModel = db.mongoose.model('properties', tb_properties);
 
-module.exports = {tb_categoryModel,tb_productModel};
+module.exports = {tb_categoryModel,tb_productModel, tb_propertiesModel};
