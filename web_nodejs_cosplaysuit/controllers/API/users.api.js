@@ -104,7 +104,7 @@ exports.regApp = async (req, res, next) => {
 
 }
 exports.regShopApp = async (req, res, next) => {
-
+    //asdas
    
     const exitId_user = await myMD.tb_shopModel.findOne({ id_user: req.body.id_user });
   
@@ -153,46 +153,3 @@ exports.updateRoleUser = async (req, res, next) => {
     res.json(objReturn);
 }
 
-exports.listFavorite = async (req, res, next) => {
-    // let list = [];
-    // let list1 = [];
-    const list = await myMD.tb_favoriteModel.find({ tb_user: req.params.tb_user }).populate('tb_product');
-    // return res.json(list.tb_product);
-    const favo = await list.find(f => f.tb_product._id == req.params.tb_product);
-    return res.json(favo);
-
-
-
-}
-exports.listFavorite1 = async (req, res, next) => {
-    let list = [];
-    list = await myMD.tb_favoriteModel.find({ tb_user: req.params.tb_user }).populate('tb_product');
-    return res.json(list);
-}
-exports.removeFavorite = async (req, res, next) => {
-    try {
-        const list = await myMD.tb_favoriteModel.find({ tb_user: req.params.tb_user }).populate('tb_product');
-        // return res.json(list.tb_product);
-        const favo = await list.find(f => f.tb_product._id == req.params.tb_product);
-        await favo.deleteOne(req.body);
-        res.send('Xoa thanh cong');
-    } catch (error) {
-        res.send(error);
-    }
-}
-exports.addFavorite = async (req, res, next) => {
-    let msg = "";
-    const {tb_user , tb_product} = req.body;
-
-    try {
-
-        let favorite = new myMD.tb_favoriteModel();
-        favorite.tb_user = tb_user;
-        favorite.tb_product = tb_product;
-        let new_u = await favorite.save();
-        return res.status(201).json({ favorite: new_u });
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Loi" });
-    }
-}

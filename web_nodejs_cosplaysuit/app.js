@@ -10,6 +10,8 @@ var categoryRouter = require('./routes/category');
 var chatRouter = require('./routes/chat')
 var userapiRouter = require('./routes/user.api');
 var productapiRouter= require('./routes/product.api');
+var billrouter = require('./routes/bill');
+var shopRouter = require('./routes/shop');
 const { error } = require('console');
 
 var app = express();

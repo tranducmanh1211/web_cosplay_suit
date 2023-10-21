@@ -1,5 +1,5 @@
 var myMDD = require('../../models/cosplau_suit_user_model');
-
+//sdasdasdsd
 var objReturn = {
     stu: 1,
     msg: 'ok'
