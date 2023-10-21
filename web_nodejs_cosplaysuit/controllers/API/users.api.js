@@ -104,27 +104,25 @@ exports.regApp = async (req, res, next) => {
 
 }
 exports.regShopApp = async (req, res, next) => {
-    const shop = await myMD.tb_shopModel();
-    shop.nameshop = req.body.nameshop;
-    shop.address = req.body.address;
-    shop.id_user = req.body.id_user;
-    let newshop = await shop.save();
+   
+    const exitId_user = await myMD.tb_shopModel.findOne({ id_user: req.body.id_user });
+  
+
     
     try {
-        if(newshop){
-            objReturn.data = shop;
-            objReturn.stu = 1;
-            objReturn.msg = "Đăng ký thành công"
-        }else{
-            objReturn.stu = 0;
-            objReturn.msg = "Đăng ký thất bại"
+        if (exitId_user) {
+            return res.json({ response: "Account has been registered!" });
         }
 
-      
+        const shop = await myMD.tb_shopModel();
+        shop.nameshop = req.body.nameshop;
+        shop.address = req.body.address;
+        shop.id_user = req.body.id_user;
+        let newshop = await shop.save();
+        return res.status(201).json({ shop: newshop, response: "Register Successfull!" });
     } catch (error) {
-        res.send(error)
         console.log(error);
-
+        return res.status(500).json({ response: "Something went wrong!" });
     }
 
 }
