@@ -39,8 +39,6 @@ const tb_properties = new db.mongoose.Schema(
     }
 );
 
-
-
 //tạo model
 let tb_categoryModel = db.mongoose.model('categoryModel', tb_category);
 let tb_productModel = db.mongoose.model('prodcutModel', tb_product);
