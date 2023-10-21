@@ -40,9 +40,20 @@ const tb_chat = new db.mongoose.Schema(
     }
 );
 
-
+const tb_favorite = new db.mongoose.Schema(
+    {
+        tb_user : {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
+        tb_product : {type: db.mongoose.Schema.Types.ObjectId, ref: 'prodcutModel'}
+    },
+    {
+        collection : 'favorite'
+    }
+);
 let tb_userModel = db.mongoose.model('tb_userModel', tb_user);
 let tb_shopModel = db.mongoose.model('tb_shopModel', tb_shop);
 let tb_chatModel = db.mongoose.model('tb_chatModel', tb_chat);
 
-module.exports = {tb_userModel,tb_shopModel,tb_chatModel};
+let tb_favoriteModel = db.mongoose.model('tb_favoriteModel',tb_favorite);
+
+
+module.exports = {tb_userModel,tb_shopModel,tb_chatModel,tb_favoriteModel};

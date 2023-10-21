@@ -14,4 +14,9 @@ routes.post('/reg',tb_userCtrl.regApp);
 routes.put('/regapp/:id_user',tb_userCtrl.updateRoleUser);
 routes.post('/shop/add',tb_userCtrl.regShopApp);
 
+routes.get('/favorite',tb_userCtrl.listFavorite);
+routes.post('/favorite',tb_userCtrl.addFavorite);
+routes.get('/favorite/:tb_user/:tb_product',tb_userCtrl.listFavorite);
+routes.delete('/favorite/:tb_user/:tb_product',tb_userCtrl.removeFavorite);
+routes.get('/favorite/:tb_user',tb_userCtrl.listFavorite1);
 module.exports = routes;
