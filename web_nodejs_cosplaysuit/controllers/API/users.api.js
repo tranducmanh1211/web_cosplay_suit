@@ -109,18 +109,18 @@ exports.regShopApp = async (req, res, next) => {
     shop.address = req.body.address;
     shop.id_user = req.body.id_user;
     let newshop = await shop.save();
-    
+
     try {
-        if(newshop){
+        if (newshop) {
             objReturn.data = shop;
             objReturn.stu = 1;
             objReturn.msg = "Đăng ký thành công"
-        }else{
+        } else {
             objReturn.stu = 0;
             objReturn.msg = "Đăng ký thất bại"
         }
 
-      
+
     } catch (error) {
         res.send(error)
         console.log(error);
@@ -132,16 +132,16 @@ exports.updateRoleUser = async (req, res, next) => {
     let idrole = req.params.id_user;
 
     let updateRole = new myMD.tb_userModel();
-        updateRole.role = req.body.role;
-       
+    updateRole.role = req.body.role;
+
     let new_role = await myMD.tb_userModel.findByIdAndUpdate(idrole, req.body);
     console.log(new_role);
     try {
-        if(new_role){
+        if (new_role) {
             objReturn.data = new_role;
             objReturn.stu = 1;
             objReturn.msg = 'Sửa thành công';
-        }else{
+        } else {
             objReturn.stu = 0;
             objReturn.msg = "Sửa thất bại";
         }
@@ -150,4 +150,48 @@ exports.updateRoleUser = async (req, res, next) => {
         objReturn.msg = error.msg;
     }
     res.json(objReturn);
+}
+
+exports.listFavorite = async (req, res, next) => {
+    // let list = [];
+    // let list1 = [];
+    const list = await myMD.tb_favoriteModel.find({ tb_user: req.params.tb_user }).populate('tb_product');
+    // return res.json(list.tb_product);
+    const favo = await list.find(f => f.tb_product._id == req.params.tb_product);
+    return res.json(favo);
+
+
+
+}
+exports.listFavorite1 = async (req, res, next) => {
+    let list = [];
+    list = await myMD.tb_favoriteModel.find({ tb_user: req.params.tb_user }).populate('tb_product');
+    return res.json(list);
+}
+exports.removeFavorite = async (req, res, next) => {
+    try {
+        const list = await myMD.tb_favoriteModel.find({ tb_user: req.params.tb_user }).populate('tb_product');
+        // return res.json(list.tb_product);
+        const favo = await list.find(f => f.tb_product._id == req.params.tb_product);
+        await favo.deleteOne(req.body);
+        res.send('Xoa thanh cong');
+    } catch (error) {
+        res.send(error);
+    }
+}
+exports.addFavorite = async (req, res, next) => {
+    let msg = "";
+    const {tb_user , tb_product} = req.body;
+
+    try {
+
+        let favorite = new myMD.tb_favoriteModel();
+        favorite.tb_user = tb_user;
+        favorite.tb_product = tb_product;
+        let new_u = await favorite.save();
+        return res.status(201).json({ favorite: new_u });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Loi" });
+    }
 }
