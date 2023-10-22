@@ -6,6 +6,8 @@ var tb_cartorderCtrl = require('../controllers/API/CartOder.API');
 
 routes.get('/getlistcartorder',tb_cartorderCtrl.getCartOder);
 
+routes.get('/getusercartorder/:id_user',tb_cartorderCtrl.getUserCartOder);
+
 routes.post('/addcart',tb_cartorderCtrl.AddCartOder);
 
 routes.put('/updatecart/:id', tb_cartorderCtrl.updateCartOder);

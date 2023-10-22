@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const tb_cartoder = new db.mongoose.Schema(
     {
         id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
-        id_product: {type: db.mongoose.Schema.Types.ObjectId, ref: 'prodcutModel'},
+        product_id: {type: db.mongoose.Schema.Types.ObjectId, ref: 'prodcutModel'},
         amount: {type: Number, require: true},
-        properties : {type : String, require : true}
+        properties_id : {type: db.mongoose.Schema.Types.ObjectId, ref: 'properties'}
     },
     {
         collection: "cartorders"

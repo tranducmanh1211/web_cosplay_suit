@@ -10,13 +10,25 @@ exports.getCartOder = async (req, res, next) => {
 
     res.send(list);
 }
+
+exports.getUserCartOder = async (req, res, next) => {
+    //Lấy ds giỏ hàng theo id_user
+    let dieu_kien_loc = null;
+    if (typeof (req.params.id_user) != 'undefined') {
+        dieu_kien_loc = { id_user: req.params.id_user};
+    }
+    var list = await myMD.tb_cartoderModel.find(dieu_kien_loc).populate('id_user');
+
+    res.send(list);
+}
+
 exports.AddCartOder = async (req, res, next) => {
 
     let add = new myMD.tb_cartoderModel();
         add.id_user = req.body.id_user;
-        add.id_product = req.body.id_product;
+        add.product_id = req.body.product_id;
         add.amount = req.body.amount;
-        add.properties = req.body.properties; 
+        add.properties_id = req.body.properties_id; 
     let new_CMD = await add.save();
     console.log(new_CMD);
     try{
