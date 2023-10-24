@@ -17,8 +17,10 @@ const tb_bill = new db.mongoose.Schema(
     {
         id_shop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_shopModel'},
         id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
-        time: {type: String, require: true},
-        status: {type: Number, require: true},
+        timestart: {type: String, require: true},
+        timeend: {type: String, require: true},
+        status: {type: String, require: true},
+        totalPayment: {type: Number, require: true}
     },
     {
         collection: 'bills'
@@ -30,7 +32,6 @@ const tb_billdetails = new db.mongoose.Schema(
         id_bill: {type: db.mongoose.Schema.Types.ObjectId, ref: 'bill'},
         id_product: {type: db.mongoose.Schema.Types.ObjectId, ref: 'prodcutModel'},
         amount: {type: Number, require: true},
-        time: {type: String, require: true},
         totalPayment: {type: Number, require: true}
     },
     {

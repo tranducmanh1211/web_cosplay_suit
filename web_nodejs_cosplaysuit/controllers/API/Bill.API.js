@@ -4,31 +4,33 @@ var objReturn = {
     stu: 1,
     msg: 'ok'
 }
-exports.getCartOder = async (req, res, next) => {
+exports.getbill = async (req, res, next) => {
     //lấy danh sách sản phẩm kèm theo tên thể loại
     var list = await myMD.tb_cartoderModel.find();
 
     res.send(list);
 }
 
-exports.getUserCartOder = async (req, res, next) => {
-    //Lấy ds giỏ hàng theo id_user
+exports.getUserbill = async (req, res, next) => {
+    //Lấy ds đơn hàng theo id_user
     let dieu_kien_loc = null;
     if (typeof (req.params.id_user) != 'undefined') {
         dieu_kien_loc = { id_user: req.params.id_user};
     }
-    var list = await myMD.tb_cartoderModel.find(dieu_kien_loc).populate('product_id').populate('properties_id');
+    var list = await myMD.tb_billModel.find(dieu_kien_loc).populate('id_shop').populate('id_user');
 
     res.send(list);
 }
 
-exports.AddCartOder = async (req, res, next) => {
+exports.AddBill = async (req, res, next) => {
 
-    let add = new myMD.tb_cartoderModel();
+    let add = new myMD.tb_billModel();
         add.id_user = req.body.id_user;
-        add.product_id = req.body.product_id;
-        add.amount = req.body.amount;
-        add.properties_id = req.body.properties_id; 
+        add.id_shop = req.body.id_shop;
+        add.timestart = req.body.timestart;
+        add.timeend = req.body.timeend;
+        add.status = req.body.status; 
+        add.totalPayment = req.body.totalPayment;
     let new_CMD = await add.save();
     console.log(new_CMD);
     try{
@@ -48,12 +50,14 @@ exports.AddCartOder = async (req, res, next) => {
     res.json(objReturn);
 }
 
-exports.updateCartOder = async (req, res, next) => {
+exports.updateBill = async (req, res, next) => {
     let id = req.params.id;
 
-    let sua = new myMD.tb_cartoderModel();
+    let sua = new myMD.tb_billModel();
         sua.amount = req.body.amount;
-        sua.properties = req.body.properties; 
+        sua.status = req.body.status; 
+        sua.timeend = req.body.timeend;
+        sua.totalPayment = req.body.totalPayment;
 
     let newcart = await myMD.tb_cartoderModel.findByIdAndUpdate(id, req.body);
         try{
@@ -70,25 +74,5 @@ exports.updateCartOder = async (req, res, next) => {
             objReturn.msg = error.msg;
         }
     res.json(objReturn);
-}
-
-exports.deleteCartOder = async (req, res, next) => {
-    let deletecart = await myMD.tb_cartoderModel.findByIdAndDelete(req.params.id, req.body);
-    console.log(deletecart);
-    try {
-        if(deletecart){
-            objReturn.data = deletecart;
-            objReturn.stu = 1;
-            objReturn.msg = 'Xóa thành công';
-        }else{
-            objReturn.stu = 0;
-            objReturn.msg = "Xóa thất bại";
-        }
-    } catch (error) {
-        objReturn.stu = 0;
-        objReturn.msg = error.msg;
-    }
-    res.json(objReturn);
-
 }
 
