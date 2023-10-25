@@ -30,7 +30,7 @@ const tb_product = new db.mongoose.Schema(
 
 const tb_properties = new db.mongoose.Schema(
     {
-        id_shop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_shopModel'},
+        id_product: {type: db.mongoose.Schema.Types.ObjectId, ref: 'prodcutModel'},
         nameproperties: {type: String, require: true},
         amount: {type: String, require: true}
     },

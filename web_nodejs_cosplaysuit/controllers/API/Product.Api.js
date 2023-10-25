@@ -39,7 +39,6 @@ exports.AddProduct = async (req, res, next) => {
 
     res.json(objReturn);
 }
-
 exports.updateProduct = async (req, res, next) => {
 
     try {
@@ -72,5 +71,14 @@ exports.delProduct = async (req, res, next) => {
         res.send('Error')
     }
 
+}
+exports.getproperties = async (req, res, next) => {
+    let dieu_kien_loc = null;
+    if (typeof (req.params.id_product) != 'undefined') {
+        dieu_kien_loc = { id_product: req.params.id_product};
+    }
+    var list = await myMDD.tb_propertiesModel.find(dieu_kien_loc);
+
+    res.send(list);
 }
 
