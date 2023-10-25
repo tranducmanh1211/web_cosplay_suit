@@ -4,12 +4,66 @@ var objReturn = {
     stu: 1,
     msg: 'ok'
 }
-exports.getbilldentail = async (req, res, next) => {
+exports.getstatuswait = async (req, res, next) => {
 
     const id_user = req.params.id_user;
 
     // Tìm danh sách hóa đơn theo idUser
-    const hoaDonList = await myMD.tb_billModel.find({ id_user: id_user }).select('_id').lean();
+    const hoaDonList = await myMD.tb_billModel.find({$and: [{ id_user: id_user }, {status: 'wait'}]}).select('_id').lean();
+    
+    // Lấy danh sách idHoaDon từ kết quả trên
+    const idHoaDonList = hoaDonList.map(hd => hd._id);
+
+    // Tìm danh sách chi tiết hóa đơn dựa trên danh sách idHoaDon
+    let id_bill = {id_bill: { $in: idHoaDonList }};
+    const hoaDonChiTietList = await myMD.tb_billdetailsModel
+    .find(id_bill).populate('id_bill').populate('id_product');
+    
+    res.json(hoaDonChiTietList);
+}
+
+exports.getstatusPack = async (req, res, next) => {
+
+    const id_user = req.params.id_user;
+
+    // Tìm danh sách hóa đơn theo idUser
+    const hoaDonList = await myMD.tb_billModel.find({$and: [{ id_user: id_user }, {status: 'Pack'}]}).select('_id').lean();
+    
+    // Lấy danh sách idHoaDon từ kết quả trên
+    const idHoaDonList = hoaDonList.map(hd => hd._id);
+
+    // Tìm danh sách chi tiết hóa đơn dựa trên danh sách idHoaDon
+    let id_bill = {id_bill: { $in: idHoaDonList }};
+    const hoaDonChiTietList = await myMD.tb_billdetailsModel
+    .find(id_bill).populate('id_bill').populate('id_product');
+    
+    res.json(hoaDonChiTietList);
+}
+
+exports.getstatusDone = async (req, res, next) => {
+
+    const id_user = req.params.id_user;
+
+    // Tìm danh sách hóa đơn theo idUser
+    const hoaDonList = await myMD.tb_billModel.find({$and: [{ id_user: id_user }, {status: 'Done'}]}).select('_id').lean();
+    
+    // Lấy danh sách idHoaDon từ kết quả trên
+    const idHoaDonList = hoaDonList.map(hd => hd._id);
+
+    // Tìm danh sách chi tiết hóa đơn dựa trên danh sách idHoaDon
+    let id_bill = {id_bill: { $in: idHoaDonList }};
+    const hoaDonChiTietList = await myMD.tb_billdetailsModel
+    .find(id_bill).populate('id_bill').populate('id_product');
+    
+    res.json(hoaDonChiTietList);
+}
+
+exports.getstatusDelivery = async (req, res, next) => {
+
+    const id_user = req.params.id_user;
+
+    // Tìm danh sách hóa đơn theo idUser
+    const hoaDonList = await myMD.tb_billModel.find({$and: [{ id_user: id_user }, {status: 'Delivery'}]}).select('_id').lean();
     
     // Lấy danh sách idHoaDon từ kết quả trên
     const idHoaDonList = hoaDonList.map(hd => hd._id);
