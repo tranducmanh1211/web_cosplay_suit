@@ -23,7 +23,7 @@ routes.post('/addbill',tb_billCtrl.AddBill);
 //router thanh toán hóa đơn chi tiết
 var tb_billdetailCtrl = require('../controllers/API/Billdetail.API');
 
-routes.get('/getbilldentail/:id_bill',tb_billdetailCtrl.getbilldentail);
+routes.get('/getbilldentail/:id_user',tb_billdetailCtrl.getbilldentail);
 routes.post('/addbilldetail',tb_billdetailCtrl.AddBilldetail);
 
 module.exports = routes;

@@ -5,14 +5,21 @@ var objReturn = {
     msg: 'ok'
 }
 exports.getbilldentail = async (req, res, next) => {
-    //Lấy ds đơn hàng theo id_user
-    let dieu_kien_loc = null;
-    if (typeof (req.params.id_bill) != 'undefined') {
-        dieu_kien_loc = { id_bill: req.params.id_bill};
-    }
-    var list = await myMD.tb_billdetailsModel.find(dieu_kien_loc).populate('id_bill').populate('id_product');
 
-    res.send(list);
+    const id_user = req.params.id_user;
+
+    // Tìm danh sách hóa đơn theo idUser
+    const hoaDonList = await myMD.tb_billModel.find({ id_user: id_user }).select('_id').lean();
+    
+    // Lấy danh sách idHoaDon từ kết quả trên
+    const idHoaDonList = hoaDonList.map(hd => hd._id);
+
+    // Tìm danh sách chi tiết hóa đơn dựa trên danh sách idHoaDon
+    let id_bill = {id_bill: { $in: idHoaDonList }};
+    const hoaDonChiTietList = await myMD.tb_billdetailsModel
+    .find(id_bill).populate('id_bill').populate('id_product');
+    
+    res.json(hoaDonChiTietList);
 }
 
 exports.AddBilldetail = async (req, res, next) => {
