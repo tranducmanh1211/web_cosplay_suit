@@ -4,6 +4,10 @@ var objReturn = {
     status: 1,
     msg: 'ok'
 }
+var objReturn1 = {
+    status: 1,
+    msg: 'ok'
+}
 
 
 
@@ -151,5 +155,30 @@ exports.updateRoleUser = async (req, res, next) => {
         objReturn.msg = error.msg;
     }
     res.json(objReturn);
+}
+
+
+exports.userById = async (req,res,next) =>  {
+
+    let User = null;
+    
+    try {
+        User = await myMD.tb_userModel.findOne({_id: req.params.id});
+        if (User) {
+            objReturn1.data= User;
+            objReturn1.status = 1;
+            objReturn1.msg = 'lấy ds thành công';
+        } else {
+            objReturn1.status = 0;
+            objReturn1.msg = 'không có  dữ liệu'
+        }
+    } catch (error) {
+        objReturn1.status = 0;
+        objReturn1.msg = error.msg;
+    }
+
+
+    res.json(objReturn1.data);
+
 }
 
