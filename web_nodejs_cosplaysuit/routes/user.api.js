@@ -14,5 +14,7 @@ routes.post('/reg',tb_userCtrl.regApp);
 routes.put('/regapp/:id_user',tb_userCtrl.updateRoleUser);
 routes.post('/shop/add',tb_userCtrl.regShopApp);
 
+routes.get('/fUser/:id',tb_userCtrl.userById);
+
 
 module.exports = routes;
