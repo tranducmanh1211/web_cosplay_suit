@@ -38,8 +38,8 @@ exports.loginWeb = async (req, res, next) => {
                 if (!objU.equals("")) {
                     if (objU.passwd == req.body.passwd) {
                         if (objU.role == 'Admin') {
-                            // req.session.userLogin = objU;
-                            // console.log(req.session.userLogin);
+                            req.session.userU = objU;
+                            console.log(req.session.userLogin);
                             return res.redirect('/users/home');
                         } else {
                             msg = " Your account is not authorized!"
@@ -152,8 +152,3 @@ exports.dangky = async (req, res, next) => {
 
 }
 
-
-
-exports.homeWeb = async (req, res, next) => {
-    res.render('cosplay_suit/home');
-}
