@@ -12,5 +12,6 @@ router.get('/signup',tb_userCtrl.dangky);
 router.post('/signup',tb_userCtrl.dangky);
 
 router.get('/home',tb_productCtrl.homeWeb);
-
+router.get('/home/quanlykhachhang',tb_productCtrl.quanlyKH);
+router.get('/home/quanlykhachhang/:_id',tb_productCtrl.quanlyKHbyID);
 module.exports = router;
