@@ -328,8 +328,14 @@
                       <ul class="dropdown-menu">
                         <li style="padding: 0;">
                           <a type="button" class="dropdown-item" data-bs-toggle="modal" id="vohieuButton"
-                            data-bs-target="#vohieuModal<%= i._id %>">Vô hiệu hóa tài
-                            khoản</a>
+                            data-bs-target="#vohieuModal<%= i._id %>">
+                            <%if(i.__v == 0){%>
+                              Vô hiệu hóa tài
+                            khoản
+                            <%}else{%>
+                              Kích hoạt tài khoản
+                            <%}%>
+                            </a>
                         </li>
                         <li style="padding: 0;">
                           <a type="button" class="dropdown-item" data-bs-toggle="modal" id="xoaButton"
@@ -337,16 +343,24 @@
                         </li>
                       </ul>
                     </td>
-                    <div class="modal fade" id="vohieuModal<%= i._id %>" tabindex="1"
+                    <div class="modal fade" id="vohieuModal<%= i._id %>" tabindex="-1"
                       aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
+                      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Tài khoản vô hiệu hóa</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                              <%if(i.__v == 0){%>
+                                Tài khoản vô hiệu hóa
+                              khoản
+                              <%}else{%>
+                                Kích hoạt tài khoản
+                              <%}%>
+                              </h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body" style="text-align: left;">
-                            <h6 style="text-align: left;color: red;"><svg xmlns="http://www.w3.org/2000/svg"
+                            <%if(i.__v == 0){%>
+                              <h6 style="text-align: left;color: red;"><svg xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-alert-triangle" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -357,21 +371,41 @@
                                 </path>
                                 <path d="M12 16h.01"></path>
                               </svg> Người dùng có tài khoản bị vô hiệu hóa không thể đăng nhập.</h6>
+                            khoản
+                            <%}else{%>
+                              <h6 style="text-align: left;color: #1b3a57;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                  <path d="M12 2c5.523 0 10 4.477 10 10a10 10 0 0 1 -19.995 .324l-.005 -.324l.004 -.28c.148 -5.393 4.566 -9.72 9.996 -9.72zm.01 13l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -8a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z" stroke-width="0" fill="currentColor"></path>
+                               </svg> Người dùng có tài khoản được kích hoạt sẽ có thể đăng nhập lại.
+                              </h6>
+                            <%}%>
                               <p style="margin-top: 40px;margin-bottom:0px;color: #a7a4a4">Tài khoản người dùng</p>
                               <p style="margin-bottom: 0px;"><%=i.email%></p>
+                              
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy bỏ</button>
-                            <button type="button" class="btn btn-danger">Vô hiệu hóa</button>
+                            <form action="" method="post">
+                              <input type="hidden" name="id_user" value="<%= i._id %>" style="display: none;" />
+                              <input type="hidden" name="id__v" value="<%= i.__v %>" style="display: none;" />
+                              <%if(i.__v == 0){%>
+                                <button class="btn btn-danger" type="submit">Vô hiệu hóa</button>
+                              <%}else{%>
+                                <button class="btn btn-primary" type="submit">Kích Hoạt</button>
+                              <%}%>
+                             
+                            </form>
+                           
                           </div>
                         </div>
                       </div>
                     </div>
 
 
-                    <div class="modal fade" id="xoaModal<%= i._id %>" tabindex="1"
+                    <div class="modal fade" id="xoaModal<%= i._id %>" tabindex="-1"
                       aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
+                      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                           <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa tài khoản</h1>
@@ -394,7 +428,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy bỏ</button>
-                            <button type="button" class="btn btn-danger">Xóa bỏ</button>
+                            <a type="button" class="btn btn-danger" href="/users/home/quanlykhachhang/<%=i._id%>">Xóa bỏ</a>
                           </div>
                         </div>
                       </div>
