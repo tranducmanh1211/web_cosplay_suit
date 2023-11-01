@@ -13,5 +13,8 @@ router.post('/signup',tb_userCtrl.dangky);
 
 router.get('/home',tb_productCtrl.homeWeb);
 router.get('/home/quanlykhachhang',tb_productCtrl.quanlyKH);
-router.get('/home/quanlykhachhang/:_id',tb_productCtrl.quanlyKHbyID);
+router.post('/home/quanlykhachhang',tb_productCtrl.quanlyKH)
+
+router.get('/home/quanlykhachhang/:id',tb_productCtrl.deleteKHbyID);
+router.delete('/home/quanlykhachhang/:id',tb_productCtrl.deleteKHbyID);
 module.exports = router;
