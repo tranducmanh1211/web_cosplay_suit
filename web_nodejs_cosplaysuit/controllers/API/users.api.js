@@ -24,8 +24,11 @@ exports.login = async (req, res, next) => {
         if (req.body.phone && req.body.passwd) {
             let user = await myMD.tb_userModel.findOne(req.body);
             if (user) {
-                res.status(201).json({ user: user, message: "Sign Up Successfull!" });
-                // msg = "Dang nhap thanh cong"
+                if(user.__v ===0){
+                    res.status(201).json({ user: user, message: "Sign Up Successfull!" });
+                }else{
+                    res.json({ message: "Your account has been disabled.Can not login!" });
+                }
             } else {
                 res.json({ message: "Password is incorrect!" });
             }
