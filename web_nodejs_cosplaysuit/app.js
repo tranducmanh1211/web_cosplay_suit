@@ -13,6 +13,8 @@ var userapiRouter = require('./routes/user.api');
 var productapiRouter= require('./routes/product.api');
 var billrouter = require('./routes/bill');
 var shopRouter = require('./routes/shop');
+var commentsRouter = require('./routes/comments');
+
 const { error } = require('console');
 
 var app = express();
@@ -43,6 +45,7 @@ app.use('/product', productapiRouter);
 app.use('/shop', shopRouter);
 
 app.use('/bill', billrouter);
+app.use('/Comments',commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
