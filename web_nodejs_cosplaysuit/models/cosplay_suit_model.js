@@ -39,9 +39,24 @@ const tb_properties = new db.mongoose.Schema(
     }
 );
 
+const tb_comments = new db.mongoose.Schema(
+    {
+        id_product: {type: db.mongoose.Schema.Types.ObjectId, ref: 'prodcutModel'},
+        id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
+        content: {type: String, require: true},
+        time: {type: String, require: true},
+        image: {type: Array, require: true},
+        star: {type: Number, require: true},
+    },
+    {
+        collection: 'comments'
+    }
+);
+
 //tạo model
+let tb_commentsModel = db.mongoose.model('commentsModel', tb_comments);
 let tb_categoryModel = db.mongoose.model('categoryModel', tb_category);
 let tb_productModel = db.mongoose.model('prodcutModel', tb_product);
 let tb_propertiesModel = db.mongoose.model('properties', tb_properties);
 
-module.exports = {tb_categoryModel,tb_productModel, tb_propertiesModel};
+module.exports = {tb_categoryModel,tb_productModel, tb_propertiesModel,tb_commentsModel};
