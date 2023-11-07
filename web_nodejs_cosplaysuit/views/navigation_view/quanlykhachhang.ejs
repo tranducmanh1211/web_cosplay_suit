@@ -157,6 +157,22 @@
           overflow: visible;
           white-space: pre-line;
         }
+
+        #svg_increase {
+          display: none;
+        }
+
+        .div_increase:hover #svg_increase {
+          display: inline;
+        }
+
+        #svg_reduced {
+          display: none;
+        }
+
+        .div_reduced:hover #svg_reduced {
+          display: inline;
+        }
       </style>
     </head>
 
@@ -248,10 +264,10 @@
               <thead>
                 <tr>
                   <th colspan="6">
-                    <div class="container" style="text-align: center;">
+                    <div class="container" style="text-align: center;justify-content: center;">
                       <div class=""
                         style="display: flex;padding: 10px;justify-content: space-between;align-items: center;">
-                        <div style="display: flex;">
+                        <div style="display: flex;justify-content: center;text-align: center;">
                           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkup-list"
                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                             fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -264,12 +280,12 @@
                             <path d="M9 17h.01"></path>
                             <path d="M12 16l1 1l3 -3"></path>
                           </svg>
-                          <h5 style="margin-left: 10px;">Danh Sách User</h5>
+                          <h5 style="margin-left: 10px;margin-bottom: 0px;">Danh Sách User</h5>
                         </div>
                         <div>
                           <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Enter Email" aria-label="Search"
-                              name="email">
+                            <input style="width: 370px;" class="form-control me-2" type="search"
+                              placeholder="Search by email address, phone number" aria-label="Search" name="email">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                           </form>
                         </div>
@@ -280,22 +296,33 @@
               </thead>
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Phone</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                      Role
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li style="padding: 0;"><a class="dropdown-item" href="#">1</a></li>
-                      <li style="padding: 0;"><a class="dropdown-item" href="#">2</a></li>
-                      <li style="padding: 0;"><a class="dropdown-item" href="#">3</a></li>
-                    </ul>
+                  <th scope="col"># </th>
+                  <th scope="col" style="display: flex;text-align: center;justify-content: center;">Name <div
+                      class="div_increase" style="width: 10px;"><a href="/users/home/quanlykhachhang?name=1"><svg
+                          id="svg_increase" xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-arrow-narrow-up" width="17" height="17"
+                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                          <path d="M12 5l0 14"></path>
+                          <path d="M16 9l-4 -4"></path>
+                          <path d="M8 9l4 -4"></path>
+                        </svg></a></div>
+                    <div class="div_reduced" style="width: 10px;"><a href="/users/home/quanlykhachhang?name=-1"><svg
+                          id="svg_reduced" xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-arrow-narrow-down" width="17" height="17"
+                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                          <path d="M12 5l0 14"></path>
+                          <path d="M16 15l-4 4"></path>
+                          <path d="M8 15l4 4"></path>
+                        </svg></a></div>
                   </th>
-
+                  <th scope="col">Phone</th>
+                  <th scope="col">Email
+                  </th>
+                  <th scope="col"> Role</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
@@ -305,11 +332,11 @@
                   <tr class="tr_hover">
                     <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
                       <%=i._id%>
-
-                        <%if(i.__v === 1){%>
-                          <p style="color: red;margin: 0px;"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-triangle"
-                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                              fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <%if(i.__v===1){%>
+                          <p style="color: red;margin: 0px;"><svg xmlns="http://www.w3.org/2000/svg"
+                              class="icon icon-tabler icon-tabler-alert-triangle" width="24" height="24"
+                              viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                              stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                               <path d="M12 9v4"></path>
                               <path
@@ -460,19 +487,28 @@
                         </div>
                       </div>
                     </div>
+                    
                   </tr>
                   <%sum++;%>
-
+                 
                     <%})%>
-
+                  <%if(listUser === null || (Array.isArray(listUser) && listUser.length === 0)){%>
+                    <td colspan="6" style="padding: 50px 150px 50px 150px;"> 
+                      <p style="margin: 0px;font-size: 20px;">Chúng tôi không thể tìm thấy tài khoản cho "<%=email%>"</p>
+                      <p style="margin: 0px;font-size: 20px;"> Hãy đảm bảo email hoặc phone number người dùng được viết đúng chính tả và định dạng chính xác</p>
+                     
+                    </td>
+                  <%}%>
+                    
               </tbody>
             </table>
           </div>
+          <%if(!(listUser === null || (Array.isArray(listUser) && listUser.length === 0))){%>
           <div class="container">
             <div class="row">
               <div class="col-12 col-sm-2 col-md-2">
                 <div class="row" style="margin-top: 8px;">
-                  <h6>
+                  <h6 >
                     <%=page%>/<%=page_length%>
                   </h6>
                 </div>
@@ -517,6 +553,7 @@
             </div>
 
           </div>
+          <%}%>
         </section>
 
       </div>
