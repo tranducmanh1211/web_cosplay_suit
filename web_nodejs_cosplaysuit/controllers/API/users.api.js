@@ -184,4 +184,15 @@ exports.userById = async (req,res,next) =>  {
     res.json(objReturn1.data);
 
 }
+exports.updatePasswd = async ( req , res,next) => {
+     try {
+        const user = await myMD.tb_userModel.findById(req.params.id);
+        user.passwd = req.body.passwd;
+
+        const uSave = await user.save();
+        res.json(uSave);
+    } catch (error) {
+        res.send(error);
+    }
+}
 
