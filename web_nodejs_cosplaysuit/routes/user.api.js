@@ -6,7 +6,7 @@ var tb_userCtrl = require('../controllers/API/users.api');
 
 
 
-
+routes.put('/doimk/:id',tb_userCtrl.updatePasswd);
 routes.post('/regapp',tb_userCtrl.regApp);
 routes.post('/login',tb_userCtrl.login);
 routes.get('/login/:email',tb_userCtrl.loginUser);
