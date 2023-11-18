@@ -47,7 +47,7 @@ const tb_comments = new db.mongoose.Schema(
         id_user: { type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel' },
         content: { type: String, require: true },
         time: { type: String, require: true },
-        image: { type: Array, require: true },
+        image: { type: Array},
         star: { type: Number, require: true },
     },
     {

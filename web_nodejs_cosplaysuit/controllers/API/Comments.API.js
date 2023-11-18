@@ -98,7 +98,6 @@ exports.getlistDDG = async (req, res, next) => {
         return danhGiaList.some((danhGia) => danhGia.id_product.toString() === idProduct.toString());
     });
 
-
     const donHangDaDanhGiaWithProducts = await myMD1.tb_billdetailsModel
         .find({ id_bill: { $in: donHangDaDanhGia.map((hoaDon) => hoaDon._id) } })
         .populate('id_product')
