@@ -6,16 +6,26 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@vonage/server-sdk": "^3.10.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-session": "^1.17.3",
+    "firebase": "^10.6.0",
+    "firebase-admin": "^11.11.0",
+    "firebase-functions": "^4.5.0",
     "http-errors": "~1.6.3",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "4.1",
     "mongoose": "^7.5.2",
     "morgan": "~1.9.1",
+<<<<<<< HEAD
     "nodemon": "^3.0.1",
     "socket.io": "^4.7.2"
+=======
+    "socket.io": "^4.7.2",
+    "twilio": "^4.19.0"
+>>>>>>> abe695dab8aa1683fba7279a79a1abb1e25238cc
   }
 }

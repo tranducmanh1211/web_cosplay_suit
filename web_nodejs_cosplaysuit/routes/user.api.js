@@ -5,8 +5,9 @@ var tb_userCtrl = require('../controllers/API/users.api');
 
 
 
-
-
+routes.post('/otp',tb_userCtrl.seenOTP);
+routes.put('/doimk/:id',tb_userCtrl.updatePasswd);
+routes.put('/fPasswd/:phone',tb_userCtrl.forgotPasswd);
 routes.post('/regapp',tb_userCtrl.regApp);
 routes.post('/login',tb_userCtrl.login);
 routes.get('/login/:email',tb_userCtrl.loginUser);
