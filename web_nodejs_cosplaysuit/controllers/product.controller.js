@@ -9,7 +9,7 @@ exports.homeWeb = async (req, res, next) => {
 
 exports.quanlyKH = async (req, res, next) => {
     // var username = req.session.userU.fullname;
-    let username = 'req.session.userU.fullname';
+    let username = req.session.userU.fullname;
     let page = Number(req.query.page) || 1;
     let limit = Number(req.query.limit) || 8;
     let skip = (page - 1) * limit;
