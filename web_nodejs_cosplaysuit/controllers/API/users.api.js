@@ -1,3 +1,4 @@
+const { response } = require('express');
 var myMD = require('../../models/cosplau_suit_user_model');
 
 // const admin = require('firebase-admin');
@@ -270,8 +271,9 @@ exports.updatediachi  = async (req, res, next) => {
     }
 }
 exports.updiachi  = async (req, res, next) => {
-    let addCM = new myMDD.tb_profileModel;
+    let addCM = new myMD.tb_profileModel(res.body);
   
+    addCM.id_user= req.body.id_user;
     addCM.fullname = req.body.fullname;
     addCM.email = req.body.email;
     addCM.phone = req.body.phone;
@@ -283,10 +285,10 @@ exports.updiachi  = async (req, res, next) => {
         if (new_CMD) {
             objReturn.data = addCM;
             objReturn.stu = 1;
-            objReturn.msg = ""
+            objReturn.msg = "thanhcong"
         } else {
             objReturn.stu = 0;
-            objReturn.msg = ""
+            objReturn.msg = "thatbai"
         }
     } catch (error) {
         objReturn.stu = 0;
