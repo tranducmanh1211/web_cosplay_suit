@@ -1,8 +1,8 @@
 var myMD = require('../../models/cosplau_suit_user_model');
 
-const admin = require('firebase-admin');
-const functions = require('firebase-functions');
-admin.initializeApp();
+// const admin = require('firebase-admin');
+// const functions = require('firebase-functions');
+// admin.initializeApp();
 
 var objReturn = {
     status: 1,
@@ -232,4 +232,66 @@ exports.seenOTP = async (req, res, next) => {
       res.status(500).json({ success: false, message: 'Failed to send OTP' });
     }
 
+}
+exports.diachiById = async (req, res, next) => {
+
+    let User = null;
+
+    try {
+        User = await myMD.tb_profileModel.findOne({ id_user: req.params.id }).populate('id_user');
+        if (User) {
+            objReturn1.data = User;
+            objReturn1.status = 1;
+            objReturn1.msg = 'lấy ds thành công';
+        } else {
+            objReturn1.status = 0;
+            objReturn1.msg = 'không có  dữ liệu'
+        }
+    } catch (error) {
+        objReturn1.status = 0;
+        objReturn1.msg = error.msg;
+    }
+
+
+    res.json(objReturn1.data);
+
+}
+exports.updatediachi  = async (req, res, next) => {
+    try {
+        const user = await myMD.tb_profileModel.findById(req.params.id);
+        user.fullname = req.body.fullname;
+        user.email=req.body.email;
+        user.phone=req.body.phone;
+        user.diachi=req.body.diachi;
+        const uSave = await user.save();
+        res.json(uSave);
+    } catch (error) {
+        res.send(error);
+    }
+}
+exports.updiachi  = async (req, res, next) => {
+    let addCM = new myMDD.tb_profileModel;
+  
+    addCM.fullname = req.body.fullname;
+    addCM.email = req.body.email;
+    addCM.phone = req.body.phone;
+    addCM.diachi = req.body.diachi;
+
+    let new_CMD = await addCM.save();
+    console.log(new_CMD);
+    try {
+        if (new_CMD) {
+            objReturn.data = addCM;
+            objReturn.stu = 1;
+            objReturn.msg = ""
+        } else {
+            objReturn.stu = 0;
+            objReturn.msg = ""
+        }
+    } catch (error) {
+        objReturn.stu = 0;
+        objReturn.msg = error.msg;
+    }
+
+    res.json(objReturn);
 }
