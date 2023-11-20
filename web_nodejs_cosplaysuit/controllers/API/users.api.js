@@ -1,8 +1,8 @@
 var myMD = require('../../models/cosplau_suit_user_model');
 
-const admin = require('firebase-admin');
-const functions = require('firebase-functions');
-admin.initializeApp();
+// const admin = require('firebase-admin');
+// const functions = require('firebase-functions');
+// admin.initializeApp();
 
 var objReturn = {
     status: 1,
