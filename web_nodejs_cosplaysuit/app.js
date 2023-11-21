@@ -13,6 +13,7 @@ var userapiRouter = require('./routes/user.api');
 var productapiRouter= require('./routes/product.api');
 var billrouter = require('./routes/bill');
 var shopRouter = require('./routes/shop');
+var salemanRouter = require('./routes/salesman');
 const { error } = require('console');
 
 var app = express();
@@ -39,6 +40,7 @@ app.use('/category', categoryRouter);
 app.use('/chat', chatRouter);
 app.use('/user/api', userapiRouter);
 app.use('/product', productapiRouter);
+app.use('/salesman', salemanRouter);
 
 app.use('/shop', shopRouter);
 
