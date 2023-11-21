@@ -12,7 +12,7 @@ exports.getidCartOder = async (req, res, next) => {
     if (typeof (req.params.id) != 'undefined') {
         dieu_kien_loc = { _id: req.params.id};
     }
-    var list = await myMD.tb_cartoderModel.find(dieu_kien_loc).populate('product_id').populate('properties_id');
+    var list = await myMD.tb_cartoderModel.find(dieu_kien_loc).populate('id_product').populate('id_properties');
 
     res.send(list);
 }
@@ -20,10 +20,10 @@ exports.getidCartOder = async (req, res, next) => {
 exports.getShop = async (req, res, next) => {
     const id_user = req.params.id_user;
     // Tìm danh sách idproduct theo idUser
-    const cartlist = await myMD.tb_cartoderModel.find({id_user: id_user }).select('product_id').lean();
+    const cartlist = await myMD.tb_cartoderModel.find({id_user: id_user }).select('id_product').lean();
     
     // Lấy danh sách idproduct từ kết quả trên
-    const idproductList = cartlist.map(hd => hd.product_id);
+    const idproductList = cartlist.map(hd => hd.id_product);
 
     //Tìm ra bản ghi của idproduct
     const listIdShop = await myMDsp.tb_productModel.find({_id: { $in: idproductList }}).select('id_shop').lean();
@@ -62,7 +62,7 @@ exports.getUserCartOder = async (req, res, next) => {
     if (typeof (req.params.id_user) != 'undefined') {
         dieu_kien_loc = { id_user: req.params.id_user};
     }
-    var list = await myMD.tb_cartoderModel.find(dieu_kien_loc).populate('product_id').populate('properties_id');
+    var list = await myMD.tb_cartoderModel.find(dieu_kien_loc).populate('id_product').populate('id_properties');
 
     res.send(list);
 }
@@ -71,10 +71,10 @@ exports.AddCartOder = async (req, res, next) => {
 
     let add = new myMD.tb_cartoderModel();
         add.id_user = req.body.id_user;
-        add.product_id = req.body.product_id;
+        add.id_product = req.body.id_product;
         add.amount = req.body.amount;
         add.totalPayment = req.body.totalPayment; 
-        add.properties_id = req.body.properties_id; 
+        add.id_properties = req.body.id_properties; 
     let new_CMD = await add.save();
     console.log(new_CMD);
     try{
