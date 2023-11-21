@@ -17,5 +17,10 @@ routes.post('/shop/add',tb_userCtrl.regShopApp);
 
 routes.get('/fUser/:id',tb_userCtrl.userById);
 
+routes.get('/profile/:id',tb_userCtrl.diachiById);
+routes.put('/uprofile/:id',tb_userCtrl.updatediachi);
+routes.post('/postprofile',tb_userCtrl.updiachi);
+
+
 
 module.exports = routes;
