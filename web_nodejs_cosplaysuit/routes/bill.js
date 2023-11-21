@@ -4,7 +4,9 @@ var routes = express.Router();
 //router giỏ hàng
 var tb_cartorderCtrl = require('../controllers/API/CartOder.API');
 
-routes.get('/getlistcartorder',tb_cartorderCtrl.getCartOder);
+routes.get('/getidCartOder/:id',tb_cartorderCtrl.getidCartOder);
+
+routes.get('/getShop/:id_user',tb_cartorderCtrl.getShop);
 
 routes.get('/getusercartorder/:id_user',tb_cartorderCtrl.getUserCartOder);
 
