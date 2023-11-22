@@ -1,9 +1,9 @@
 const { response } = require('express');
 var myMD = require('../../models/cosplau_suit_user_model');
 
-const accountSid = 'ACb85dcbf3db4f48feab2d902ca8de87e9';
-const authToken = 'b2af5e0125f2fada83f59357cdb3a887';
-const client = require('twilio')(accountSid, authToken);
+// const accountSid = 'ACb85dcbf3db4f48feab2d902ca8de87e9';
+// const authToken = 'b2af5e0125f2fada83f59357cdb3a887';
+// const client = require('twilio')(accountSid, authToken);
 
 var objReturn = {
     status: 1,
