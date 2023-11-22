@@ -11,4 +11,5 @@ routes.get('/listCDG/:id_user',tb_CmCtrl.getlistDHCDG);
 routes.get('/listDDG/:id_user',tb_CmCtrl.getlistDDG);
 
 routes.get('/listdd/:id_user',tb_CmCtrl.getBillDetailsWithProducts);
+
 module.exports = routes;
