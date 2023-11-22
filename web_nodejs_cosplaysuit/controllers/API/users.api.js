@@ -2,7 +2,7 @@ const { response } = require('express');
 var myMD = require('../../models/cosplau_suit_user_model');
 
 const accountSid = 'ACb85dcbf3db4f48feab2d902ca8de87e9';
-const authToken = 'ae1e40c76c8845dbfddf7b23b90ec026';
+const authToken = 'b2af5e0125f2fada83f59357cdb3a887';
 const client = require('twilio')(accountSid, authToken);
 
 var objReturn = {
@@ -226,7 +226,7 @@ exports.seenOTP = async (req, res, next) => {
         }
 
         await client.messages.create({
-            body: `Mạnh đẹp zai thật sự  ${OTP}`,
+            body: `Mạnh đẹp zai hơn Bình thật sự  ${OTP}`,
             messagingServiceSid: "MG572ad512b5cdae64f82467201f07d364",
             to: `+84${phone}`
         }).then(message => {
