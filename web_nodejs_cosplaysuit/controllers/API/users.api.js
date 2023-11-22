@@ -1,9 +1,9 @@
 const { response } = require('express');
 var myMD = require('../../models/cosplau_suit_user_model');
 
-// const admin = require('firebase-admin');
-// const functions = require('firebase-functions');
-// admin.initializeApp();
+const accountSid = 'ACb85dcbf3db4f48feab2d902ca8de87e9';
+const authToken = 'ae1e40c76c8845dbfddf7b23b90ec026';
+const client = require('twilio')(accountSid, authToken);
 
 var objReturn = {
     status: 1,
@@ -212,27 +212,34 @@ exports.forgotPasswd = async ( req, res, next) =>{
     }
 }
 exports.seenOTP = async (req, res, next) => {
-    const phoneNumber = req.body.phoneNumber;
+    let phoneUser;
     try {
-      const user = await admin.auth().getUserByPhoneNumber(phoneNumber);
-      const uid = user.uid;
-  
-      // Gửi OTP bằng cách sử dụng Firebase Authentication
-      const otp = generateOTP(); // Hàm sinh mã OTP của bạn
-      await admin.auth().updateUser(uid, {
-        phoneNumber,
-        // Thêm mã OTP vào thông tin người dùng (để kiểm tra sau này)
-        customClaims: { otp },
-      });
-  
-      // Gửi OTP đến số điện thoại sử dụng cách thích hợp (SMS, Firebase Cloud Messaging, ...)
-  
-      res.status(200).json({ success: true, message: 'OTP sent successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: 'Failed to send OTP' });
-    }
+        const { phone } = req.body;
 
+        phoneUser = await myMD.tb_userModel.findOne({ phone });
+
+        let digits = "0123456789";
+        let OTP = "";
+
+        for (let i = 0; i < 6; i++) {
+            OTP += digits[Math.floor(Math.random() * 10)];
+        }
+
+        await client.messages.create({
+            body: `Mạnh đẹp zai thật sự  ${OTP}`,
+            messagingServiceSid: "MG572ad512b5cdae64f82467201f07d364",
+            to: `+84${phone}`
+        }).then(message => {
+            console.log(message.sid);
+            return res.status(200).json({ msg: "Message Sent Successfully" });
+        }).catch(error => {
+            console.error(error);
+            return res.status(500).json({ error: "Error sending message" });
+        });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ error: e.message });
+    }
 }
 exports.diachiById = async (req, res, next) => {
 
