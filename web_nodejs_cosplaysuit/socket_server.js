@@ -31,6 +31,20 @@ io.on('connection', (socket) => {
         //   socket.broadcast.emit (gửi dữ liệu cho tất cả client trong room trừ người gửi)
     });
 
+    socket.on('new msg', async (msg) => {
+        console.log('Received:', msg);
+
+        client.on('new msg',(data)=>{
+            //nhận dữ liệu từ client gửi lên
+            console.log("New msg: "+data);
+            //gửi phản hồi
+            client.emit('new msg', "Server đã nhận rồi nè: "+data);
+        });
+    
+
+        //   socket.broadcast.emit (gửi dữ liệu cho tất cả client trong room trừ người gửi)
+    });
+
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
