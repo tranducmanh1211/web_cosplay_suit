@@ -80,7 +80,7 @@
                                                 <source srcset="https://cdn.dribbble.com/users/17621009/avatars/small/data?1695481321">
                                                 <img class="photo" alt="Trần Đức Mạnh PH 1 9 4 1 4" src="https://cdn.dribbble.com/users/17621009/avatars/small/data?1695481321"/>
                                             </picture>
-                                            <span class="display-name">Trần Đức Mạnh PH 1 9 4 1 4</span>
+                                            <span class="display-name"><%=account.fullname%></span>
                                         </a>
                                         <span class="sep">/</span>
                                         Thông tin
@@ -113,19 +113,16 @@
                                     <div class="form-field">
                                         <fieldset class="user_login">
                                             <label for="user_login">Username</label>
-                                            <input autocorrect="off" autocapitalize="off" autocomplete="username" class="input-with-outline-only" type="text" value="manhdepzaivcl" name="user[login]" id="user_login"/>
+                                            <input disabled="true" autocorrect="off" autocapitalize="off" autocomplete="username" class="input-with-outline-only" type="text" value="<%=account.fullname%>" name="fullname" id="fullname"/>
                                         </fieldset>
                                     </div>
                                     <div class="form-field">
                                         <fieldset class="user_email">
                                             <label for="user_email">Email</label>
-                                            <input autocomplete="email" class="input-with-outline-only" type="email" value="manhtdph19414@fpt.edu.vn" name="user[email]" id="user_email"/>
+                                            <input disabled="true" autocomplete="email" class="input-with-outline-only" type="email" value="<%=account.email%>" name="email" id="email"/>
                                         </fieldset>
                                     </div>
                                 
-                                </div>
-                                <div class="form-btns">
-                                    <input type="submit" name="commit" value="Save Changes" class="btn2" data-disable-with="Save Changes"/>
                                 </div>
                             </form>
                         </div>
