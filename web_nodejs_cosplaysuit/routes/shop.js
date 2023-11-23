@@ -6,4 +6,6 @@ var tb_shop = require('../controllers/API/Shop.Api');
 router.get('/listShop', tb_shop.getlListShop);
 router.get('/getOneShop/:id', tb_shop.getShopById );
 
+
+
 module.exports = router;
