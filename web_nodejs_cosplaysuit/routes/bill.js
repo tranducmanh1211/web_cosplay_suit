@@ -8,6 +8,8 @@ routes.get('/getidCartOder/:id',tb_cartorderCtrl.getidCartOder);
 
 routes.get('/getShop/:id_user',tb_cartorderCtrl.getShop);
 
+routes.get('/getShopBuynow/:idcart',tb_cartorderCtrl.getShopBuynow);
+
 routes.get('/getusercartorder/:id_user',tb_cartorderCtrl.getUserCartOder);
 
 routes.post('/addcart',tb_cartorderCtrl.AddCartOder);

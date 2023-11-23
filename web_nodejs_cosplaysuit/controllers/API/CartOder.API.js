@@ -16,7 +16,28 @@ exports.getidCartOder = async (req, res, next) => {
 
     res.send(list);
 }
+exports.getShopBuynow = async (req, res, next) => {
+    const idcart = req.params.idcart;
+    // Tìm danh sách idproduct theo idcart
+    const cartlist = await myMD.tb_cartoderModel.find({_id: idcart }).select('id_product').lean();
+    
+    // Lấy danh sách idproduct từ kết quả trên
+    const idproductList = cartlist.map(hd => hd.id_product);
 
+    //Tìm ra bản ghi của idproduct
+    const listIdShop = await myMDsp.tb_productModel.find({_id: { $in: idproductList }}).select('id_shop').lean();
+
+    // Lấy danh sách idshop từ kết quả trên
+    const idshoplist = new Set(listIdShop.map(hd => String(hd.id_shop)));
+    const giaTriKhongTrungLap = [...idshoplist];
+    console.log("ok: " + giaTriKhongTrungLap);
+
+    //Lấy ds product từ ds không trùng
+    const list = await myMDshop.tb_shopModel.find({_id: { $in: giaTriKhongTrungLap }});
+
+    res.send(list);
+
+}
 exports.getShop = async (req, res, next) => {
     const id_user = req.params.id_user;
     // Tìm danh sách idproduct theo idUser
