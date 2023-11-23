@@ -27,6 +27,28 @@ exports.listCmts = async (req, res, next) => {
     res.json(objReturn.data);
 }
 
+exports.listCmtsForUser = async (req, res, next) => {
+    let listCmts = []
+
+    try {
+        listCmts = await myMD.tb_commentsModel.find({ id_user: req.params.id_user }).populate("id_product");
+
+        if (listCmts) {
+            objReturn.data = listCmts;
+            objReturn.status = 1;
+            objReturn.msg = 'lấy ds thành công';
+        } else {
+            objReturn.status = 0;
+            objReturn.msg = 'không có  dữ liệu'
+        }
+    } catch (error) {
+        objReturn.status = 0;
+        objReturn.msg = error.msg;
+    }
+
+    res.json(objReturn.data);
+}
+
 exports.addCmts = async (req, res, next) => {
     try {
         var currentdate = new Date();
