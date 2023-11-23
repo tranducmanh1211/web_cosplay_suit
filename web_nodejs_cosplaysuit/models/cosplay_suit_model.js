@@ -49,6 +49,7 @@ const tb_comments = new db.mongoose.Schema(
         time: { type: String, require: true },
         image: { type: Array},
         star: { type: Number, require: true },
+        id_bill: { type: db.mongoose.Schema.Types.ObjectId, ref: 'bill' }
     },
     {
         collection: 'comments'

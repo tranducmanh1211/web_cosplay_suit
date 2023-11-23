@@ -173,6 +173,13 @@
         .div_reduced:hover #svg_reduced {
           display: inline;
         }
+        .hien{
+          display: flex;text-align: center;justify-content: center;
+        }
+        .hien:hover #svg_increase{
+          display: inline;
+        }
+      
       </style>
     </head>
 
@@ -280,7 +287,7 @@
                             <path d="M9 17h.01"></path>
                             <path d="M12 16l1 1l3 -3"></path>
                           </svg>
-                          <h5 style="margin-left: 10px;margin-bottom: 0px;">Danh Sách User</h5>
+                          <h5 style="margin-left: 10px;margin-bottom: 0px;">Danh Sách Người Dùng</h5>
                         </div>
                         <div>
                           <form class="d-flex" role="search">
@@ -297,7 +304,7 @@
               <thead>
                 <tr>
                   <th scope="col"># </th>
-                  <th scope="col" style="display: flex;text-align: center;justify-content: center;">Name <div
+                  <th scope="col" class="hien">Name <div
                       class="div_increase" style="width: 10px;"><a href="/users/home/quanlykhachhang?name=1"><svg
                           id="svg_increase" xmlns="http://www.w3.org/2000/svg"
                           class="icon icon-tabler icon-tabler-arrow-narrow-up" width="17" height="17"
@@ -323,6 +330,7 @@
                   <th scope="col">Email
                   </th>
                   <th scope="col"> Role</th>
+                  <th ></th>
                   <th scope="col"></th>
                 </tr>
               </thead>
@@ -332,19 +340,6 @@
                   <tr class="tr_hover">
                     <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
                       <%=i._id%>
-                        <%if(i.__v===1){%>
-                          <p style="color: red;margin: 0px;"><svg xmlns="http://www.w3.org/2000/svg"
-                              class="icon icon-tabler icon-tabler-alert-triangle" width="24" height="24"
-                              viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                              stroke-linecap="round" stroke-linejoin="round">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                              <path d="M12 9v4"></path>
-                              <path
-                                d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z">
-                              </path>
-                              <path d="M12 16h.01"></path>
-                            </svg> Disabled</p>
-                          <%}%>
                     </td>
                     <td class="td_name">
                       <%=i.fullname%>
@@ -358,7 +353,11 @@
                     <td>
                       <%=i.role%>
                     </td>
+                    <td><%if(i.__v===1){%>
+                      <p style="color: red;margin: 0px;">Disabled</p>
+                      <%}%></td>
                     <td>
+                      
                       <a id="a_none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical"
                           width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -487,73 +486,75 @@
                         </div>
                       </div>
                     </div>
-                    
+
                   </tr>
                   <%sum++;%>
-                 
+
                     <%})%>
-                  <%if(listUser === null || (Array.isArray(listUser) && listUser.length === 0)){%>
-                    <td colspan="6" style="padding: 50px 150px 50px 150px;"> 
-                      <p style="margin: 0px;font-size: 20px;">Chúng tôi không thể tìm thấy tài khoản cho "<%=email%>"</p>
-                      <p style="margin: 0px;font-size: 20px;"> Hãy đảm bảo email hoặc phone number người dùng được viết đúng chính tả và định dạng chính xác</p>
-                     
-                    </td>
-                  <%}%>
-                    
+                      <%if(listUser===null || (Array.isArray(listUser) && listUser.length===0)){%>
+                        <td colspan="6" style="padding: 50px 150px 50px 150px;">
+                          <p style="margin: 0px;font-size: 20px;">Chúng tôi không thể tìm thấy tài khoản cho "<%=email%>
+                              "</p>
+                          <p style="margin: 0px;font-size: 20px;"> Hãy đảm bảo email hoặc phone number người dùng được
+                            viết đúng chính tả và định dạng chính xác</p>
+
+                        </td>
+                        <%}%>
+
               </tbody>
             </table>
           </div>
-          <%if(!(listUser === null || (Array.isArray(listUser) && listUser.length === 0))){%>
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-sm-2 col-md-2">
-                <div class="row" style="margin-top: 8px;">
-                  <h6 >
-                    <%=page%>/<%=page_length%>
-                  </h6>
+          <%if(!(listUser===null || (Array.isArray(listUser) && listUser.length===0))){%>
+            <div class="container">
+              <div class="row">
+                <div class="col-12 col-sm-2 col-md-2">
+                  <div class="row" style="margin-top: 8px;">
+                    <h6>
+                      <%=page%>/<%=page_length%>
+                    </h6>
+                  </div>
                 </div>
-              </div>
-              <div class="col-12 col-sm-7 col-md-7">
-                <div class="row"></div>
-              </div>
-              <div class="col-12 col-sm-3 col-md-3">
-                <div class="row">
-                  <nav aria-label="Page navigation example" style="height: 0px;">
-                    <ul class="pagination justify-content-end">
-                      <li class="page-item">
-                        <%if(page>1){%>
-                          <a class="page-link" href="/users/home/quanlykhachhang?page=<%=page-1%>"
-                            aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                          </a>
+                <div class="col-12 col-sm-7 col-md-7">
+                  <div class="row"></div>
+                </div>
+                <div class="col-12 col-sm-3 col-md-3">
+                  <div class="row">
+                    <nav aria-label="Page navigation example" style="height: 0px;">
+                      <ul class="pagination justify-content-end">
+                        <li class="page-item">
+                          <%if(page>1){%>
+                            <a class="page-link" href="/users/home/quanlykhachhang?page=<%=page-1%>"
+                              aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                            </a>
+                            <%}%>
+
+                        </li>
+                        <%for(let i=1;i<=page_length;i++){%>
+                          <li class="page-item"><a class="page-link" href="/users/home/quanlykhachhang?page=<%=i%>">
+                              <%=i%>
+                            </a></li>
                           <%}%>
+                            <li class="page-item">
+                              <%if(page>=page_length){%>
 
-                      </li>
-                      <%for(let i=1;i<=page_length;i++){%>
-                        <li class="page-item"><a class="page-link" href="/users/home/quanlykhachhang?page=<%=i%>">
-                            <%=i%>
-                          </a></li>
-                        <%}%>
-                          <li class="page-item">
-                            <%if(page>=page_length){%>
+                                <%}else{%>
+                                  <a class="page-link" href="/users/home/quanlykhachhang?page=<%=page+1%>"
+                                    aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                  </a>
+                                  <%}%>
 
-                              <%}else{%>
-                                <a class="page-link" href="/users/home/quanlykhachhang?page=<%=page+1%>"
-                                  aria-label="Next">
-                                  <span aria-hidden="true">&raquo;</span>
-                                </a>
-                                <%}%>
+                            </li>
+                      </ul>
+                    </nav>
+                  </div>
 
-                          </li>
-                    </ul>
-                  </nav>
                 </div>
-
               </div>
-            </div>
 
-          </div>
-          <%}%>
+            </div>
+            <%}%>
         </section>
 
       </div>

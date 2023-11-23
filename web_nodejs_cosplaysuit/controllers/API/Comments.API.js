@@ -6,7 +6,6 @@ var objReturn = {
 }
 
 exports.listCmts = async (req, res, next) => {
-
     let listCmts = []
 
     try {
@@ -28,8 +27,29 @@ exports.listCmts = async (req, res, next) => {
     res.json(objReturn.data);
 }
 
-exports.addCmts = async (req, res, next) => {
+exports.listCmtsForUser = async (req, res, next) => {
+    let listCmts = []
 
+    try {
+        listCmts = await myMD.tb_commentsModel.find({ id_user: req.params.id_user }).populate("id_product");
+
+        if (listCmts) {
+            objReturn.data = listCmts;
+            objReturn.status = 1;
+            objReturn.msg = 'lấy ds thành công';
+        } else {
+            objReturn.status = 0;
+            objReturn.msg = 'không có  dữ liệu'
+        }
+    } catch (error) {
+        objReturn.status = 0;
+        objReturn.msg = error.msg;
+    }
+
+    res.json(objReturn.data);
+}
+
+exports.addCmts = async (req, res, next) => {
     try {
         var currentdate = new Date();
         var datetime = "" + currentdate.getDate() + "/"
@@ -44,6 +64,7 @@ exports.addCmts = async (req, res, next) => {
         BL.id_user = req.body.id_user;
         BL.image = req.body.image;
         BL.star = req.body.star;
+        BL.id_bill = req.body.id_bill;
 
         let new_Cmts = await BL.save()
         return res.status(201).json({ new_Cmts })
@@ -54,7 +75,6 @@ exports.addCmts = async (req, res, next) => {
     }
 }
 
-
 exports.delCmts = async (req, res, next) => {
     try {
         await myMD.tb_commentsModel.findByIdAndDelete(req.params.id, req.body);
@@ -62,77 +82,107 @@ exports.delCmts = async (req, res, next) => {
     } catch (error) {
         res.send('Error')
     }
-
 }
+
+const hasReviewed = (danhGiaList, id_product, id_user, id_bill) => {
+    return danhGiaList.some((danhGia) => 
+        danhGia.id_product.toString() === id_product.toString() &&
+        danhGia.id_user.toString() === id_user.toString() &&
+        (!id_bill || danhGia.id_bill.toString() === id_bill.toString())
+    );
+};
+
 exports.getlistDHCDG = async (req, res, next) => {
     const id_user = req.params.id_user;
 
+    try {
+        const doneBills = await myMD1.tb_billModel.find({ $and: [{ id_user: id_user }, { status: 'Done' }] }).select('_id').lean();
+        const idHoaDonList = doneBills.map(hd => hd._id);
 
-    const hoaDonList = await myMD1.tb_billModel.find({ $and: [{ id_user: id_user }, { status: 'Done' }] }).select('_id').lean();
+        const hoaDonChiTietList = await myMD1.tb_billdetailsModel
+            .find({ id_bill: { $in: idHoaDonList } })
+            .populate({
+                path: 'id_product',
+                populate: {
+                    path: 'id_shop',
+                    model: 'tb_shopModel',
+                },
+            })
+            .lean();
 
+        const danhGiaList = await myMD.tb_commentsModel.find({ id_product: { $in: hoaDonChiTietList.map(item => item.id_product) }, id_bill: { $exists: true } }).lean();
 
-    const danhGiaList = await myMD.tb_commentsModel.find({ id_user: id_user }).lean();
+        const chuaDanhGia = hoaDonChiTietList.filter((chiTiet) => {
+            return !hasReviewed(danhGiaList, chiTiet.id_product._id, id_user, chiTiet.id_bill);
+        });
 
-
-    const donHangChuaDanhGia = hoaDonList.filter((hoaDon) => {
-        const idProduct = hoaDon._id;
-        return !danhGiaList.some((danhGia) => danhGia.id_product.toString() === idProduct.toString());
-    });
-    const donHangChuaDanhGiaWithProducts = await myMD1.tb_billdetailsModel
-        .find({ id_bill: { $in: donHangChuaDanhGia.map((hoaDon) => hoaDon._id) } })
-        .populate('id_product')
-        .lean();
-    res.json(donHangChuaDanhGiaWithProducts);
-
+        res.json(chuaDanhGia);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 }
 
 exports.getlistDDG = async (req, res, next) => {
     const id_user = req.params.id_user;
 
-    const hoaDonList = await myMD1.tb_billModel.find({ $and: [{ id_user: id_user }, { status: 'Done' }] }).select('_id').lean();
+    try {
+        const doneBills = await myMD1.tb_billModel.find({ $and: [{ id_user: id_user }, { status: 'Done' }] }).select('_id').lean();
+        const idHoaDonList = doneBills.map(hd => hd._id);
 
-    const danhGiaList = await myMD.tb_commentsModel.find({ id_user: id_user }).lean();
+        const hoaDonChiTietList = await myMD1.tb_billdetailsModel
+            .find({ id_bill: { $in: idHoaDonList } })
+            .populate({
+                path: 'id_product',
+                populate: {
+                    path: 'id_shop',
+                    model: 'tb_shopModel',
+                },
+            })
+            .lean();
 
-    const donHangDaDanhGia = hoaDonList.filter((hoaDon) => {
-        const idProduct = hoaDon._id;
-        return danhGiaList.some((danhGia) => danhGia.id_product.toString() === idProduct.toString());
-    });
+        const danhGiaList = await myMD.tb_commentsModel.find({ id_product: { $in: hoaDonChiTietList.map(item => item.id_product) }, id_bill: { $exists: true } }).lean();
 
-    const donHangDaDanhGiaWithProducts = await myMD1.tb_billdetailsModel
-        .find({ id_bill: { $in: donHangDaDanhGia.map((hoaDon) => hoaDon._id) } })
-        .populate('id_product')
-        .lean();
+        const daDanhGia = hoaDonChiTietList.filter((chiTiet) => {
+            return hasReviewed(danhGiaList, chiTiet.id_product._id, id_user, chiTiet.id_bill);
+        });
 
-    res.json(donHangDaDanhGiaWithProducts);
-
+        res.json(daDanhGia);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 }
 
 exports.getBillDetailsWithProducts = async (req, res, next) => {
     const id_user = req.params.id_user;
 
-    // Tìm danh sách hóa đơn đã hoàn thành của người dùng
     const hoaDonList = await myMD1.tb_billModel.find({ $and: [{ id_user: id_user }, { status: 'Done' }] }).select('_id').lean();
+    const idHoaDonList = hoaDonList.map(hd => hd._id);
 
-    // Lấy danh sách idBill từ kết quả trên
-    const idBillList = hoaDonList.map((hoaDon) => hoaDon._id);
+    const hoaDonChiTietList = await myMD1.tb_billdetailsModel
+        .find({ id_bill: { $in: idHoaDonList } })
+        .populate({
+            path: 'id_product',
+            populate: {
+                path: 'id_shop',
+                model: 'tb_shopModel',
+            },
+        })
+        .lean();
 
-    // Tìm danh sách đánh giá của người dùng
-    const danhGiaList = await myMD.tb_commentsModel.find({ id_user: id_user }).lean();
+    const danhGiaList = await myMD.tb_commentsModel.find({ id_product: { $in: hoaDonChiTietList.map(item => item.id_product) }, id_bill: { $exists: true } }).lean();
 
-    // Lọc ra danh sách đơn hàng đã hoàn thành và đã được đánh giá
-    const donHangDaDanhGia = hoaDonList.filter((hoaDon) => {
-        const idProduct = hoaDon._id;
-        return danhGiaList.some((danhGia) => danhGia.id_product.toString() === idProduct.toString());
+    const daDanhGia = [];
+    const chuaDanhGia = [];
+
+    hoaDonChiTietList.forEach((chiTiet) => {
+        const coDanhGia = hasReviewed(danhGiaList, chiTiet.id_product._id, id_user, chiTiet.id_bill);
+
+        if (coDanhGia) {
+            daDanhGia.push(chiTiet);
+        } else {
+            chuaDanhGia.push(chiTiet);
+        }
     });
 
-    // Lấy danh sách đơn hàng đã hoàn thành và chưa được đánh giá
-    const donHangChuaDanhGia = hoaDonList.filter((hoaDon) => {
-        const idProduct = hoaDon._id;
-        return !danhGiaList.some((danhGia) => danhGia.id_product.toString() === idProduct.toString());
-    });
-
-    res.json({
-        donHangDaDanhGia,
-        donHangChuaDanhGia,
-    });
+    res.json({ daDanhGia, chuaDanhGia });
 };
