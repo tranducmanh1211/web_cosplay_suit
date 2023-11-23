@@ -1,5 +1,5 @@
 var myMD = require('../models/cosplau_suit_user_model');
-
+var nodemailer = require('nodemailer');
 exports.loginWeb = async (req, res, next) => {
     let msg = '';
     let email = '';
@@ -122,7 +122,7 @@ exports.dangky = async (req, res, next) => {
             else if (exitEmail || exitPhone) {
                 msg = "Email or Phone already exitst!"
             }
-            else  {
+            else {
                 let objUser = new myMD.tb_userModel();
                 objUser.fullname = req.body.fullname;
                 objUser.passwd = req.body.passwd;
@@ -140,7 +140,7 @@ exports.dangky = async (req, res, next) => {
 
 
 
-          
+
 
         } else {
             temp = 0;
@@ -151,4 +151,56 @@ exports.dangky = async (req, res, next) => {
     res.render('cosplay_suit/signup', { msg: msg, fullname: fullname, phone: phone, email: email, passwd: passwd });
 
 }
+exports.forgotPass = async (req, res, next) => {
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'suitcosplay@gmail.com',
+            pass: 'vjzqpyqimbldcxjp'
+        }
+    });
+    let digits = "0123456789";
+    let OTP = "";
 
+    for (let i = 0; i < 6; i++) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+    }
+    var content = '';
+    content += `
+    <div style="text-align: center;padding-top:20dp;padding-bottom: 20px;border: 2px solid rgb(219, 83, 183);border-radius: 10px;background-color: rgb(236, 223, 235);">
+                <h4 style="color: #000000;font-size: 20px;font-weight: bold;">Mã Xác Nhận Lại Mật Khẩu</h4>
+                <div style="text-align: center;margin-top: 15px;margin-bottom: 15px;margin-left: 10px;margin-right: 10px;padding: 10px;background-color: #ffffff;">
+                    <h6 style="font-size : 15px">Đây là mã phê duyệt xác nhận quên mật khẩu của bạn : </h6>
+                    <br>
+                    <h4 style="font-size: 20px;font-weight: bold;">${OTP}</h4>
+                </div>
+                <p style="margin-top: 20px;margin-left: 10px;margin-right: 10px;">Nếu bạn không phải là người được gửi yêu cầu này, hãy đổi mật tài khoản ngay lập tức để tránh việc truy cập trái phép...</p>
+            </div>
+    `;
+    var mailOptions = {
+        from: 'Manh Dep Zai',
+        to: 'chuongdkph26546@fpt.edu.vn',
+        subject: 'Mã Đăng Nhập : ' + `${OTP}`,
+        html: content
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+exports.forgotPass1 = async (req, res, next) => {
+
+    res.render('cosplay_suit/forgotPasswd');
+}
+exports.account = async (req, res, next) => {
+
+    res.render('cosplay_suit/account');
+}
+exports.newpass = async (req, res, next) => {
+
+    res.render('cosplay_suit/newpasswd');
+}

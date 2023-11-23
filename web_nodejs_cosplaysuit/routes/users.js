@@ -15,6 +15,16 @@ router.post('/',tb_userCtrl.loginWeb);
 router.get('/signup',tb_userCtrl.dangky);
 router.post('/signup',tb_userCtrl.dangky);
 
+router.get('/forgotPasswd',tb_userCtrl.forgotPass1);
+router.get('/forgotPass',tb_userCtrl.forgotPass);
+router.post('/forgotPass',tb_userCtrl.forgotPass);
+
+router.get('/account/newpass',check_login.yeu_cau_login,tb_userCtrl.newpass);
+router.post('/acount/newpass',check_login.yeu_cau_login,tb_userCtrl.newpass);
+
+router.get('/account',check_login.yeu_cau_login,tb_userCtrl.account);
+router.post('/acount',check_login.yeu_cau_login,tb_userCtrl.account);
+
 router.get('/home',check_login.yeu_cau_login,tb_productCtrl.homeWeb);
 router.get('/home/quanlykhachhang',check_login.yeu_cau_login,tb_productCtrl.quanlyKH);
 router.post('/home/quanlykhachhang',check_login.yeu_cau_login,tb_productCtrl.quanlyKH)
