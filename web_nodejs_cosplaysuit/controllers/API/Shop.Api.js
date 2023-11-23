@@ -16,4 +16,21 @@ exports.getlListShop = async (req, res, next) => {
     res.send(list);
 }
 
+exports.getShopById = async (req, res, next) => {
+    try {
+        var shop = await myMDD.tb_shopModel
+            .findOne({ _id: req.params.id })
+            .select('id_user'); 
+
+        if (!shop) {
+            return res.status(404).json({ message: 'Không tìm thấy cửa hàng' });
+        }
+
+        res.status(200).json({ id_user: shop.id_user }); 
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Đã xảy ra lỗi server' });
+    }
+}
+
 

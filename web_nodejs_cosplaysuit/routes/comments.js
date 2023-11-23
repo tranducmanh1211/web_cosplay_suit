@@ -4,6 +4,8 @@ var tb_CmCtrl = require('../controllers/API/Comments.API');
 
 routes.get('/listCmts/:id_pro',tb_CmCtrl.listCmts);
 
+routes.get('/listCmtsFU/:id_user',tb_CmCtrl.listCmtsForUser);
+
 routes.delete('/delCmts/:id',tb_CmCtrl.delCmts);
 routes.post('/addCmts',tb_CmCtrl.addCmts);
 
