@@ -197,10 +197,62 @@ exports.forgotPass1 = async (req, res, next) => {
     res.render('cosplay_suit/forgotPasswd');
 }
 exports.account = async (req, res, next) => {
-
-    res.render('cosplay_suit/account');
+    let account = req.session.userU;
+    res.render('cosplay_suit/account',{account : account});
 }
 exports.newpass = async (req, res, next) => {
+    let account = req.session.userU;
+    let oldpasswd = '';
+    let msg = '';
+    let fullname = '';
+    let email = '';
+    let passwd = '';
+    let phone = '';
+    var temp = 0;
+    if (req.method == 'POST') {
+        if(req.body.oldpasswd.length === 0){
+            oldpasswd = "Please do not leave your old password blank!"
+            temp++;
+        }else if(req.body.oldpasswd.length <= 6){
+            oldpasswd = "Old password greater than 6 characters!"
+            temp++;
+        }else if(!(req.body.oldpasswd === account.passwd)){
+            oldpasswd = "Old password incorrect!"
+            temp++;
+        }else{
+            oldpasswd = "";
+        }
 
-    res.render('cosplay_suit/newpasswd');
+        if (req.body.passwd.length === 0) {
+            passwd = "Please do not leave your password blank!"
+            temp++;
+        } else if (req.body.passwd.length <= 6) {
+            passwd = "Password greater than 6 characters!"
+            temp++;
+        } else {
+            passwd = "";
+        }
+        if (temp === 0) {
+            let objMK = new myMD.tb_userModel();
+            objMK.passwd = req.body.passwd;
+            objMK._id = account._id;         
+            try {
+                await myMD.tb_userModel.findByIdAndUpdate({ _id: account._id }, objMK);
+                msg = "Password change successful, you need to log in again!";
+                // res.redirect('/users');
+            } catch (error) {
+                msg = "An error occurred, please reload the page!";
+                console.log(error);
+            }
+        } else {
+            temp = 0;
+        }
+
+    }
+
+
+
+
+
+    res.render('cosplay_suit/newpasswd',{account : account,msg,oldpasswd,passwd});
 }
