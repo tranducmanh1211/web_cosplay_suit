@@ -14,14 +14,22 @@ exports.quanlyNguoiBan = async (req, res, next) => {
     let limit = Number(req.query.limit) || 5;
     let skip = (page - 1) * limit;
     let dieu_Kien = {};
-    if (typeof (req.query.email) != 'undefined') {
-        dieu_Kien = { email: new RegExp('.*' + req.query.email + '.*') };
+    if(typeof(req.query.email) != 'undefined'){
+        if (!isNaN(req.query.email)) {
+            console.log('Người dùng đã nhập số.');
+            dieu_Kien = { phone: new RegExp('.*' + req.query.email + '.*') };
+        } else if (typeof req.query.email === 'string') {
+            console.log('Người dùng đã nhập chữ.');
+            dieu_Kien = { email: new RegExp('.*' + req.query.email + '.*') };
+        } else {
+            console.log('Người dùng đã nhập giá trị không hợp lệ.');
+        }
     }
-    let list = await myMD.tb_userModel.find();
+    let list = await myMD.tb_userModel.find({$and: [{role: "Salesman"}, {__v:0}]});
     let page_length = Math.ceil(list.length/limit); 
     //page_length = 3
 
-    let listUser = await myMD.tb_userModel.find({$and: [{role: "Salesman"}, dieu_Kien]})
+    let listUser = await myMD.tb_userModel.find({$and: [{role: "Salesman"}, {__v:0}, dieu_Kien]})
     .skip(skip)
     .limit(limit);
   

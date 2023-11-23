@@ -208,6 +208,11 @@
                   <span class="nav-item">Quản lý sản phẩm</span>
                 </a>
               </li>
+              <li><a class="nav-link" href="/category/getCategory" style="font-size: 16px;color: rgb(85, 83, 83);">
+                <i class="fas fa-industry"></i>
+                <span class="nav-item">Quản lý thể loại</span>
+              </a>
+            </li>
               <li><a class="nav-link" href="/users/home/quanlykhachhang"
                   style="font-size: 16px;color: rgb(85, 83, 83);">
                   <i class="fas fa-chart-bar"></i>
@@ -264,7 +269,7 @@
                         </div>
                         <div>
                           <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Enter Email" aria-label="Search"
+                            <input class="form-control me-2" type="search" style="width: 300px;" placeholder="Enter Email or Phone Number" aria-label="Search"
                               name="email">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                           </form>
@@ -276,17 +281,33 @@
               </thead>
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
+                  <th scope="col"># </th>
+                  <th scope="col" style="display: flex;text-align: center;justify-content: center;">Name <div
+                      class="div_increase" style="width: 10px;"><a href="/salesman/home/quanlynguoiban?name=1"><svg
+                          id="svg_increase" xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-arrow-narrow-up" width="17" height="17"
+                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                          <path d="M12 5l0 14"></path>
+                          <path d="M16 9l-4 -4"></path>
+                          <path d="M8 9l4 -4"></path>
+                        </svg></a></div>
+                    <div class="div_reduced" style="width: 10px;"><a href="/salesman/home/quanlynguoiban?name=-1"><svg
+                          id="svg_reduced" xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-arrow-narrow-down" width="17" height="17"
+                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                          <path d="M12 5l0 14"></path>
+                          <path d="M16 15l-4 4"></path>
+                          <path d="M8 15l4 4"></path>
+                        </svg></a></div>
+                  </th>
                   <th scope="col">Phone</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Role</th>
-                   
-                     
-                     
-                    
-                  
-
+                  <th scope="col">Email
+                  </th>
+                  <th scope="col"> Role</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
@@ -323,12 +344,11 @@
                       <ul class="dropdown-menu">
                         <li style="padding: 0;">
                           <a type="button" class="dropdown-item" data-bs-toggle="modal" id="vohieuButton"
-                            data-bs-target="#vohieuModal<%= i._id %>">Vô hiệu hóa tài
-                            khoản</a>
+                            data-bs-target="#vohieuModal<%= i._id %>">Chấp nhận đăng ký shop</a>
                         </li>
                         <li style="padding: 0;">
                           <a type="button" class="dropdown-item" data-bs-toggle="modal" id="xoaButton"
-                          data-bs-target="#xoaModal<%= i._id %>">Xóa tài khoản</a>
+                          data-bs-target="#xoaModal<%= i._id %>">Xem danh sách sản phẩm shop</a>
                         </li>
                       </ul>
                     </td>
@@ -364,9 +384,9 @@
                     </div>
 
 
-                    <div class="modal fade" id="xoaModal<%= i._id %>" tabindex="1"
-                      aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
+                    <div class="modal fade" id="xoaModal<%= i._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                      aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                           <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa tài khoản</h1>
@@ -398,10 +418,17 @@
                   <%sum++;%>
 
                     <%})%>
-
+                    <%if(listUser === null || (Array.isArray(listUser) && listUser.length === 0)){%>
+                      <td colspan="6" style="padding: 50px 150px 50px 150px;"> 
+                        <p style="margin: 0px;font-size: 20px;">Chúng tôi không thể tìm thấy tài khoản cho "<%=email%>"</p>
+                        <p style="margin: 0px;font-size: 20px;"> Hãy đảm bảo email hoặc phone number người dùng được viết đúng chính tả và định dạng chính xác</p>
+                       
+                      </td>
+                    <%}%>
               </tbody>
             </table>
           </div>
+          <%if(!(listUser === null || (Array.isArray(listUser) && listUser.length === 0))){%>
           <div class="container">
             <div class="row">
               <div class="col-12 col-sm-2 col-md-2">
@@ -451,6 +478,7 @@
             </div>
 
           </div>
+          <%}%>
         </section>
 
       </div>
