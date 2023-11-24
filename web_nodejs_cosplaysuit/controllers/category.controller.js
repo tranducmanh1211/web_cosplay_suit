@@ -6,7 +6,7 @@ exports.gettheloai = async (req, res, next) => {
     //tạo chức năng lọc dữ liệu trên danh sách
     let username = req.session.userU.fullname;
     let dieu_kien_loc = null;
- 
+
     if (typeof (req.query.name) != 'undefined') {
         dieu_kien_loc = { price: req.query.name };
     }
@@ -19,7 +19,7 @@ exports.gettheloai = async (req, res, next) => {
 
 exports.addTL = async (req, res, next) => {
 
-    let msg = ''; 
+    let msg = '';
     let username = req.session.userU.fullname;
     if (req.method == 'POST') {
 
