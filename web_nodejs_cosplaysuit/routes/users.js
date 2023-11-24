@@ -15,9 +15,15 @@ router.post('/',tb_userCtrl.loginWeb);
 router.get('/signup',tb_userCtrl.dangky);
 router.post('/signup',tb_userCtrl.dangky);
 
-router.get('/forgotPasswd',tb_userCtrl.forgotPass1);
+
 router.get('/forgotPass',tb_userCtrl.forgotPass);
 router.post('/forgotPass',tb_userCtrl.forgotPass);
+
+router.get('/forgotPass/otpcheck',check_login.yeu_cau_otp,tb_userCtrl.otpcheck);
+router.post('/forgotPass/otpcheck',check_login.yeu_cau_otp,tb_userCtrl.otpcheck);
+
+router.get('/forgotPass/otpcheck/passwdnew',check_login.yeu_cau_otp,tb_userCtrl.passNew);
+router.post('/forgotPass/otpcheck/passwdnew',check_login.yeu_cau_otp,tb_userCtrl.passNew);
 
 router.get('/account/newpass',check_login.yeu_cau_login,tb_userCtrl.newpass);
 router.post('/account/newpass',check_login.yeu_cau_login,tb_userCtrl.newpass);
