@@ -31,7 +31,7 @@ exports.listCmtsForUser = async (req, res, next) => {
     let listCmts = []
 
     try {
-        listCmts = await myMD.tb_commentsModel.find({ id_user: req.params.id_user }).populate("id_product");
+        listCmts = await myMD.tb_commentsModel.find({ id_user: req.params.id_user }).populate("id_product").populate("id_user");
 
         if (listCmts) {
             objReturn.data = listCmts;
@@ -45,7 +45,6 @@ exports.listCmtsForUser = async (req, res, next) => {
         objReturn.status = 0;
         objReturn.msg = error.msg;
     }
-
     res.json(objReturn.data);
 }
 
