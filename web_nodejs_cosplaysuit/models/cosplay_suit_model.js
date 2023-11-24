@@ -21,6 +21,7 @@ const tb_product = new db.mongoose.Schema(
         amount: { type: String, require: true },
         image: { type: String, require: true },
         listImage: { type: Array, require: true },
+        listProp: { type: Array, require: true },
         description: { type: String, require: true },
         size: { type: String, require: true },
         time_product: { type: String, require: true }
@@ -32,13 +33,13 @@ const tb_product = new db.mongoose.Schema(
 
 const tb_properties = new db.mongoose.Schema(
     {
-        id_product: { type: db.mongoose.Schema.Types.ObjectId, ref: 'prodcutModel' },
         nameproperties: { type: String, require: true },
         amount: { type: String, require: true }
     },
     {
         collection: 'properties'
     }
+
 );
 
 const tb_comments = new db.mongoose.Schema(
@@ -47,7 +48,7 @@ const tb_comments = new db.mongoose.Schema(
         id_user: { type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel' },
         content: { type: String, require: true },
         time: { type: String, require: true },
-        image: { type: Array},
+        image: { type: Array },
         star: { type: Number, require: true },
         id_bill: { type: db.mongoose.Schema.Types.ObjectId, ref: 'bill' }
     },

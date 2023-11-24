@@ -36,6 +36,7 @@ exports.AddProduct = async (req, res, next) => {
     addCM.amount = req.body.amount;
     addCM.image = req.body.image;
     addCM.listImage = req.body.listImage;
+    addCM.listProp = req.body.listProp;
     addCM.description = req.body.description;
     addCM.size = req.body.size;
     addCM.time_product = req.body.time_product;
@@ -57,6 +58,32 @@ exports.AddProduct = async (req, res, next) => {
 
     res.json(objReturn);
 }
+exports.AddProperties = async (req, res, next) => {
+
+    let addCM = new myMDD.tb_propertiesModel();
+    addCM.id_product = req.body.id_product;
+    addCM.nameproperties = req.body.nameproperties;
+    addCM.amount = req.body.amount;
+
+    let new_CMD = await addCM.save();
+    console.log(new_CMD);
+    try {
+        if (new_CMD) {
+            objReturn.data = addCM;
+            objReturn.stu = 1;
+            objReturn.msg = "Thêm thành công"
+        } else {
+            objReturn.stu = 0;
+            objReturn.msg = "Thêm thất bại"
+        }
+    } catch (error) {
+        objReturn.stu = 0;
+        objReturn.msg = error.msg;
+    }
+
+    res.json(objReturn);
+}
+
 exports.updateProduct = async (req, res, next) => {
 
     try {
@@ -70,6 +97,7 @@ exports.updateProduct = async (req, res, next) => {
         addCM.amount = req.body.amount;
         addCM.image = req.body.image;
         addCM.listImage = req.body.listImage;
+        addCM.listProp = req.body.listProp;
         addCM.description = req.body.description;
         addCM.size = req.body.size;
         addCM.time_product = req.body.time_product;
@@ -101,6 +129,7 @@ exports.getproperties = async (req, res, next) => {
 
     res.send(list);
 }
+
 exports.getlListImage = async (req, res, next) => {
     const truyen = await myMDD.tb_productModel.findById(req.params.id);
 
