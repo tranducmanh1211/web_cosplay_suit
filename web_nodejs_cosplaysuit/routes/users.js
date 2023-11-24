@@ -20,10 +20,10 @@ router.get('/forgotPass',tb_userCtrl.forgotPass);
 router.post('/forgotPass',tb_userCtrl.forgotPass);
 
 router.get('/account/newpass',check_login.yeu_cau_login,tb_userCtrl.newpass);
-router.post('/acount/newpass',check_login.yeu_cau_login,tb_userCtrl.newpass);
+router.post('/account/newpass',check_login.yeu_cau_login,tb_userCtrl.newpass);
 
 router.get('/account',check_login.yeu_cau_login,tb_userCtrl.account);
-router.post('/acount',check_login.yeu_cau_login,tb_userCtrl.account);
+router.post('/account',check_login.yeu_cau_login,tb_userCtrl.account);
 
 router.get('/home',check_login.yeu_cau_login,tb_productCtrl.homeWeb);
 router.get('/home/quanlykhachhang',check_login.yeu_cau_login,tb_productCtrl.quanlyKH);
