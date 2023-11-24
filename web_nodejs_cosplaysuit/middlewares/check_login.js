@@ -7,3 +7,12 @@ exports.yeu_cau_login = (req,res,next) => {
     }
 
 }
+exports.yeu_cau_otp = (req,res,next) => {
+
+    if(req.session.emailU){
+        next();
+    }else{
+        res.redirect('/users/forgotPass');
+    }
+
+}

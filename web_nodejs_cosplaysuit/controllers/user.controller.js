@@ -39,6 +39,7 @@ exports.loginWeb = async (req, res, next) => {
                     if (objU.passwd == req.body.passwd) {
                         if (objU.role == 'Admin') {
                             req.session.userU = objU;
+                            console.log("a" + objU);
                             console.log(req.session.userLogin);
                             return res.redirect('/users/home');
                         } else {
@@ -151,22 +152,44 @@ exports.dangky = async (req, res, next) => {
     res.render('cosplay_suit/signup', { msg: msg, fullname: fullname, phone: phone, email: email, passwd: passwd });
 
 }
+let OTP = "";
 exports.forgotPass = async (req, res, next) => {
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'suitcosplay@gmail.com',
-            pass: 'vjzqpyqimbldcxjp'
-        }
-    });
+    const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    var temp = 0;
+    let email = '';
+    let email1 = '';
+    let msg = '';
     let digits = "0123456789";
-    let OTP = "";
 
-    for (let i = 0; i < 6; i++) {
-        OTP += digits[Math.floor(Math.random() * 10)];
-    }
-    var content = '';
-    content += `
+    if (req.method == 'POST') {
+        if (req.body.email.length === 0) {
+            email = "Please do not leave your email blank!"
+            temp++;
+        } else if (!emailRegexp.test(req.body.email)) {
+            email = "Incorrect email format!"
+            temp++;
+        } else {
+            email = "";
+        }
+        if (temp === 0) {
+            const exitEmail = await myMD.tb_userModel.findOne({ email: req.body.email });
+            if (!exitEmail) {
+                email1 = "Email does not exist in the system!"
+            } else {
+
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'suitcosplay@gmail.com',
+                        pass: 'vjzqpyqimbldcxjp'
+                    }
+                });
+
+                for (let i = 0; i < 6; i++) {
+                    OTP += digits[Math.floor(Math.random() * 10)];
+                }
+                var content = '';
+                content += `
     <div style="text-align: center;padding-top:20dp;padding-bottom: 20px;border: 2px solid rgb(219, 83, 183);border-radius: 10px;background-color: rgb(236, 223, 235);">
                 <h4 style="color: #000000;font-size: 20px;font-weight: bold;">Mã Xác Nhận Lại Mật Khẩu</h4>
                 <div style="text-align: center;margin-top: 15px;margin-bottom: 15px;margin-left: 10px;margin-right: 10px;padding: 10px;background-color: #ffffff;">
@@ -177,28 +200,111 @@ exports.forgotPass = async (req, res, next) => {
                 <p style="margin-top: 20px;margin-left: 10px;margin-right: 10px;">Nếu bạn không phải là người được gửi yêu cầu này, hãy đổi mật tài khoản ngay lập tức để tránh việc truy cập trái phép...</p>
             </div>
     `;
-    var mailOptions = {
-        from: 'Manh Dep Zai',
-        to: 'chuongdkph26546@fpt.edu.vn',
-        subject: 'Mã Đăng Nhập : ' + `${OTP}`,
-        html: content
-    };
 
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
+                var mailOptions = {
+                    from: 'Manh Dep Zai',
+                    to: req.body.email,
+                    subject: 'Mã Đăng Nhập : ' + `${OTP}`,
+                    html: content
+                };
+
+                transporter.sendMail(mailOptions, async function (error, info) {
+                    if (error) {
+                        console.log(error);
+                        msg = "Error sending email. Please try again.";
+                    } else {
+                        req.session.emailU = req.body.email;
+                        console.log(req.session.emailU);
+                        console.log('Email sent: OK');
+                        msg = "Please check your email!!";
+                    }
+
+                    res.render('cosplay_suit/forgotPasswd', { email: email, email1: email1, msg: msg });
+                });
+            }
         } else {
-            console.log('Email sent: ' + info.response);
+            temp = 0;
+            msg = "Validation error. Please check your input.";
+            res.render('cosplay_suit/forgotPasswd', { email: email, email1: email1, msg: msg });
         }
-    });
+    } else {
+        res.render('cosplay_suit/forgotPasswd', { email: email, email1: email1, msg: msg });
+    }
 }
-exports.forgotPass1 = async (req, res, next) => {
+exports.otpcheck = async (req, res, next) => {
+    let email = req.session.emailU;
+    console.log(req.session.emailU);
+    console.log(OTP);
+    var temp = 0;
+    let otp = '';
+    let msg = '';
+    if (req.method == 'POST') {
+        if (String(req.body.otppass).length === 0) {
+            otp = "Please do not leave your number blank!"
+            temp++;
+        } else if (String(req.body.otppass) !== OTP) {
+            otp = "OTP code is incorrect!"
+        } else {
+            otp = "OTP code is corect!";
+            res.redirect('/users/forgotPass/otpcheck/passwdnew');
+        }
+    }
 
-    res.render('cosplay_suit/forgotPasswd');
+    res.render('cosplay_suit/otpcheck', { otp, email: email, msg });
+
 }
+exports.passNew = async (req, res, next) => {
+    let pass1 = '';
+    let pass2 = '';
+    let msg = '';
+    var temp = 0;
+    let email = req.session.emailU;
+    if (req.method == 'POST') {
+        if (req.body.newpass.length === 0) {
+            pass1 = "Please do not leave your new password blank!"
+            temp++;
+        } else if (req.body.newpass.length <= 6) {
+            pass1 = "New password greater than 6 characters!"
+            temp++;
+        } else {
+            pass1 = "";
+        }
+
+        if (req.body.checknewpass.length === 0) {
+            pass2 = "Please do not leave your check new password blank!"
+            temp++;
+        } else if (req.body.checknewpass.length <= 6) {
+            pass2 = "Check new password greater than 6 characters!"
+            temp++;
+        } else if (!(req.body.checknewpass === req.body.newpass)) {
+            pass2 = "Check new password must match New password!"
+            temp++;
+        } else {
+            pass2 = "";
+        }
+        if (temp === 0) {
+            try {
+                const user = await myMD.tb_userModel.findOne({ email: email });
+                user.passwd = req.body.newpass;
+                await user.save();
+                msg = "Password update successful, please log in again!";
+                // res.redirect('/users');
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            temp = 0;
+        }
+
+    }
+    res.render('cosplay_suit/forgotPasswdNew', { pass1, pass2,msg });
+}
+
+
+
 exports.account = async (req, res, next) => {
     let account = req.session.userU;
-    res.render('cosplay_suit/account',{account : account});
+    res.render('cosplay_suit/account', { account: account });
 }
 exports.newpass = async (req, res, next) => {
     let account = req.session.userU;
@@ -210,16 +316,16 @@ exports.newpass = async (req, res, next) => {
     let phone = '';
     var temp = 0;
     if (req.method == 'POST') {
-        if(req.body.oldpasswd.length === 0){
+        if (req.body.oldpasswd.length === 0) {
             oldpasswd = "Please do not leave your old password blank!"
             temp++;
-        }else if(req.body.oldpasswd.length <= 6){
+        } else if (req.body.oldpasswd.length <= 6) {
             oldpasswd = "Old password greater than 6 characters!"
             temp++;
-        }else if(!(req.body.oldpasswd === account.passwd)){
+        } else if (!(req.body.oldpasswd === account.passwd)) {
             oldpasswd = "Old password incorrect!"
             temp++;
-        }else{
+        } else {
             oldpasswd = "";
         }
 
@@ -235,7 +341,7 @@ exports.newpass = async (req, res, next) => {
         if (temp === 0) {
             let objMK = new myMD.tb_userModel();
             objMK.passwd = req.body.passwd;
-            objMK._id = account._id;         
+            objMK._id = account._id;
             try {
                 await myMD.tb_userModel.findByIdAndUpdate({ _id: account._id }, objMK);
                 msg = "Password change successful, you need to log in again!";
@@ -254,5 +360,5 @@ exports.newpass = async (req, res, next) => {
 
 
 
-    res.render('cosplay_suit/newpasswd',{account : account,msg,oldpasswd,passwd});
+    res.render('cosplay_suit/newpasswd', { account: account, msg, oldpasswd, passwd });
 }

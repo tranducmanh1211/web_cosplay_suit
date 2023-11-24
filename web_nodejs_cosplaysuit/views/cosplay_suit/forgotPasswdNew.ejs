@@ -3,7 +3,7 @@
 
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-type" />
-    <title>Cosplay Suit | Reset Password</title>
+    <title>New Password | Cosplay Suit</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Reset your Heroku account password." name="description" />
     <meta content="A1QME020P" name="slack-app-id" />
@@ -2358,7 +2358,7 @@
         }
 
         .gradient-primary {
-            background-image: -webkit-linear-gradient(top, #e6e5e7, #aa36a9);
+            background-image: -webkit-linear-gradient(top, #e6e5e7, #eebbee);
             background-image: -webkit-linear-gradient(to button, #e6e5e7, #aa36a9);
             background-color: #ffffff
         }
@@ -2674,7 +2674,6 @@
         form input[type="password"],
         form input[type="number"] {
             height: 44px;
-            padding-left: 50px
         }
 
         @media(max-width: 600px) {
@@ -2841,63 +2840,42 @@
             </h1>
             <div class="content">
                 <div class="panel" id="reset_password">
-                    <h2 class="h3">Reset Password</h2>
+                    <h2 class="h3">New Password</h2>
                     <form class="panel-body panel-left" method="post" role="form">
                         <input name="_csrf" type="hidden" value="" />
-                        <p class="overview">Enter your email address below and we &#39;ll send you a link to reset your
-                            password.</p>
+                        <p class="overview" style="margin: 0px;"></p>
+                        <p class="overview"></p>
                         <div class="form-group">
-                            <label for="email">Email address</label>
-                            <div class="input-icon icon-username"></div>
-                            <input class="form-control" name="email" placeholder="Email address" size="46"
-                                type="text" />
+                            <label for="password">New Password</label>
+                            <input style="margin-left: 0px;" class="form-control" name="newpass" placeholder="Enter your new password" size="46"
+                                type="password" />
                         </div>
                         <p style="color: red;">
-                            <%=email%>
+                            <%=pass1%>
                         </p>
+                        
+                        <div class="form-group">
+                            <label for="password">Check New Password</label>
+                            <input style="margin-left: 0px;" class="form-control" name="checknewpass" placeholder="Enter your check new password" size="46"
+                                type="password" />
+                        </div>
                         <p style="color: red;">
-                            <%=email1%>
+                            <%=pass2%>
                         </p>
-                        <p>
-                            <%=msg%>
-                        </p>
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Reset Password</button>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Confirm Password</button>
                     </form>
-                    <div class="panel-footer">
-                        <a href="/users">Log In</a>
-                    </div>
+                  
                 </div>
-                Still can't login? E-mail <a
-                    href="mailto:account-lockout@heroku.com?subject=Login issue">mt12112002qwjcj@gmail.com</a>
-                <br>if you need additional assistance.
             </div>
         </div>
-        <footer class="logo-sfdc">
-            <ul class="legal">
-                <li>
-                    <a href="#" rel="nofollow">Terms of Service</a>
-                </li>
-                <li>
-                    <a href="#" rel="nofollow">Privacy</a>
-                </li>
-                <li>
-                    <a href="#" rel="nofollow">Cookies</a>
-                </li>
-                <li>
-                    <a class="optanon-toggle-display" href="#" rel="nofollow">Cookie Preferences</a>
-                </li>
-                <li>&copy;2023 CosplaySuit.com</li>
-            </ul>
-
-        </footer>
     </div>
     <% if (msg) { %>
         <script>
             alert('<%= msg %>');
-            window.location.href = '/users/forgotPass/otpcheck';
+            window.location.href = '/users';
         </script>
     <% } %>
-            <script src="https://developer.salesforce.com/shared-components/helmet/import.js" type="module"></script>
+    <script src="https://developer.salesforce.com/shared-components/helmet/import.js" type="module"></script>
 </body>
 
 </html>

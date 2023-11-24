@@ -3,7 +3,7 @@
 
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-type" />
-    <title>Cosplay Suit | Reset Password</title>
+    <title>Check OTP | Cosplay Suit</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Reset your Heroku account password." name="description" />
     <meta content="A1QME020P" name="slack-app-id" />
@@ -2358,7 +2358,7 @@
         }
 
         .gradient-primary {
-            background-image: -webkit-linear-gradient(top, #e6e5e7, #aa36a9);
+            background-image: -webkit-linear-gradient(top, #e6e5e7, #eebbee);
             background-image: -webkit-linear-gradient(to button, #e6e5e7, #aa36a9);
             background-color: #ffffff
         }
@@ -2674,7 +2674,6 @@
         form input[type="password"],
         form input[type="number"] {
             height: 44px;
-            padding-left: 50px
         }
 
         @media(max-width: 600px) {
@@ -2841,31 +2840,21 @@
             </h1>
             <div class="content">
                 <div class="panel" id="reset_password">
-                    <h2 class="h3">Reset Password</h2>
+                    <h2 class="h3">Check OTP</h2>
                     <form class="panel-body panel-left" method="post" role="form">
                         <input name="_csrf" type="hidden" value="" />
-                        <p class="overview">Enter your email address below and we &#39;ll send you a link to reset your
-                            password.</p>
+                        <p class="overview" style="margin: 0px;">Enter the otp we sent to your email address below!</p>
+                        <p class="overview"><%=email%></p>
                         <div class="form-group">
-                            <label for="email">Email address</label>
-                            <div class="input-icon icon-username"></div>
-                            <input class="form-control" name="email" placeholder="Email address" size="46"
-                                type="text" />
+                            <input style="margin-left: 0px;" class="form-control" name="otppass" placeholder="Enter number" size="46"
+                                type="number" />
                         </div>
                         <p style="color: red;">
-                            <%=email%>
+                            <%=otp%>
                         </p>
-                        <p style="color: red;">
-                            <%=email1%>
-                        </p>
-                        <p>
-                            <%=msg%>
-                        </p>
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Reset Password</button>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Check OTP</button>
                     </form>
-                    <div class="panel-footer">
-                        <a href="/users">Log In</a>
-                    </div>
+                  
                 </div>
                 Still can't login? E-mail <a
                     href="mailto:account-lockout@heroku.com?subject=Login issue">mt12112002qwjcj@gmail.com</a>
@@ -2891,13 +2880,7 @@
 
         </footer>
     </div>
-    <% if (msg) { %>
-        <script>
-            alert('<%= msg %>');
-            window.location.href = '/users/forgotPass/otpcheck';
-        </script>
-    <% } %>
-            <script src="https://developer.salesforce.com/shared-components/helmet/import.js" type="module"></script>
+    <script src="https://developer.salesforce.com/shared-components/helmet/import.js" type="module"></script>
 </body>
 
 </html>
