@@ -3,8 +3,8 @@ var router = express.Router();
 var tb_shop = require('../controllers/API/Shop.Api');
 //asdasdas
 
-router.get('/listShop', tb_shop.getlListShop);
-router.get('/getOneShop/:id', tb_shop.getShopById );
+router.get('/listShop/:id_user', tb_shop.getlListShop);
+router.get('/getOneShop/:id', tb_shop.getShopById);
 
 
 

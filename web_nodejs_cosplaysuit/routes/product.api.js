@@ -13,4 +13,7 @@ routes.post('/addSP', tb_productCtrl.AddProduct);
 //lấy danh sách properties
 routes.get('/getproperties/:id_product', tb_productCtrl.getproperties);
 routes.get('/products/:id', tb_productCtrl.productById);
+
+// properties
+routes.post("/addProperties", tb_productCtrl.AddProperties);
 module.exports = routes;
