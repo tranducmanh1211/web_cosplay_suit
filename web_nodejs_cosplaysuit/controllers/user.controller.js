@@ -1,5 +1,6 @@
 var myMD = require('../models/cosplau_suit_user_model');
 var nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 exports.loginWeb = async (req, res, next) => {
     let msg = '';
     let email = '';
@@ -36,11 +37,12 @@ exports.loginWeb = async (req, res, next) => {
                 //     msg = "Email does not exist in the system!"
                 // }
                 if (!objU.equals("")) {
-                    if (objU.passwd == req.body.passwd) {
+                    let check_pass = await bcrypt.compare(req.body.passwd, objU.passwd);
+                    if (check_pass) {
+
                         if (objU.role == 'Admin') {
                             req.session.userU = objU;
                             console.log("a" + objU);
-                            console.log(req.session.userLogin);
                             return res.redirect('/users/home');
                         } else {
                             msg = " Your account is not authorized!"
@@ -50,7 +52,7 @@ exports.loginWeb = async (req, res, next) => {
                         msg = " Password does not match!"
                     }
                 } else {
-
+                    msg = " Email does not exist in the system!"
                 }
             } catch (error) {
                 msg = " Email does not exist in the system!"
@@ -126,7 +128,8 @@ exports.dangky = async (req, res, next) => {
             else {
                 let objUser = new myMD.tb_userModel();
                 objUser.fullname = req.body.fullname;
-                objUser.passwd = req.body.passwd;
+                const salt = await bcrypt.genSalt(5);
+                objUser.passwd = await bcrypt.hash(req.body.passwd, salt);
                 objUser.email = req.body.email;
                 objUser.phone = req.body.phone;
                 objUser.role = "Admin";
@@ -285,7 +288,8 @@ exports.passNew = async (req, res, next) => {
         if (temp === 0) {
             try {
                 const user = await myMD.tb_userModel.findOne({ email: email });
-                user.passwd = req.body.newpass;
+                const salt = await bcrypt.genSalt(5);
+                user.passwd = await bcrypt.hash(req.body.newpass, salt);
                 await user.save();
                 msg = "Password update successful, please log in again!";
                 // res.redirect('/users');
@@ -315,14 +319,16 @@ exports.newpass = async (req, res, next) => {
     let passwd = '';
     let phone = '';
     var temp = 0;
+    
     if (req.method == 'POST') {
+        let check_pass = await bcrypt.compare(req.body.oldpasswd, account.passwd);
         if (req.body.oldpasswd.length === 0) {
             oldpasswd = "Please do not leave your old password blank!"
             temp++;
         } else if (req.body.oldpasswd.length <= 6) {
             oldpasswd = "Old password greater than 6 characters!"
             temp++;
-        } else if (!(req.body.oldpasswd === account.passwd)) {
+        } else if (!check_pass) {
             oldpasswd = "Old password incorrect!"
             temp++;
         } else {
@@ -340,7 +346,8 @@ exports.newpass = async (req, res, next) => {
         }
         if (temp === 0) {
             let objMK = new myMD.tb_userModel();
-            objMK.passwd = req.body.passwd;
+            const salt = await bcrypt.genSalt(5);
+            objMK.passwd = await bcrypt.hash(req.body.passwd, salt);
             objMK._id = account._id;
             try {
                 await myMD.tb_userModel.findByIdAndUpdate({ _id: account._id }, objMK);
