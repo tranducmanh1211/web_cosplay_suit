@@ -7,7 +7,7 @@ const tb_cartoder = new db.mongoose.Schema(
         id_product: {type: db.mongoose.Schema.Types.ObjectId, ref: 'prodcutModel'},
         amount: {type: Number, require: true},
         totalPayment: {type: Number, require: true},
-        id_properties : {type: db.mongoose.Schema.Types.ObjectId, ref: 'properties'}
+        id_properties : {type: String, require: true}
     },
     {
         collection: "cartorders"
@@ -20,6 +20,7 @@ const tb_bill = new db.mongoose.Schema(
         id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
         timestart: {type: String, require: true},
         timeend: {type: String, require: true},
+        ma_voucher: {type: String, require: true},
         status: {type: String, require: true},
         totalPayment: {type: Number, require: true}
     },

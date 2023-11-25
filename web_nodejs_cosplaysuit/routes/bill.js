@@ -23,6 +23,8 @@ var tb_billCtrl = require('../controllers/API/Bill.API');
 
 routes.get('/getuserbill/:id_user',tb_billCtrl.getUserbill);
 routes.post('/addbill',tb_billCtrl.AddBill);
+routes.get('/addbill',tb_billCtrl.AddBill);
+
 
 //router thanh toán hóa đơn chi tiết
 var tb_billdetailCtrl = require('../controllers/API/Billdetail.API');
@@ -33,5 +35,6 @@ routes.get('/getstatusDelivery/:id_user',tb_billdetailCtrl.getstatusDelivery);
 routes.get('/getstatusDone/:id_user',tb_billdetailCtrl.getstatusDone);
 
 routes.post('/addbilldetail',tb_billdetailCtrl.AddBilldetail);
+routes.get('/addbilldetail',tb_billdetailCtrl.AddBilldetail);
 
 module.exports = routes;

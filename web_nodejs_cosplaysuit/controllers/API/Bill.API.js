@@ -31,23 +31,9 @@ exports.AddBill = async (req, res, next) => {
         add.timeend = req.body.timeend;
         add.status = req.body.status; 
         add.totalPayment = req.body.totalPayment;
+        add.ma_voucher = req.body.ma_voucher;
     let new_CMD = await add.save();
-    console.log(new_CMD);
-    try{
-        if(new_CMD){
-            objReturn.data = add;
-            objReturn.stu = 1;
-            objReturn.msg = "Thêm thành công"
-        }else{
-            objReturn.stu = 0;
-            objReturn.msg = "Thêm thất bại"
-        }
-    }catch(error){
-        objReturn.stu = 0;
-        objReturn.msg = error.msg;
-    }
-
-    res.json(objReturn);
+    res.json(new_CMD);
 }
 
 exports.updateBill = async (req, res, next) => {
