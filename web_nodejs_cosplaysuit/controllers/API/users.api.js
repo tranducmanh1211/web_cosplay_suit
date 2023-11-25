@@ -1,6 +1,6 @@
 const { response } = require('express');
 var myMD = require('../../models/cosplau_suit_user_model');
-
+const bcrypt = require('bcrypt');
 // const accountSid = 'ACb85dcbf3db4f48feab2d902ca8de87e9';
 // const authToken = 'b2af5e0125f2fada83f59357cdb3a887';
 // const client = require('twilio')(accountSid, authToken);
@@ -25,10 +25,11 @@ exports.login = async (req, res, next) => {
         const exitPhone = await myMD.tb_userModel.findOne({ phone: req.body.phone });
         if (!exitPhone) {
             return res.json({ message: "Phone number not found!" });
-        }
-        if (req.body.phone && req.body.passwd) {
-            let user = await myMD.tb_userModel.findOne(req.body);
-            if (user) {
+        }else{
+            console.log("manh"+exitPhone);
+            let user = await myMD.tb_userModel.findOne({phone : req.body.phone});
+            let check_pass = await bcrypt.compare(req.body.passwd, user.passwd);
+            if (check_pass) {
                 if (user.__v === 0) {
                     res.status(201).json({ user: user, message: "Sign Up Successfull!" });
                 } else {
@@ -99,7 +100,8 @@ exports.regApp = async (req, res, next) => {
 
         const user = new myMD.tb_userModel(req.body);
         user.phone = req.body.phone;
-        user.passwd = req.body.passwd;
+        const salt = await bcrypt.genSalt(5);
+        user.passwd = await bcrypt.hash(req.body.passwd, salt);
         user.email = req.body.email;
         user.fullname = req.body.fullname;
         user.role = req.body.role;
@@ -192,7 +194,9 @@ exports.userById = async (req, res, next) => {
 exports.updatePasswd = async (req, res, next) => {
     try {
         const user = await myMD.tb_userModel.findById(req.params.id);
-        user.passwd = req.body.passwd;
+        const salt = await bcrypt.genSalt(5);
+        user.passwd = await bcrypt.hash(req.body.passwd, salt);
+       
 
         const uSave = await user.save();
         res.json(uSave);
@@ -202,8 +206,9 @@ exports.updatePasswd = async (req, res, next) => {
 }
 exports.forgotPasswd = async ( req, res, next) =>{
     try {
-        const user = await myMD.tb_userModel.findOne({phone : req.params.phone});     
-        user.passwd = req.body.passwd;
+        const user = await myMD.tb_userModel.findOne({phone : req.params.phone});    
+        const salt = await bcrypt.genSalt(5);
+        user.passwd = await bcrypt.hash(req.body.passwd, salt);
         
         const uSave = await user.save();
         res.json(uSave);
