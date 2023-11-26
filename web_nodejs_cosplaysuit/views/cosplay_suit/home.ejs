@@ -139,10 +139,10 @@
             </a>
           </li>
           <li><a class="nav-link" href="/category/getCategory" style="font-size: 16px;color: rgb(85, 83, 83);">
-            <i class="fas fa-industry"></i>
-            <span class="nav-item">Quản lý thể loại</span>
-          </a>
-        </li>
+              <i class="fas fa-industry"></i>
+              <span class="nav-item">Quản lý thể loại</span>
+            </a>
+          </li>
           <li><a class="nav-link" href="/users/home/quanlykhachhang" style="font-size: 16px;color: rgb(85, 83, 83);">
               <i class="fas fa-chart-bar"></i>
               <span class="nav-item">Quản lý khách hàng</span>
@@ -160,10 +160,10 @@
             </a>
           </li>
           <li><a class="nav-link" href="/users/account" style="font-size: 16px;color: rgb(85, 83, 83);">
-            <i class="fab fa-dochub"></i>
-            <span class="nav-item">Account</span>
-          </a>
-        </li>
+              <i class="fab fa-dochub"></i>
+              <span class="nav-item">Account</span>
+            </a>
+          </li>
           <li><a class="nav-link" href="#" class="logout" style="font-size: 16px;color: rgb(85, 83, 83);">
               <i class="fas fa-sign-out-alt"></i>
               <span class="nav-item">Logout</span>
@@ -177,8 +177,168 @@
     </nav>
     <section class="main">
       <div class="main-top">
-        <h3 style="font-size: 20px;margin-bottom: 0px;">Quản Lý Sản Phẩm</h3>
+        <h3 style="font-size: 20px;margin-bottom: 0px;">Quản lý sản phẩm</h3>
       </div>
+      <div class="main-top1">
+        <table class="table" style="border: 1px solid rgb(234, 226, 226);">
+          <thead>
+            <tr>
+              <th colspan="8">
+                <div class="container" style="text-align: center;justify-content: center;">
+                  <div class="" style="display: flex;padding: 10px;justify-content: space-between;align-items: center;">
+                    <div style="display: flex;justify-content: center;text-align: center;">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkup-list"
+                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2">
+                        </path>
+                        <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z">
+                        </path>
+                        <path d="M9 14h.01"></path>
+                        <path d="M9 17h.01"></path>
+                        <path d="M12 16l1 1l3 -3"></path>
+                      </svg>
+                      <h5 style="margin-left: 10px;margin-bottom: 0px;">Danh Sách Người Dùng</h5>
+                    </div>
+                    <div>
+                      <form class="d-flex" role="search">
+                        <input style="width: 370px;" class="form-control me-2" type="search"
+                          placeholder="Search by email address, phone number" aria-label="Search" name="email">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <thead>
+            <tr>
+              <th scope="col">STT </th>
+
+              <th scope="col"> Shop </th>
+
+              <th scope="col" style="display: flex;text-align: center;justify-content: center;">Name
+              </th>
+              <th scope="col">Price</th>
+              <th scope="col">Category
+              </th>
+              <!-- <th scope="col"> Image</th> -->
+              <th scope="col"> Description</th>
+              <th scope="col"> Time Product</th>
+
+            </tr>
+          </thead>
+
+          <body>
+
+            <% let count=1; %>
+              <% listProduct.forEach( ( row )=> { %>
+                <tr class="tr_hover">
+                  <td>
+                    <%= count %>
+
+                  </td>
+                  <td class="td_id">
+                    <%= row.id_shop.nameshop %>
+                  </td>
+                  <td class="td_name">
+                    <%= row.nameproduct %>
+                  </td>
+                  <td class="td_price">
+                    <%= row.price %>
+                  </td>
+                  <td class="td_Category">
+                    <%= row.id_category.name %>
+                      <!-- row.id_category.name -->
+                  </td>
+                  <td class="td_Description">
+                    <%= row.description %>
+                  </td>
+                  <td>
+                    <%= row.time_product %>
+                  </td>
+
+                  <!-- <td>
+                    <a id="a_none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical"
+                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                      </svg>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li style="padding: 0;">
+                        <a type="button" class="dropdown-item" data-bs-toggle="modal" id="" data-bs-target="">Sửa Thể
+                          Loại</a>
+                      </li>
+                      <li style="padding: 0;">
+                        <a type="button" class="dropdown-item delete-category-button" data-bs-toggle="modal"
+                          data-bs-target="#deleteConfirmationModal" data-category-id="<%= row._id %>">Xóa Thể Loại</a>
+                      </li>
+                    </ul>
+                  </td> -->
+                </tr>
+                <% count +=1; %>
+                  <% } ) %>
+
+          </body>
+
+        </table>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-sm-2 col-md-2">
+            <div class="row" style="margin-top: 8px;">
+              <h6>
+
+              </h6>
+            </div>
+          </div>
+          <div class="col-12 col-sm-7 col-md-7">
+            <div class="row"></div>
+          </div>
+          <div class="col-12 col-sm-3 col-md-3">
+            <div class="row">
+              <nav aria-label="Page navigation example" style="height: 0px;">
+                <ul class="pagination justify-content-end">
+                  <li class="page-item">
+
+                    <a class="page-link" href="/salesman/home/quanlynguoiban?page" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+
+
+                  </li>
+
+                  <li class="page-item"><a class="page-link" href="/salesman/home/quanlynguoiban?page">
+
+                    </a></li>
+
+                  <li class="page-item">
+
+
+
+                    <a class="page-link" href="/salesman/home/quanlynguoiban?page" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+
+
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
     </section>
 
   </div>

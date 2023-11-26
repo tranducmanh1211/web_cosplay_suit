@@ -138,6 +138,7 @@
             </a>
           </li>
           <li><a class="nav-link" href="/salesman/home/quanlynguoiban" style="font-size: 16px;color: rgb(85, 83, 83);">
+
               <i class="fas fa-tasks"></i>
               <span class="nav-item">Quản lý người bán</span>
             </a>
@@ -145,6 +146,11 @@
           <li><a class="nav-link" href="#" style="font-size: 16px;color: rgb(85, 83, 83);">
               <i class="fab fa-dochub"></i>
               <span class="nav-item">Thống kê</span>
+            </a>
+          </li>
+          <li><a class="nav-link" href="/users/account" style="font-size: 16px;color: rgb(85, 83, 83);">
+              <i class="fab fa-dochub"></i>
+              <span class="nav-item">Account</span>
             </a>
           </li>
           <li><a class="nav-link" href="#" class="logout" style="font-size: 16px;color: rgb(85, 83, 83);">
@@ -209,51 +215,53 @@
             </tr>
           </thead>
           <tbody>
-            <% let count = 1; %>
-            <% listTL.forEach( ( row )=> { %>
-            <tr class="tr_hover">
-              <td>
-                <%= count %>
-               
-              </td>
-              <td class="td_name">
-                <%= row.name %>
-              </td>
-              <td>
-                <img src="<%= row.imageCategory %>" alt="Category Image" style="max-width: 80px; max-height: 80px;">
-              </td>
-              <td>
-                <%= row.time_category %>
-              </td>
-              <td>
-                <a id="a_none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24"
-                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                    <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                    <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                  </svg>
-                </a>
-                <ul class="dropdown-menu">
-                  <li style="padding: 0;">
-                    <a type="button" class="dropdown-item" data-bs-toggle="modal" id="" data-bs-target="">Sửa Thể Loại</a>
-                  </li>
-                  <li style="padding: 0;">
-                    <a type="button" class="dropdown-item delete-category-button" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal"
-                      data-category-id="<%= row._id %>">Xóa Thể Loại</a>
-                  </li>
-                </ul>
-              </td>
-            </tr>
-            <% count += 1; %>
-            <% } ) %>
+            <% let count=1; %>
+              <% listTL.forEach( ( row )=> { %>
+                <tr class="tr_hover">
+                  <td>
+                    <%= count %>
+
+                  </td>
+                  <td class="td_name">
+                    <%= row.name %>
+                  </td>
+                  <td>
+                    <img src="<%= row.imageCategory %>" alt="Category Image" style="max-width: 80px; max-height: 80px;">
+                  </td>
+                  <td>
+                    <%= row.time_category %>
+                  </td>
+                  <td>
+                    <a id="a_none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical"
+                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                      </svg>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li style="padding: 0;">
+                        <a type="button" class="dropdown-item" data-bs-toggle="modal" id="" data-bs-target="">Sửa Thể
+                          Loại</a>
+                      </li>
+                      <li style="padding: 0;">
+                        <a type="button" class="dropdown-item delete-category-button" data-bs-toggle="modal"
+                          data-bs-target="#deleteConfirmationModal" data-category-id="<%= row._id %>">Xóa Thể Loại</a>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <% count +=1; %>
+                  <% } ) %>
           </tbody>
         </table>
       </div>
       <!-- đây là code modal của anh -->
-      <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+      <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -261,7 +269,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-           
+
               <form enctype="multipart/form-data" method="post">
                 <div class="mb-3">
                   <label for="name" class="form-label">Tên Thể Loại</label>
@@ -271,8 +279,8 @@
                   <label for="imageCategory" class="form-label">Chọn Ảnh Thể Loại</label>
                   <input type="file" class="form-control" id="imageCategory" name="imageCategory">
                 </div>
-             
-                <div class="text-center"> 
+
+                <div class="text-center">
                   <button type="submit" class="btn btn-primary">Thêm</button>
                 </div>
               </form>
@@ -282,7 +290,8 @@
       </div>
 
       <!-- dialog xóa -->
-      <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+      <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -294,7 +303,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-              
+
               <form id="deleteForm" action="" method="delete">
                 <button type="submit" class="btn btn-danger">Xóa</button>
               </form>
@@ -316,7 +325,7 @@
           <div class="col-12 col-sm-3 col-md-3"></div>
         </div>
       </div>
-      <%if(!(listTL === null || (Array.isArray(listTL) && listTL.length === 0))){%>
+      <%if(!(listTL===null || (Array.isArray(listTL) && listTL.length===0))){%>
         <div class="container">
           <div class="row">
             <div class="col-12 col-sm-2 col-md-2">
@@ -335,8 +344,7 @@
                   <ul class="pagination justify-content-end">
                     <li class="page-item">
                       <%if(page>1){%>
-                        <a class="page-link" href="/category/getCategory?page=<%=page-1%>"
-                          aria-label="Previous">
+                        <a class="page-link" href="/category/getCategory?page=<%=page-1%>" aria-label="Previous">
                           <span aria-hidden="true">&laquo;</span>
                         </a>
                         <%}%>
@@ -351,8 +359,7 @@
                           <%if(page>=page_length){%>
 
                             <%}else{%>
-                              <a class="page-link" href="/category/getCategory?page=<%=page+1%>"
-                                aria-label="Next">
+                              <a class="page-link" href="/category/getCategory?page=<%=page+1%>" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                               </a>
                               <%}%>
@@ -370,20 +377,21 @@
     </section>
   </div>
   <script>
- document.addEventListener('DOMContentLoaded', function () {
-  const deleteConfirmationModal = document.getElementById('deleteConfirmationModal');
-  const deleteForm = document.getElementById('deleteForm');
+    document.addEventListener('DOMContentLoaded', function () {
+      const deleteConfirmationModal = document.getElementById('deleteConfirmationModal');
+      const deleteForm = document.getElementById('deleteForm');
 
-  deleteConfirmationModal.addEventListener('show.bs.modal', function (event) {
-    const button = event.relatedTarget;
-    const categoryId = encodeURIComponent(button.getAttribute('data-category-id'));
-    deleteForm.action = `/category/getCategory/delete/${categoryId}`;
-  });
-});
+      deleteConfirmationModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const categoryId = encodeURIComponent(button.getAttribute('data-category-id'));
+        deleteForm.action = `/category/getCategory/delete/${categoryId}`;
+      });
+    });
 
 
   </script>
   <script src="/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
