@@ -11,7 +11,7 @@ var categoryRouter = require('./routes/category');
 var chatRouter = require('./routes/chat')
 var userapiRouter = require('./routes/user.api');
 var productapiRouter= require('./routes/product.api');
-var billrouter = require('./routes/bill');
+var billrouter = require('./routes/API/bill');
 var shopRouter = require('./routes/shop');
 
 var salemanRouter = require('./routes/salesman');

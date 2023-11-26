@@ -76,7 +76,6 @@ exports.tets = async (req, res, next) => {
     res.send(list);
 
 }
-
 exports.getUserCartOder = async (req, res, next) => {
     //Lấy ds giỏ hàng theo id_user
     let dieu_kien_loc = null;
@@ -157,5 +156,26 @@ exports.deleteCartOder = async (req, res, next) => {
     }
     res.json(objReturn);
 
+}
+exports.CheckAddCart = async (req, res, next) =>{
+    try {
+        let dieu_kien_loc = null;
+        if (typeof req.params.idcart !== 'undefined') {
+            dieu_kien_loc = { id_product: req.params.idcart };
+        }
+
+        var count = await myMD.tb_cartoderModel.countDocuments(dieu_kien_loc);
+
+        if (count > 0) {
+            console.log("Yes");
+            res.json( "Yes");
+        } else {
+            console.log("No");
+            res.json("No" );
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 }
 

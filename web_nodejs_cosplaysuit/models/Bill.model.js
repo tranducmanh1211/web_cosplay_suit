@@ -34,6 +34,7 @@ const tb_billdetails = new db.mongoose.Schema(
         id_bill: {type: db.mongoose.Schema.Types.ObjectId, ref: 'bill'},
         id_product: {type: db.mongoose.Schema.Types.ObjectId, ref: 'prodcutModel'},
         amount: {type: Number, require: true},
+        size: {type: String, require: true},
         totalPayment: {type: Number, require: true}
     },
     {
