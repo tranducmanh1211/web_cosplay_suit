@@ -173,13 +173,16 @@
         .div_reduced:hover #svg_reduced {
           display: inline;
         }
-        .hien{
-          display: flex;text-align: center;justify-content: center;
+
+        .hien {
+          display: flex;
+          text-align: center;
+          justify-content: center;
         }
-        .hien:hover #svg_increase{
+
+        .hien:hover #svg_increase {
           display: inline;
         }
-      
       </style>
     </head>
 
@@ -236,17 +239,19 @@
                 </a>
               </li>
               <li><a class="nav-link" href="/category/getCategory" style="font-size: 16px;color: rgb(85, 83, 83);">
-            <i class="fas fa-industry"></i>
-            <span class="nav-item">Quản lý thể loại</span>
-          </a>
-        </li>
+                  <i class="fas fa-industry"></i>
+                  <span class="nav-item">Quản lý thể loại</span>
+                </a>
+              </li>
               <li><a class="nav-link" href="/users/home/quanlykhachhang"
                   style="font-size: 16px;color: rgb(85, 83, 83);">
                   <i class="fas fa-chart-bar"></i>
                   <span class="nav-item">Quản lý khách hàng</span>
                 </a>
               </li>
-              <li><a class="nav-link" href="/salesman/home/quanlynguoiban" style="font-size: 16px;color: rgb(85, 83, 83);">
+              <li><a class="nav-link" href="/salesman/home/quanlynguoiban"
+                  style="font-size: 16px;color: rgb(85, 83, 83);">
+
                   <i class="fas fa-tasks"></i>
                   <span class="nav-item">Quản lý người bán</span>
                 </a>
@@ -254,6 +259,11 @@
               <li><a class="nav-link" href="#" style="font-size: 16px;color: rgb(85, 83, 83);">
                   <i class="fab fa-dochub"></i>
                   <span class="nav-item">Thống kê</span>
+                </a>
+              </li>
+              <li><a class="nav-link" href="/users/account" style="font-size: 16px;color: rgb(85, 83, 83);">
+                  <i class="fab fa-dochub"></i>
+                  <span class="nav-item">Account</span>
                 </a>
               </li>
               <li><a class="nav-link" href="#" class="logout" style="font-size: 16px;color: rgb(85, 83, 83);">
@@ -309,12 +319,11 @@
               <thead>
                 <tr>
                   <th scope="col"># </th>
-                  <th scope="col" class="hien">Name <div
-                      class="div_increase" style="width: 10px;"><a href="/users/home/quanlykhachhang?name=1"><svg
-                          id="svg_increase" xmlns="http://www.w3.org/2000/svg"
-                          class="icon icon-tabler icon-tabler-arrow-narrow-up" width="17" height="17"
-                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                          stroke-linejoin="round">
+                  <th scope="col" class="hien">Name <div class="div_increase" style="width: 10px;"><a
+                        href="/users/home/quanlykhachhang?name=1"><svg id="svg_increase"
+                          xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-up"
+                          width="17" height="17" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                          stroke-linecap="round" stroke-linejoin="round">
                           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                           <path d="M12 5l0 14"></path>
                           <path d="M16 9l-4 -4"></path>
@@ -335,7 +344,7 @@
                   <th scope="col">Email
                   </th>
                   <th scope="col"> Role</th>
-                  <th ></th>
+                  <th></th>
                   <th scope="col"></th>
                 </tr>
               </thead>
@@ -344,7 +353,7 @@
 
                   <tr class="tr_hover">
                     <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                      <%=i._id%>
+                      <%= sum%>
                     </td>
                     <td class="td_name">
                       <%=i.fullname%>
@@ -358,11 +367,13 @@
                     <td>
                       <%=i.role%>
                     </td>
-                    <td><%if(i.__v===1){%>
-                      <p style="color: red;margin: 0px;">Disabled</p>
-                      <%}%></td>
                     <td>
-                      
+                      <%if(i.__v===1){%>
+                        <p style="color: red;margin: 0px;">Disabled</p>
+                        <%}%>
+                    </td>
+                    <td>
+
                       <a id="a_none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical"
                           width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
