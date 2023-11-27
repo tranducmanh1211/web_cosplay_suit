@@ -17,9 +17,8 @@ exports.getidthanhtoan = async (req, res, next) => {
 
 exports.Addthanhtoan = async (req, res, next) => {
     let add = new myMD.tb_thanhtoanModel();
-        add.id_bill = req.body.id_bill;
-        add.totalPayment = req.body.totalPayment; 
-        add.CardType = req.body.CardType;
+        add.vnp_Amount = req.body.vnp_Amount; 
+        add.vnp_CardType = req.body.vnp_CardType;
         add.vnp_BankTranNo = req.body.vnp_BankTranNo;
         add.vnp_BankCode = req.body.vnp_BankCode; 
         add.vnp_OrderInfo = req.body.vnp_OrderInfo;
@@ -27,24 +26,9 @@ exports.Addthanhtoan = async (req, res, next) => {
         add.vnp_TmnCode = req.body.vnp_TmnCode;
         add.vnp_SecureHash = req.body.vnp_SecureHash; 
         add.vnp_TxnRef = req.body.vnp_TxnRef; 
-        add.id_properties = req.body.id_properties; 
     let new_CMD = await add.save();
     console.log(new_CMD);
-    try{
-        if(new_CMD){
-            objReturn.data = add;
-            objReturn.stu = 1;
-            objReturn.msg = "Thêm thành công"
-        }else{
-            objReturn.stu = 0;
-            objReturn.msg = "Thêm thất bại"
-        }
-    }catch(error){
-        objReturn.stu = 0;
-        objReturn.msg = error.msg;
-    }
-
-    res.json(objReturn);
+    res.json(new_CMD);
 }
 
 exports.getidaddress = async (req, res, next) => {

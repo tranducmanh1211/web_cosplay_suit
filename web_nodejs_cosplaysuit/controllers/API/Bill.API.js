@@ -31,6 +31,7 @@ exports.AddBill = async (req, res, next) => {
         add.timeend = req.body.timeend;
         add.status = req.body.status; 
         add.totalPayment = req.body.totalPayment;
+        add.vnp_TxnRef = req.body.vnp_TxnRef;
         add.ma_voucher = req.body.ma_voucher;
     let new_CMD = await add.save();
     res.json(new_CMD);

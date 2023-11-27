@@ -21,6 +21,7 @@ const tb_bill = new db.mongoose.Schema(
         timestart: {type: String, require: true},
         timeend: {type: String, require: true},
         ma_voucher: {type: String, require: true},
+        vnp_TxnRef: {type: String, require: true},
         status: {type: String, require: true},
         totalPayment: {type: Number, require: true}
     },
@@ -44,8 +45,8 @@ const tb_billdetails = new db.mongoose.Schema(
 const tb_thanhtoan = new db.mongoose.Schema(
     {
         id_bill: {type: db.mongoose.Schema.Types.ObjectId, ref: 'bill'},
-        totalPayment: {type: Number, require: true},
-        CardType: {type: String, require: true},
+        vnp_Amount: {type: Number, require: true},
+        vnp_CardType: {type: String, require: true},
         vnp_BankTranNo: {type: String, require: true},
         vnp_BankCode: {type: String, require: true},
         vnp_OrderInfo: {type: String, require: true},
