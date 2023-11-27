@@ -74,8 +74,8 @@ const tb_address = new db.mongoose.Schema(
 let tb_cartoderModel = db.mongoose.model('cartoder', tb_cartoder);
 let tb_billModel = db.mongoose.model('bill', tb_bill);
 let tb_billdetailsModel = db.mongoose.model('billdetails', tb_billdetails);
-let tb_thanhtoanModel = db.mongoose.model('billdetails', tb_thanhtoan);
-let tb_addressModel = db.mongoose.model('billdetails', tb_address);
+let tb_thanhtoanModel = db.mongoose.model('thanhtoan', tb_thanhtoan);
+let tb_addressModel = db.mongoose.model('address', tb_address);
 
 
 module.exports = {tb_cartoderModel,tb_billModel, tb_billdetailsModel, tb_thanhtoanModel, tb_addressModel};

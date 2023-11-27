@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả thanh toán</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .failure {
+            color: red;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <% if (code == "00") { %>
+        <h1>Thanh toán thành công!</h1>
+        <p>Vui lòng vào đơn hàng của bạn kiểm tra lại đã hiện hóa đơn hay chưa!</p>
+        <!-- <img src="/thanhtoan/public/images/success.png"> -->
+    <% } else if (code == "04"){ %>
+        <p>Số tiền không hợp lệ!</p>
+        <!-- <img src="/thanhtoan/public/images/failure.png"> -->
+    <% } else { %>
+        <p>Thanh toán thất bại!</p>
+        <!-- <img src="/thanhtoan/public/images/failure.png"> -->
+    <% } %>
+    
+</body>
+</html>

@@ -10,3 +10,5 @@ routes.post('/Addthanhtoan',tb_thanhtoanCtrl.Addthanhtoan);
 routes.get('/getidaddress/:idbill',tb_thanhtoanCtrl.getidaddress);
 
 routes.post('/Add_address',tb_thanhtoanCtrl.Add_address);
+
+module.exports = routes;
