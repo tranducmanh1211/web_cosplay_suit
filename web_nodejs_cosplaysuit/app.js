@@ -13,6 +13,7 @@ var userapiRouter = require('./routes/user.api');
 var productapiRouter= require('./routes/product.api');
 var billrouter = require('./routes/API/bill');
 var shopRouter = require('./routes/shop');
+var thanhtoanRouter = require('./routes/API/thanhtoan');
 
 var salemanRouter = require('./routes/salesman');
 
@@ -46,11 +47,10 @@ app.use('/chat', chatRouter);
 app.use('/user/api', userapiRouter);
 app.use('/product', productapiRouter);
 app.use('/salesman', salemanRouter);
-
 app.use('/shop', shopRouter);
-
 app.use('/bill', billrouter);
 app.use('/Comments',commentsRouter);
+app.use('/thanhtoan', thanhtoanRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

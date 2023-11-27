@@ -41,10 +41,41 @@ const tb_billdetails = new db.mongoose.Schema(
         collection: 'billdetails'
     }
 );
+const tb_thanhtoan = new db.mongoose.Schema(
+    {
+        id_bill: {type: db.mongoose.Schema.Types.ObjectId, ref: 'bill'},
+        totalPayment: {type: Number, require: true},
+        CardType: {type: String, require: true},
+        vnp_BankTranNo: {type: String, require: true},
+        vnp_BankCode: {type: String, require: true},
+        vnp_OrderInfo: {type: String, require: true},
+        vnp_PayDate: {type: String, require: true},
+        vnp_TmnCode: {type: String, require: true},
+        vnp_TxnRef: {type: String, require: true},
+        vnp_SecureHash: {type: String, require: true}
+    },
+    {
+        collection: 'thanhtoan'
+    }
+)
 
+const tb_address = new db.mongoose.Schema(
+    {
+        id_bill: {type: db.mongoose.Schema.Types.ObjectId, ref: 'bill'},
+        address: {type: String, require: true},
+        phone: {type: String, require: true},
+        fullname: {type: String, require: true}
+    },
+    {
+        collection: 'address'
+    }
+)
 //tạo model
 let tb_cartoderModel = db.mongoose.model('cartoder', tb_cartoder);
 let tb_billModel = db.mongoose.model('bill', tb_bill);
 let tb_billdetailsModel = db.mongoose.model('billdetails', tb_billdetails);
+let tb_thanhtoanModel = db.mongoose.model('billdetails', tb_thanhtoan);
+let tb_addressModel = db.mongoose.model('billdetails', tb_address);
 
-module.exports = {tb_cartoderModel,tb_billModel, tb_billdetailsModel};
+
+module.exports = {tb_cartoderModel,tb_billModel, tb_billdetailsModel, tb_thanhtoanModel, tb_addressModel};
