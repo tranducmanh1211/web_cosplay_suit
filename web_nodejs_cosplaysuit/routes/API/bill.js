@@ -24,16 +24,16 @@ var tb_billCtrl = require('../../controllers/API/Bill.API');
 
 routes.get('/getuserbill/:id_user',tb_billCtrl.getUserbill);
 routes.post('/addbill',tb_billCtrl.AddBill);
-routes.get('/addbill',tb_billCtrl.AddBill);
+routes.put('/upstatusbill/:id',tb_billCtrl.updateBill);
 
 
 //router thanh toán hóa đơn chi tiết
 var tb_billdetailCtrl = require('../../controllers/API/Billdetail.API');
 
-routes.get('/getstatuswait/:id_user',tb_billdetailCtrl.getstatuswait);
-routes.get('/getstatusPack/:id_user',tb_billdetailCtrl.getstatusPack);
-routes.get('/getstatusDelivery/:id_user',tb_billdetailCtrl.getstatusDelivery);
-routes.get('/getstatusDone/:id_user',tb_billdetailCtrl.getstatusDone);
+routes.get('/getstatuswait/:type/:id',tb_billdetailCtrl.getstatuswait);
+routes.get('/getstatusPack/:type/:id',tb_billdetailCtrl.getstatusPack);
+routes.get('/getstatusDelivery/:type/:id',tb_billdetailCtrl.getstatusDelivery);
+routes.get('/getstatusDone/:type/:id',tb_billdetailCtrl.getstatusDone);
 
 routes.post('/addbilldetail',tb_billdetailCtrl.AddBilldetail);
 routes.get('/addbilldetail',tb_billdetailCtrl.AddBilldetail);

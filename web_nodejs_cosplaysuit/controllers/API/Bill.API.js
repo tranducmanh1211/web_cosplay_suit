@@ -38,15 +38,13 @@ exports.AddBill = async (req, res, next) => {
 }
 
 exports.updateBill = async (req, res, next) => {
-    let id = req.params.id;
+    let _id = req.params.id;
 
     let sua = new myMD.tb_billModel();
-        sua.amount = req.body.amount;
         sua.status = req.body.status; 
         sua.timeend = req.body.timeend;
-        sua.totalPayment = req.body.totalPayment;
 
-    let newcart = await myMD.tb_cartoderModel.findByIdAndUpdate(id, req.body);
+    let newcart = await myMD.tb_billModel.findByIdAndUpdate(_id, req.body);
         try{
             if(newcart){
                 objReturn.data = newcart;
