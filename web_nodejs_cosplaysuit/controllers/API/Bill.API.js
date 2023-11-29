@@ -1,4 +1,5 @@
 var myMD = require('../../models/Bill.model');
+var myDBshop = require('../../models/cosplau_suit_user_model');
 
 var objReturn = {
     stu: 1,
@@ -18,6 +19,22 @@ exports.getUserbill = async (req, res, next) => {
         dieu_kien_loc = { id_user: req.params.id_user};
     }
     var list = await myMD.tb_billModel.find(dieu_kien_loc).populate('id_shop').populate('id_user');
+
+    res.send(list);
+}
+exports.getdskhach = async (req, res, next) => {
+    //Lấy ds khach theo id_user
+    const idshop = await myDBshop.tb_shopModel.findOne({id_user: req.params.id}).select('_id');
+    
+    // Tìm danh sách iduser theo idshop
+    const cartlist = await myMD.tb_billModel.find({ id_shop: idshop }).select('id_user').lean();
+
+    // Lấy danh sách iduser từ kết quả trên, loại bỏ giá trị trùng
+    const idshoplist = new Set(cartlist.map(hd => String(hd.id_user)));
+    const giaTriKhongTrungLap = [...idshoplist];
+
+    //Lấy ds user từ ds không trùng
+    const list = await myDBshop.tb_profileModel.find({id_user: { $in: giaTriKhongTrungLap }}).populate('id_user');
 
     res.send(list);
 }

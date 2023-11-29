@@ -19,15 +19,17 @@ routes.put('/updatecart/:id', tb_cartorderCtrl.updateCartOder);
 
 routes.delete('/deletecart/:id', tb_cartorderCtrl.deleteCartOder); 
 
-//router thanh toán hóa đơn
+//router hóa đơn
 var tb_billCtrl = require('../../controllers/API/Bill.API');
 
 routes.get('/getuserbill/:id_user',tb_billCtrl.getUserbill);
 routes.post('/addbill',tb_billCtrl.AddBill);
 routes.put('/upstatusbill/:id',tb_billCtrl.updateBill);
+routes.get('/getdskhach/:id',tb_billCtrl.getdskhach);
 
 
-//router thanh toán hóa đơn chi tiết
+
+//router hóa đơn chi tiết
 var tb_billdetailCtrl = require('../../controllers/API/Billdetail.API');
 
 routes.get('/getstatuswait/:type/:id',tb_billdetailCtrl.getstatuswait);
