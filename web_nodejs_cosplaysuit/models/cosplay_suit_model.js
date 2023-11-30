@@ -26,7 +26,6 @@ const tb_product = new db.mongoose.Schema(
         description: { type: String, require: true },
         size: { type: String, require: true },
         status: { type: Boolean, require: true },
-        sold: { type: String, require: true },
         time_product: { type: String, require: true }
     },
     {
