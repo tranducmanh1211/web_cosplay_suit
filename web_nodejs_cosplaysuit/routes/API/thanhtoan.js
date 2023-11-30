@@ -7,7 +7,7 @@ routes.get('/getidthanhtoan/:idbill',tb_thanhtoanCtrl.getidthanhtoan);
 
 routes.post('/Addthanhtoan',tb_thanhtoanCtrl.Addthanhtoan);
 
-routes.get('/getidaddress/:idbill',tb_thanhtoanCtrl.getidaddress);
+routes.get('/getidaddress/:id',tb_thanhtoanCtrl.getiduseraddress);
 
 routes.post('/Add_address',tb_thanhtoanCtrl.Add_address);
 

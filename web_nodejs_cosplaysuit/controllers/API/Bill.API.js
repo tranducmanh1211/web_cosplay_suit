@@ -11,7 +11,6 @@ exports.getbill = async (req, res, next) => {
 
     res.send(list);
 }
-
 exports.getUserbill = async (req, res, next) => {
     //Lấy ds đơn hàng theo id_user
     let dieu_kien_loc = null;
@@ -38,7 +37,6 @@ exports.getdskhach = async (req, res, next) => {
 
     res.send(list);
 }
-
 exports.AddBill = async (req, res, next) => {
 
     let add = new myMD.tb_billModel();
@@ -53,7 +51,6 @@ exports.AddBill = async (req, res, next) => {
     let new_CMD = await add.save();
     res.json(new_CMD);
 }
-
 exports.updateBill = async (req, res, next) => {
     let _id = req.params.id;
 

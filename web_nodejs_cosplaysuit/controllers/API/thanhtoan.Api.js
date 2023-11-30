@@ -1,4 +1,5 @@
 var myMD = require('../../models/Bill.model');
+var myDBshop = require('../../models/cosplau_suit_user_model');
 
 var objReturn = {
     stu: 1,
@@ -31,13 +32,13 @@ exports.Addthanhtoan = async (req, res, next) => {
     res.json(new_CMD);
 }
 
-exports.getidaddress = async (req, res, next) => {
+exports.getiduseraddress = async (req, res, next) => {
     //lấy danh sách giỏ hàng theo id
     let dieu_kien_loc = null;
     if (typeof (req.params.id) != 'undefined') {
-        dieu_kien_loc = { id_bill: req.params.id};
+        dieu_kien_loc = { id_user: req.params.id};
     }
-    var list = await myMD.tb_addressModel.find(dieu_kien_loc).populate('id_bill');
+    var list = await myDBshop.tb_profileModel.findOne(dieu_kien_loc).populate('id_user');
 
     res.send(list);
 }

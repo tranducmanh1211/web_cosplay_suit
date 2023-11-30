@@ -206,3 +206,52 @@ exports.AddBilldetail = async (req, res, next) => {
 
     res.json(objReturn);
 }
+exports.Getdsmualaisp = async(req, res, next) => {
+    //lấy idbill từ iduser truyền vào
+    const id_bill = await myMD.tb_billModel.find({id_user: req.params.id}).select('_id');
+    // Lấy danh sách idbill từ kết quả trên
+    const idbilllist = id_bill.map(hd => hd._id);
+    //Tìm ra bản ghi của idbill
+    const listIdShop = await myMD.tb_billdetailsModel.find({id_bill: { $in: idbilllist }}).select('id_product').lean();
+
+    // Lấy danh sách idprodcut từ kết quả trên không trùng lặp
+    const idshoplist = new Set(listIdShop.map(hd => String(hd.id_product)));
+    const giaTriKhongTrungLap = [...idshoplist];
+    console.log("ok: " + giaTriKhongTrungLap);
+
+    
+    //Lấy ds tb_billdetailsModel từ ds không trùng
+    const list = await myMD.tb_billdetailsModel.find( {id_product: { $in: giaTriKhongTrungLap }, id_bill: { $in: idbilllist }})
+    .limit(4)
+    .populate([
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_product' }
+        ]);
+
+    res.json(list);
+
+}
+exports.Getallmualaisp = async(req, res, next) => {
+    //lấy idbill từ iduser truyền vào
+    const id_bill = await myMD.tb_billModel.find({id_user: req.params.id}).select('_id');
+    // Lấy danh sách idbill từ kết quả trên
+    const idbilllist = id_bill.map(hd => hd._id);
+    //Tìm ra bản ghi của idbill
+    const listIdShop = await myMD.tb_billdetailsModel.find({id_bill: { $in: idbilllist }}).select('id_product').lean();
+
+    // Lấy danh sách idprodcut từ kết quả trên không trùng lặp
+    const idshoplist = new Set(listIdShop.map(hd => String(hd.id_product)));
+    const giaTriKhongTrungLap = [...idshoplist];
+    console.log("ok: " + giaTriKhongTrungLap);
+
+    
+    //Lấy ds tb_billdetailsModel từ ds không trùng
+    const list = await myMD.tb_billdetailsModel.find( {id_product: { $in: giaTriKhongTrungLap }, id_bill: { $in: idbilllist }})
+    .populate([
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_product' }
+        ]);
+
+    res.json(list);
+
+}

@@ -29,6 +29,7 @@ routes.get('/getdskhach/:id',tb_billCtrl.getdskhach);
 
 
 
+
 //router hóa đơn chi tiết
 var tb_billdetailCtrl = require('../../controllers/API/Billdetail.API');
 
@@ -38,6 +39,10 @@ routes.get('/getstatusDelivery/:type/:id',tb_billdetailCtrl.getstatusDelivery);
 routes.get('/getstatusDone/:type/:id',tb_billdetailCtrl.getstatusDone);
 
 routes.post('/addbilldetail',tb_billdetailCtrl.AddBilldetail);
-routes.get('/addbilldetail',tb_billdetailCtrl.AddBilldetail);
+routes.get('/getdsmualaisp/:id',tb_billdetailCtrl.Getdsmualaisp);
+routes.get('/getallmualaisp/:id',tb_billdetailCtrl.Getallmualaisp);
+
+
+
 
 module.exports = routes;
