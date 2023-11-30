@@ -58,11 +58,25 @@ const tb_comments = new db.mongoose.Schema(
         collection: 'comments'
     }
 );
+const tb_voucher = new db.mongoose.Schema(
+    {
+        id_shop: { type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_shopModel' },
+        id_user: { type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel' },
+        discount: { type: String, require: true },
+        amount: { type: String, require: true },
+        content: { type: String, require: true }
+      
+    },
+    {
+        collection: 'voucher'
+    }
+);
 
 //tạo model
 let tb_commentsModel = db.mongoose.model('commentsModel', tb_comments);
 let tb_categoryModel = db.mongoose.model('categoryModel', tb_category);
 let tb_productModel = db.mongoose.model('prodcutModel', tb_product);
 let tb_propertiesModel = db.mongoose.model('properties', tb_properties);
+let tb_voucherModel = db.mongoose.model('voucherModel', tb_voucher);
 
-module.exports = { tb_categoryModel, tb_productModel, tb_propertiesModel, tb_commentsModel };
+module.exports = { tb_categoryModel, tb_productModel, tb_propertiesModel, tb_commentsModel,tb_voucherModel };
