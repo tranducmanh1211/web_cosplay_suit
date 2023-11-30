@@ -2,7 +2,7 @@
 <html lang="en">
 <%let sum=1;%>
   <%let page_i=page%>
-
+    <%listUser%>
 
     <head>
       <title>Home | Coplay Suit</title>
@@ -330,16 +330,16 @@
                       <%=sum%>
                     </td>
                     <td class="td_name">
-                      <%=i.fullname%>
+                      <a href="/shop/getCT/<%=i._id%>"><%= i.nameshop %></a>
                     </td>
                     <td>
-                      <%=i.phone%>
+                      <%=i.id_user.phone%>
                     </td>
                     <td>
-                      <%=i.email%>
+                      <%=i.id_user.email%>
                     </td>
                     <td>
-                      <%=i.role%>
+                      <%=i.id_user.role%>
                     </td>
                     <td>
                       <a id="a_none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -385,7 +385,7 @@
                               </svg> Người dùng có tài khoản bị vô hiệu hóa không thể đăng nhập.</h6>
                             <p style="margin-top: 40px;margin-bottom:0px;color: #a7a4a4">Tài khoản người dùng</p>
                             <p style="margin-bottom: 0px;">
-                              <%=i.email%>
+                              <%=i.id_user.email%>
                             </p>
                           </div>
                           <div class="modal-footer">
@@ -420,7 +420,7 @@
                               thể được phục hồi.</h6>
                             <p style="margin-top: 40px;margin-bottom:0px;color: #a7a4a4">Tài khoản người dùng</p>
                             <p style="margin-bottom: 0px;">
-                              <%=i.email%>
+                              <%=i.id_user.email%>
                             </p>
                           </div>
                           <div class="modal-footer">
@@ -444,6 +444,19 @@
                         </td>
                         <%}%>
               </tbody>
+              <!-- Include jQuery if not already included -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Add a script block to handle the click event and redirect to the shop products page -->
+<script>
+  $(document).ready(function () {
+    $('.td_name a').on('click', function (event) {
+      event.preventDefault();
+      var shopId = $(this).attr('href').split('/').pop();
+      window.location.href = '/shop/getCT/' + shopId ;
+    });
+  });
+</script>
             </table>
           </div>
           <%if(!(listUser===null || (Array.isArray(listUser) && listUser.length===0))){%>
