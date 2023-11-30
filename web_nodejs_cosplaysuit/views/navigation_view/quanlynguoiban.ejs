@@ -330,7 +330,7 @@
                       <%=sum%>
                     </td>
                     <td class="td_name">
-                      <a href="/shop/getCT/<%=i._id%>"><%= i.nameshop %></a>
+                      <a href="/salesman/home/getCT/<%=i._id%>"><%= i.nameshop %></a>
                     </td>
                     <td>
                       <%=i.id_user.phone%>
@@ -453,7 +453,7 @@
     $('.td_name a').on('click', function (event) {
       event.preventDefault();
       var shopId = $(this).attr('href').split('/').pop();
-      window.location.href = '/shop/getCT/' + shopId ;
+      window.location.href = '/salesman/home/getCT/' + shopId ;
     });
   });
 </script>
