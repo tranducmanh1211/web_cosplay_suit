@@ -39,6 +39,8 @@ exports.AddProduct = async (req, res, next) => {
     addCM.listProp = req.body.listProp;
     addCM.description = req.body.description;
     addCM.size = req.body.size;
+    addCM.status = req.body.status;
+    addCM.sold = req.body.sold;
     addCM.time_product = req.body.time_product;
     let new_CMD = await addCM.save();
     console.log(new_CMD);
@@ -100,6 +102,8 @@ exports.updateProduct = async (req, res, next) => {
         addCM.listProp = req.body.listProp;
         addCM.description = req.body.description;
         addCM.size = req.body.size;
+        addCM.status = req.body.status;
+        addCM.sold = req.body.sold;
         addCM.time_product = req.body.time_product;
 
         const mtSave = await addCM.save();
