@@ -14,6 +14,13 @@ exports.getlListShop = async (req, res, next) => {
     var list = await myMDD.tb_shopModel.find(dieu_kien_loc);
     res.send(list);
 }
+exports.getlListShop1 = async (req, res, next) => {
+    //lấy danh sách sản phẩm kèm theo tên thể loại
+
+ 
+    var list = await myMDD.tb_shopModel.find().populate('id_user');
+    res.send(list);
+}
 
 exports.getShopById = async (req, res, next) => {
     try {
