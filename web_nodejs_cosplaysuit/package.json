@@ -20,6 +20,7 @@
     "firebase-functions": "^4.5.0",
     "http-errors": "~1.6.3",
     "jquery": "^3.7.1",
+    "jsdom": "^23.0.0",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "mongodb": "4.1",
