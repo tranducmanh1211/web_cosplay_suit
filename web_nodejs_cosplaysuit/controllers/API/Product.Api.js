@@ -179,3 +179,14 @@ exports.productById = async (req, res, next) => {
     res.json(objReturn1.data);
 
 }
+
+exports.getproductByIdShop = async (req, res, next) => {
+    let dieu_kien_loc = null;
+
+    if (typeof req.params.id_shop !== 'undefined') {
+        dieu_kien_loc = { id_shop: req.params.id_shop };
+    }
+    var list = await myMDD.tb_productModel.find(dieu_kien_loc).limit(6);
+
+    res.send(list);
+}

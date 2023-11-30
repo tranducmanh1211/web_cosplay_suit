@@ -3,11 +3,11 @@
 
 <head>
   <title>Home | Coplay Suit</title>
-  <!-- Font Awesome Cdn Link -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="stylesheet" href="/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css">
   <style>
-    /*  import google fonts */
+
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
     * {
@@ -20,10 +20,6 @@
       box-sizing: border-box;
       font-family: "Poppins", sans-serif;
     }
-
-    /* body {
-      background: rgb(233, 233, 233);
-    } */
 
     .container-fluid {
       display: flex;
@@ -75,7 +71,6 @@
 
     nav i {
       font-size: 18px;
-      /* text-align: left; */
     }
 
     .logout {
@@ -84,23 +79,18 @@
       bottom: 20px;
     }
 
-    /* Main Section */
     .main {
-
       width: 100%;
-
     }
 
     .main-top {
       background: rgb(246, 246, 246);
       width: 100%;
-
       padding: 40px 10px 20px 10px;
       text-align: center;
       font-size: 18px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-
     }
 
     .main-top1 {
@@ -108,7 +98,6 @@
       width: 100%;
       padding: 10px;
       text-align: center;
-
     }
 
     .main-body {
@@ -177,22 +166,24 @@
           </li>
         </ul>
       </div>
-
-
-
     </nav>
-    <section class="main">
+    <!-- <section class="main">
       <div class="main-top">
-        <h3 style="font-size: 20px;margin-bottom: 0px;">Quản lý sản phẩm</h3>
+        <h3 style="font-size: 20px;margin-bottom: 0px;">Quản lý thể loại</h3>
       </div>
       <div class="main-top1">
-        <table class="table" style="border: 1px solid rgb(234, 226, 226);">
+        <div class="d-flex justify-content-end mb-3">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            Thêm Thể Loại
+          </button>
+        </div>
+        <table class="table table-bordered" style="border: 1px solid rgb(234, 226, 226);">
           <thead>
             <tr>
-              <th colspan="8">
-                <div class="container" style="text-align: center;justify-content: center;">
+              <th colspan="6">
+                <div class="container" style="text-align: center;">
                   <div class="" style="display: flex;padding: 10px;justify-content: space-between;align-items: center;">
-                    <div style="display: flex;justify-content: center;text-align: center;">
+                    <div style="display: flex;">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkup-list"
                         width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -205,12 +196,12 @@
                         <path d="M9 17h.01"></path>
                         <path d="M12 16l1 1l3 -3"></path>
                       </svg>
-                      <h5 style="margin-left: 10px;margin-bottom: 0px;">Danh Sách Người Dùng</h5>
+                      <h5 style="margin-left: 10px;">Danh Sách Thể Loại</h5>
                     </div>
                     <div>
                       <form class="d-flex" role="search">
-                        <input style="width: 370px;" class="form-control me-2" type="search"
-                          placeholder="Search by email address, phone number" aria-label="Search" name="email">
+                        <input class="form-control me-2" type="search" style="width: 300px;"
+                          placeholder="Enter Name Category" aria-label="Search" name="name">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                       </form>
                     </div>
@@ -221,134 +212,67 @@
           </thead>
           <thead>
             <tr>
-              <th scope="col">STT </th>
-
-              <th scope="col"> Shop </th>
-
+              <th scope="col">STT</th>
               <th scope="col" style="display: flex;text-align: center;justify-content: center;">Name
               </th>
-              <th scope="col">Price</th>
-              <th scope="col">Category
-              </th>
-              <!-- <th scope="col"> Image</th> -->
-              <th scope="col"> Description</th>
-              <th scope="col"> Time Product</th>
-
+              <th scope="col">Name Product</th>
+              <th scope="col">Name Shop</th>
+              <th scope="col">Total Price</th>
+              <th scope="col"></th>
             </tr>
           </thead>
-
-          <body>
-
-            <% let count=1; %>
-              <% listProduct.forEach( ( row )=> { %>
+          <tbody>
+     
                 <tr class="tr_hover">
                   <td>
-                    <%= count %>
-
-                  </td>
-                  <td class="td_id">
-                    <%= row.id_shop.nameshop %>
+              
+                    1
                   </td>
                   <td class="td_name">
-                    <%= row.nameproduct %>
-                  </td>
-                  <td class="td_price">
-                    <%= row.price %>
-                  </td>
-                  <td class="td_Category">
-                    <%= row.id_category.name %>
-                      <!-- row.id_category.name -->
-                  </td>
-                  <td class="td_Description">
-                    <%= row.description %>
+              ten pr
                   </td>
                   <td>
-                    <%= row.time_product %>
+                   t
                   </td>
-
-                  <!-- <td>
-                    <a id="a_none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical"
-                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                      </svg>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li style="padding: 0;">
-                        <a type="button" class="dropdown-item" data-bs-toggle="modal" id="" data-bs-target="">Sửa Thể
-                          Loại</a>
-                      </li>
-                      <li style="padding: 0;">
-                        <a type="button" class="dropdown-item delete-category-button" data-bs-toggle="modal"
-                          data-bs-target="#deleteConfirmationModal" data-category-id="<%= row._id %>">Xóa Thể Loại</a>
-                      </li>
-                    </ul>
-                  </td> -->
+                  <td>
+                   t
+                  </td>
+                  <td>
+                   t
+                  </td>
+                  <td>
+                    
+                  </td>
                 </tr>
-                <% count +=1; %>
-                  <% } ) %>
-
-          </body>
-
+           
+          </tbody>
         </table>
       </div>
+
+  
+    
 
       <div class="container">
         <div class="row">
           <div class="col-12 col-sm-2 col-md-2">
             <div class="row" style="margin-top: 8px;">
-              <h6>
-
-              </h6>
+              <h6></h6>
             </div>
           </div>
           <div class="col-12 col-sm-7 col-md-7">
             <div class="row"></div>
           </div>
-          <div class="col-12 col-sm-3 col-md-3">
-            <div class="row">
-              <nav aria-label="Page navigation example" style="height: 0px;">
-                <ul class="pagination justify-content-end">
-                  <li class="page-item">
-
-                    <a class="page-link" href="/salesman/home/quanlynguoiban?page" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-
-
-                  </li>
-
-                  <li class="page-item"><a class="page-link" href="/salesman/home/quanlynguoiban?page">
-
-                    </a></li>
-
-                  <li class="page-item">
-
-
-
-                    <a class="page-link" href="/salesman/home/quanlynguoiban?page" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-
-
-                  </li>
-                </ul>
-              </nav>
-            </div>
-
-          </div>
+          <div class="col-12 col-sm-3 col-md-3"></div>
         </div>
-
       </div>
-
-    </section>
-
+     
+      
+    </section> -->
   </div>
+
+
   <script src="/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

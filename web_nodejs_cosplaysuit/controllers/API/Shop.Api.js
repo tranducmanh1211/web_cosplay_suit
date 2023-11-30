@@ -31,5 +31,19 @@ exports.getShopById = async (req, res, next) => {
         res.status(500).json({ message: 'Đã xảy ra lỗi server' });
     }
 }
+exports.getShopById1 = async (req, res, next) => {
+    try {
+        var shop = await myMDD.tb_shopModel
+            .findOne({ _id: req.params.id });
 
+        if (!shop) {
+            return res.status(404).json({ message: 'Không tìm thấy cửa hàng' });
+        }
+
+        res.status(200).json(shop);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Đã xảy ra lỗi server' });
+    }
+}
 

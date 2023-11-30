@@ -1,4 +1,5 @@
 var myMD = require('../../models/Bill.model');
+var myDBshop = require('../../models/cosplau_suit_user_model');
 
 var objReturn = {
     stu: 1,
@@ -21,6 +22,22 @@ exports.getUserbill = async (req, res, next) => {
 
     res.send(list);
 }
+exports.getdskhach = async (req, res, next) => {
+    //Lấy ds khach theo id_user
+    const idshop = await myDBshop.tb_shopModel.findOne({id_user: req.params.id}).select('_id');
+    
+    // Tìm danh sách iduser theo idshop
+    const cartlist = await myMD.tb_billModel.find({ id_shop: idshop }).select('id_user').lean();
+
+    // Lấy danh sách iduser từ kết quả trên, loại bỏ giá trị trùng
+    const idshoplist = new Set(cartlist.map(hd => String(hd.id_user)));
+    const giaTriKhongTrungLap = [...idshoplist];
+
+    //Lấy ds user từ ds không trùng
+    const list = await myDBshop.tb_profileModel.find({id_user: { $in: giaTriKhongTrungLap }}).populate('id_user');
+
+    res.send(list);
+}
 
 exports.AddBill = async (req, res, next) => {
 
@@ -38,15 +55,13 @@ exports.AddBill = async (req, res, next) => {
 }
 
 exports.updateBill = async (req, res, next) => {
-    let id = req.params.id;
+    let _id = req.params.id;
 
     let sua = new myMD.tb_billModel();
-        sua.amount = req.body.amount;
         sua.status = req.body.status; 
         sua.timeend = req.body.timeend;
-        sua.totalPayment = req.body.totalPayment;
 
-    let newcart = await myMD.tb_cartoderModel.findByIdAndUpdate(id, req.body);
+    let newcart = await myMD.tb_billModel.findByIdAndUpdate(_id, req.body);
         try{
             if(newcart){
                 objReturn.data = newcart;
