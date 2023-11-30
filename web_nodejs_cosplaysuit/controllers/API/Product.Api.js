@@ -190,3 +190,27 @@ exports.getproductByIdShop = async (req, res, next) => {
 
     res.send(list);
 }
+
+
+
+
+exports.getproductByIdShopPage = async (req, res, next) => {
+    let page = Number(req.params.page) || 1;
+    let limit = Number(req.query.limit) || 10;
+    let skip = (page - 1) * limit;
+
+
+    let list1 = await myMDD.tb_productModel.find({ id_shop: req.params.id_shop });
+    let page_length = Math.ceil(list1.length / limit);
+    console.log("page",page);
+    console.log("limit",limit);
+    console.log("skip",skip);
+    console.log("page_length",page_length);
+    var list = await myMDD.tb_productModel.find({ id_shop: req.params.id_shop }).skip(skip)
+    .limit(limit);
+
+    res.json({
+        dtoSanPham: list,
+        page_length: page_length
+    });
+}
