@@ -5,7 +5,7 @@ const cosplay_user = require('./cosplau_suit_user_model');
 const tb_category = new db.mongoose.Schema(
     {
         name: { type: String, require: true },
-        imageCategory: {type: String},
+        imageCategory: { type: String },
         time_category: { type: String, require: true }
     },
     {
@@ -25,6 +25,8 @@ const tb_product = new db.mongoose.Schema(
         listProp: { type: Array, require: true },
         description: { type: String, require: true },
         size: { type: String, require: true },
+        status: { type: Boolean, require: true },
+        sold: { type: String, require: true },
         time_product: { type: String, require: true }
     },
     {
