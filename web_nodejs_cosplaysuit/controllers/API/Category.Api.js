@@ -27,8 +27,8 @@ exports.AddCategory = async (req, res, next) => {
     res.json(objReturn);
 }
 exports.getCategory = async (req, res, next) => {
-    //lấy danh sách sản phẩm kèm theo tên thể loại
+   
     var list = await myMD.tb_categoryModel.find();
-
+    
     res.send(list);
 }
