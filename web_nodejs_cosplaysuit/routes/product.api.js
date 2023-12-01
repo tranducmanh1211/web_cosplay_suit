@@ -12,6 +12,8 @@ routes.delete('/delSP/:id', tb_productCtrl.delProduct);
 routes.post('/addSP', tb_productCtrl.AddProduct);
 // routes.get('/listImage/:id', tb_productCtrl.getlListImage);
 
+
+routes.get('/getlistprobyidcat/:id_category',tb_productCtrl.getListProByIdCat);
 //lấy danh sách properties
 routes.get('/getproperties/:id_product', tb_productCtrl.getproperties);
 routes.get('/products/:id', tb_productCtrl.productById);
@@ -20,6 +22,8 @@ routes.get('/getCategoryApp', tb_CategoryCtrl.getCategory);
 
 
 
+
 // properties
 routes.post("/addProperties", tb_productCtrl.AddProperties);
+
 module.exports = routes;
