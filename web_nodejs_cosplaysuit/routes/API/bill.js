@@ -27,9 +27,6 @@ routes.post('/addbill',tb_billCtrl.AddBill);
 routes.put('/upstatusbill/:id',tb_billCtrl.updateBill);
 routes.get('/getdskhach/:id',tb_billCtrl.getdskhach);
 
-
-
-
 //router hóa đơn chi tiết
 var tb_billdetailCtrl = require('../../controllers/API/Billdetail.API');
 
@@ -42,7 +39,8 @@ routes.post('/addbilldetail',tb_billdetailCtrl.AddBilldetail);
 routes.get('/getdsmualaisp/:id',tb_billdetailCtrl.Getdsmualaisp);
 routes.get('/getallmualaisp/:id',tb_billdetailCtrl.Getallmualaisp);
 
-
+//update số lượng trong sản phẩm
+routes.post('/upsoluongproduct', tb_billCtrl.upsoluongproduct);
 
 
 module.exports = routes;

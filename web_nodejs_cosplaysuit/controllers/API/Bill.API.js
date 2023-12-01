@@ -1,5 +1,6 @@
 var myMD = require('../../models/Bill.model');
 var myDBshop = require('../../models/cosplau_suit_user_model');
+var mydbproduct = require('../../models/cosplay_suit_model');
 
 var objReturn = {
     stu: 1,
@@ -73,5 +74,38 @@ exports.updateBill = async (req, res, next) => {
             objReturn.msg = error.msg;
         }
     res.json(objReturn);
+}
+exports.upsoluongproduct = async(req, res, next) => {
+    //Lấy danh sách từ trên app gửi về, idList phải đúng tên
+    const idList = req.body;
+    //lấy danh sách từ list trên
+    const idlistcart = await myMD.tb_cartoderModel.find({_id: { $in: idList }}).select('id_product').lean();
+    // Lấy danh sách idprodcut từ kết quả trên 
+    const idshoplist = idlistcart.map(hd => hd.id_product);
+
+    const listcart = await myMD.tb_cartoderModel.find({ _id: { $in: idList } });
+    const listproduct = await mydbproduct.tb_productModel.find({ _id: { $in: idshoplist }});
+
+    // Tính toán giảm số lượng cho các sản phẩm có id_properties và nameproperties giống nhau
+    const updatedListProduct = listproduct.map(async product => {
+        // Tìm thông tin tương ứng trong listcart
+        const correspondingCartItem = listcart.find(cartItem => cartItem.id_product.equals(product._id));
+
+        if (correspondingCartItem) {
+            // Lặp qua listProp để kiểm tra id_properties và nameproperties
+            product.listProp.forEach(prop => {
+                const correspondingPropInCart = correspondingCartItem.id_properties === prop.nameproperties;
+                
+                if (correspondingPropInCart) {
+                    // Trừ amount trong listProp từ amount trong tb_cartoder
+                    prop.amount -= correspondingCartItem.amount;
+                }
+            });
+            product.amount -= correspondingCartItem.amount;
+            // product.sold += correspondingCartItem.amount;
+        }
+        let upsoluongproduct = await mydbproduct.tb_productModel.findByIdAndUpdate(product._id, product);
+        return updatedListProduct;
+    });
 }
 
