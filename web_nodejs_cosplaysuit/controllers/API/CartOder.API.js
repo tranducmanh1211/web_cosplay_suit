@@ -163,15 +163,19 @@ exports.CheckAddCart = async (req, res, next) =>{
         if (typeof req.params.idcart !== 'undefined') {
             dieu_kien_loc = { id_product: req.params.idcart };
         }
-
+        var list = await myMD.tb_cartoderModel.findOne(dieu_kien_loc).select('id_user');
+        
         var count = await myMD.tb_cartoderModel.countDocuments(dieu_kien_loc);
 
+        
         if (count > 0) {
             console.log("Yes");
-            res.json( "Yes");
+            res.json(list);
+            console.log(list);
         } else {
+            console.log(list);
             console.log("No");
-            res.json("No" );
+            res.json(list);
         }
     } catch (error) {
         console.error("Error:", error);
