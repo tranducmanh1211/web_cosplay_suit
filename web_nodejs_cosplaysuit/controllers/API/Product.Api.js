@@ -1,5 +1,5 @@
 var myMDD = require('../../models/cosplay_suit_model');
-
+const mongoose = require('mongoose');
 var objReturn = {
     stu: 1,
     msg: 'ok'
@@ -214,3 +214,49 @@ exports.getproductByIdShopPage = async (req, res, next) => {
         page_length: page_length
     });
 }
+
+exports.getListProByIdCat = async (req, res, next) => {
+    try {
+        let idCat = req.params.id_category;
+
+    
+        var list = await myMDD.tb_productModel.aggregate([
+            {
+                $match: { id_category: new mongoose.Types.ObjectId(idCat) }
+            },
+            {
+                $lookup: {
+                    from: "comments", 
+                    localField: "_id",
+                    foreignField: "id_product",
+                    as: "comments"
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    id_shop: 1,
+                    id_category: 1,
+                    nameproduct: 1,
+                    price: 1,
+                    amount: 1,
+                    image: 1,
+                    listImage: 1,
+                    listProp: 1,
+                    description: 1,
+                    size: 1,
+                    status: 1,
+                    time_product: 1,
+                    starCount: { $size: "$comments" }, 
+                    totalStars: { $sum: "$comments.star" }, 
+                    avgStars: { $avg: "$comments.star" } 
+                }
+            }
+        ]);
+
+        res.send(list);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+};
