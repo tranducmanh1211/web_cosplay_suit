@@ -9,6 +9,6 @@ routes.use ( (req,res,next)=>{
 var tb_bill = require('../controllers/bill.controller');
 
 routes.get('/getbilldone',check_login.yeu_cau_login, tb_bill.getBillDone);
-
+routes.get('/getbillcancelled',check_login.yeu_cau_login, tb_bill.getBillCancelled);
 
 module.exports = routes;
