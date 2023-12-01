@@ -31,7 +31,7 @@ exports.gettheloai = async (req, res, next) => {
         let page_length = Math.ceil(list.length / limit);
 
         var list = await myMD.tb_categoryModel.find(dieu_kien_loc).skip(skip)
-            .limit(limit);;
+            .limit(limit);
         res.render('navigation_view/quanlytheloai', { listTL: list, username: username, page_length: page_length, page: page });
     } catch (error) {
         console.error(error);

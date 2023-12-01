@@ -1,27 +1,146 @@
-var myMD = require('../models/cosplay_suit_model');
+var myMD = require('../models/Bill.model');
+
+// Hàm định dạng số tiền
+function formatCurrency(number) {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
+}
+
+function formatPrice(price) {
+    return formatCurrency(price);
+}
 
 exports.getBillDone = async (req, res, next) => {
-    let username = req.session.userU.fullname;
-    let dieu_kien_loc = null;
-    let page = Number(req.query.page) || 1;
-    let limit = Number(req.query.limit) || 5;
-    let skip = (page - 1) * limit;
-    if (typeof req.query.name !== 'undefined') {
-        const keyword = req.query.name;
-        const regex = new RegExp('.*' + keyword + '.*', 'i');
-        dieu_kien_loc = { name: regex };
-    }
-
     try {
-        var list = await myMD.tb_categoryModel.find(dieu_kien_loc)
-        let page_length = Math.ceil(list.length / limit);
+        let username = req.session.userU.fullname;
+        let page = Number(req.query.page) || 1;
+        let limit = Number(req.query.limit) || 7;
+        let skip = (page - 1) * limit;
 
-        var list = await myMD.tb_categoryModel.find(dieu_kien_loc).skip(skip)
-            .limit(limit);;
-        res.render('navigation_view/quanlydonhang', { listTL: list, username: username, page_length: page_length, page: page });
+        let nameShopCondition = {};
+        if (req.query.nameShop) {
+            const keyword = req.query.nameShop;
+            const regex = new RegExp('.*' + keyword + '.*', 'i');
+            nameShopCondition = { 'id_shop.nameshop': regex };
+        }
+
+        var listDH = await myMD.tb_billModel.find({
+            status: "Done",
+            ...nameShopCondition
+        })
+        .populate({
+            path: 'id_shop',
+            model: 'tb_shopModel'
+        })
+        .populate({
+            path: 'id_user',
+            model: 'tb_userModel'
+        })
+        .skip(skip)
+        .limit(limit);
+
+        if (listDH.length === 0) {
+            return res.render('navigation_view/quanlydonhang', { listDH: [], username: username, page_length: 1, page: 1 });
+        }
+
+        const totalBillDetailsArray = await Promise.all(
+            listDH.map(async (bill) => {
+                const countBillDetails = await myMD.tb_billdetailsModel.countDocuments({ id_bill: bill._id });
+                return countBillDetails;
+            })
+        );
+
+        // Thêm trường kiểm tra thanh toán khi nhận hàng dưới dạng chuỗi và định dạng số tiền
+        listDH = listDH.map((bill, index) => {
+            const paymentMethod = bill.vnp_TxnRef.length > 10 ? "Thanh toán khi nhận hàng" : "Thanh toán bằng VNPay";
+            return {
+                ...bill._doc,
+                totalBillDetails: totalBillDetailsArray[index],
+                paymentMethod: paymentMethod,
+                totalPaymentFormatted: formatPrice(bill.totalPayment),
+            };
+        });
+
+        // Tính đúng số lượng trang
+        let page_length = Math.ceil(totalBillDetailsArray.length / limit);
+
+        // Kiểm tra nếu page vượt quá page_length, gán page bằng page_length
+        if (page > page_length) {
+            page = page_length;
+        }
+
+        res.render('navigation_view/quanlydonhang', { listDH: listDH, username: username, page_length: page_length, page: page });
     } catch (error) {
         console.error(error);
         return res.status(500).send('Lỗi khi truy vấn dữ liệu từ MongoDB.');
     }
 };
 
+
+
+
+
+exports.getBillCancelled = async (req, res, next) => {
+    try {
+        let username = req.session.userU.fullname;
+        let page = Number(req.query.page) || 1;
+        let limit = Number(req.query.limit) || 7;
+        let skip = (page - 1) * limit;
+
+        let nameShopCondition = {};
+        if (req.query.nameShop) {
+            const keyword = req.query.nameShop;
+            const regex = new RegExp('.*' + keyword + '.*', 'i');
+            nameShopCondition = { 'id_shop.nameshop': regex };
+        }
+
+        var listDH = await myMD.tb_billModel.find({
+            status: "Cancelled",
+            ...nameShopCondition
+        })
+        .populate({
+            path: 'id_shop',
+            model: 'tb_shopModel'
+        })
+        .populate({
+            path: 'id_user',
+            model: 'tb_userModel'
+        })
+        .skip(skip)
+        .limit(limit);
+
+        if (listDH.length === 0) {
+            return res.render('navigation_view/quanlydonhang', { listDH: [], username: username, page_length: 1, page: 1 });
+        }
+
+        const totalBillDetailsArray = await Promise.all(
+            listDH.map(async (bill) => {
+                const countBillDetails = await myMD.tb_billdetailsModel.countDocuments({ id_bill: bill._id });
+                return countBillDetails;
+            })
+        );
+
+        // Thêm trường kiểm tra thanh toán khi nhận hàng dưới dạng chuỗi
+        listDH = listDH.map((bill, index) => {
+            const paymentMethod = bill.vnp_TxnRef.length > 10 ? "Thanh toán khi nhận hàng" : "Thanh toán bằng VNPay";
+            return {
+                ...bill._doc,
+                totalBillDetails: totalBillDetailsArray[index],
+                paymentMethod: paymentMethod,
+                totalPaymentFormatted: formatPrice(bill.totalPayment),
+            };
+        });
+
+        // Tính đúng số lượng trang
+        let page_length = Math.ceil(totalBillDetailsArray.length / limit);
+
+        // Kiểm tra nếu page vượt quá page_length, gán page bằng page_length
+        if (page > page_length) {
+            page = page_length;
+        }
+
+        res.render('cosplay_suit/billCancelled', { listDH: listDH, username: username, page_length: page_length, page: page });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Lỗi khi truy vấn dữ liệu từ MongoDB.');
+    }
+};

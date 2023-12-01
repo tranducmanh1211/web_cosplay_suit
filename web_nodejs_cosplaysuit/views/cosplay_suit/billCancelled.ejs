@@ -107,12 +107,8 @@
     h1 {
       margin: 20px 10px;
     }
-    .formatted-price::after {
-  content: "vnđ";
-}
-
+    
   </style>
-  
 </head>
 
 <body>
@@ -176,15 +172,16 @@
       <div class="main-top">
         <h3 style="font-size: 20px;margin-bottom: 0px;">Quản lý đơn hàng</h3>
       </div>
+      
       <div class="main-top1">
 
         <div class="d-flex justify-content-start mb-3">
           <ul class="nav nav-tabs">
               <li class="nav-item">
-                  <a class="nav-link active" href="/billw/getbilldone">Đã Hoàn Thành</a>
+                  <a class="nav-link " href="/billw/getbilldone">Đã Hoàn Thành</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="/billw/getbillcancelled">Đã Hủy</a>
+                  <a class="nav-link active" href="/billw/getbillcancelled">Đã Hủy</a>
               </li>
               
           </ul>
@@ -192,7 +189,7 @@
         <table class="table table-bordered" style="border: 1px solid rgb(234, 226, 226);">
           <thead>
             <tr>
-              <th colspan="7">
+              <th colspan="6">
                 <div class="container" style="text-align: center;">
                   <div class="" style="display: flex;padding: 10px;justify-content: space-between;align-items: center;">
                     <div style="display: flex;">
@@ -208,7 +205,7 @@
                         <path d="M9 17h.01"></path>
                         <path d="M12 16l1 1l3 -3"></path>
                       </svg>
-                      <h5 style="margin-left: 10px;">Đơn Hàng Đã Hoàn Thành</h5>
+                      <h5 style="margin-left: 10px;">Đơn Hàng Đã Hủy</h5>
                     </div>
                     <div>
                       <form class="d-flex" role="search" id="searchForm">
@@ -222,50 +219,49 @@
                 </div>
               </th>
             </tr>
-      
-          <thead>
-            <tr>
-              <th scope="col">STT</th>
-              <th scope="col">Name Shop
-              </th>
-              <th scope="col">Name User</th>
-              <th scope="col">Time</th>
-              <th scope="col">Số lượng SP</th>
-              <th scope="col">Phương Thức TT</th>
-              <th scope="col">Total Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% let count=1; %>
-            <% listDH.forEach( ( row )=> { %>
-                <tr class="tr_hover">
-                  <td>
-                    <%= count %>
-                  </td>
-                  <td class="td_name">
-                    <%= row.id_shop.nameshop %>
-                  </td>
-                  <td>
-                    <%= row.id_user.fullname %>
-                  </td>
-                  <td>
-                    <%= row.timeend %>
-                  </td>
-                  <td>
-                    <%= row.totalBillDetails%>
-                  </td>
-                  <td>
-                    <%= row.paymentMethod%>
-                  </td>
-                  <td>
-                   <%= row.totalPaymentFormatted %>
-                  
-                   </td>
-             
+         
+            <thead>
+                <tr>
+                  <th scope="col">STT</th>
+                  <th scope="col">Name Shop
+                  </th>
+                  <th scope="col">Name User</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Số lượng SP</th>
+                  <th scope="col">Phương Thức TT</th>
+                  <th scope="col">Total Price</th>
                 </tr>
-                <% count +=1; %>
-                <% } ) %>
-          </tbody>
+              </thead>
+              <tbody>
+                <% let count=1; %>
+                <% listDH.forEach( ( row )=> { %>
+                    <tr class="tr_hover">
+                      <td>
+                        <%= count %>
+                      </td>
+                      <td class="td_name">
+                        <%= row.id_shop.nameshop %>
+                      </td>
+                      <td>
+                        <%= row.id_user.fullname %>
+                      </td>
+                      <td>
+                        <%= row.timeend %>
+                      </td>
+                      <td>
+                        <%= row.totalBillDetails%>
+                      </td>
+                      <td>
+                        <%= row.paymentMethod%>
+                      </td>
+                      <td>
+                        <%= row.totalPaymentFormatted %>
+                       </td>
+                 
+                    </tr>
+                    <% count +=1; %>
+                    <% } ) %>
+              </tbody>
         </table>
       </div>
 
