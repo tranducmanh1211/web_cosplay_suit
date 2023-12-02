@@ -116,7 +116,7 @@ exports.upproductsl = async (req, res, next) => {
         const newAmount = req.body.amount; // Giá trị mới cho trường amount
 
         // Lấy thông tin sản phẩm từ tb_productModel
-        const existingProduct = await mydbproduct.tb_productModel.findByIdAndUpdate({_id: _id});
+        const existingProduct = await mydbproduct.tb_productModel.findOne({_id: _id});
         existingProduct.amount -= newAmount;
         existingProduct.sold += newAmount;
         existingProduct.listProp.forEach(prop => {
@@ -126,11 +126,12 @@ exports.upproductsl = async (req, res, next) => {
                 prop.amount -= newAmount;
             }
         });
-        const updatedProduct = await existingProduct.save();
-        console.log(updatedProduct);
-
+        let newcart = await mydbproduct.tb_productModel.findByIdAndUpdate(_id, existingProduct);
+        // const updatedProduct = await existingProduct.save();
+        console.log(newcart);
+        
         return res.status(200).json({
-            data: updatedProduct,
+            data: newcart,
             stu: 1,
             msg: "Sửa thành công"
         });
