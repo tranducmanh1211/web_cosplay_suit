@@ -11,7 +11,8 @@ routes.put('/updateSP/:id', tb_productCtrl.updateProduct);
 routes.delete('/delSP/:id', tb_productCtrl.delProduct);
 routes.post('/addSP', tb_productCtrl.AddProduct);
 // routes.get('/listImage/:id', tb_productCtrl.getlListImage);
-
+routes.get('/getlistsptrending', tb_productCtrl.getproductTreding);
+routes.get('/getlistsptrending/:id_shop', tb_productCtrl.getproductByIdShopTreding);
 
 routes.get('/getlistprobyidcat/:id_category', tb_productCtrl.getListProByIdCat);
 //lấy danh sách properties
