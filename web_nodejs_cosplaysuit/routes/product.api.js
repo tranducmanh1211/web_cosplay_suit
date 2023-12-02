@@ -4,7 +4,7 @@ var tb_productCtrl = require('../controllers/API/Product.Api');
 var tb_CategoryCtrl = require('../controllers/API/Category.Api');
 
 routes.get('/getlistsp', tb_productCtrl.getlListSanPham);
-routes.get('/getlistsp/:id_shop', tb_productCtrl.getproductUser);
+routes.get('/getlistsp/:id_shop/:id_category', tb_productCtrl.getproductUser);
 routes.get('/getlistsplimit/:id_shop', tb_productCtrl.getproductByIdShop);
 routes.get('/getlistsp/:id_shop/:page', tb_productCtrl.getproductByIdShopPage);
 routes.put('/updateSP/:id', tb_productCtrl.updateProduct);
@@ -17,6 +17,7 @@ routes.get('/getproperties/:id_product', tb_productCtrl.getproperties);
 routes.get('/products/:id', tb_productCtrl.productById);
 //
 routes.get('/getCategoryApp', tb_CategoryCtrl.getCategory);
+routes.get('/searchProduct/:id_shop', tb_productCtrl.SearchproductUser);
 
 
 
