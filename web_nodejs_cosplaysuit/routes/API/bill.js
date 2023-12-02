@@ -41,6 +41,7 @@ routes.get('/getallmualaisp/:id',tb_billdetailCtrl.Getallmualaisp);
 
 //update số lượng trong sản phẩm
 routes.post('/upsoluongproduct', tb_billCtrl.upsoluongproduct);
+routes.post('/upproducts/:id', tb_billCtrl.upproductsl);
 
 
 module.exports = routes;

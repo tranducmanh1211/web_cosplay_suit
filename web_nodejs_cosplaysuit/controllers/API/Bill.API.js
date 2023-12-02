@@ -109,3 +109,36 @@ exports.upsoluongproduct = async(req, res, next) => {
     });
 }
 
+exports.upproductsl = async (req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const nameproperties = req.body.nameproperties; // Giá trị của trường nameproperties cần cập nhật
+        const newAmount = req.body.amount; // Giá trị mới cho trường amount
+
+        // Lấy thông tin sản phẩm từ tb_productModel
+        const existingProduct = await mydbproduct.tb_productModel.findByIdAndUpdate({_id: _id});
+        existingProduct.amount -= newAmount;
+        existingProduct.sold += newAmount;
+        existingProduct.listProp.forEach(prop => {
+            const correspondingPropInCart = nameproperties === prop.nameproperties;
+            
+            if (correspondingPropInCart) {
+                prop.amount -= newAmount;
+            }
+        });
+        const updatedProduct = await existingProduct.save();
+        console.log(updatedProduct);
+
+        return res.status(200).json({
+            data: updatedProduct,
+            stu: 1,
+            msg: "Sửa thành công"
+        });
+    } catch (error) {
+        console.error("Error in upproductsl:", error);
+        return res.status(500).json({ stu: 0, msg: "Internal server error" });
+    }
+};
+
+
+
