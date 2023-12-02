@@ -208,7 +208,7 @@ exports.AddBilldetail = async (req, res, next) => {
 }
 exports.Getdsmualaisp = async(req, res, next) => {
     //lấy idbill từ iduser truyền vào
-    const id_bill = await myMD.tb_billModel.find({id_user: req.params.id}).select('_id');
+    const id_bill = await myMD.tb_billModel.find({$and: [{id_user: req.params.id} , {status: 'Done'}]}).select('_id');
     // Lấy danh sách idbill từ kết quả trên
     const idbilllist = id_bill.map(hd => hd._id);
     //Tìm ra bản ghi của idbill
@@ -233,7 +233,7 @@ exports.Getdsmualaisp = async(req, res, next) => {
 }
 exports.Getallmualaisp = async(req, res, next) => {
     //lấy idbill từ iduser truyền vào
-    const id_bill = await myMD.tb_billModel.find({id_user: req.params.id}).select('_id');
+    const id_bill = await myMD.tb_billModel.find({$and: [{id_user: req.params.id} , {status: 'Done'}]}).select('_id');
     // Lấy danh sách idbill từ kết quả trên
     const idbilllist = id_bill.map(hd => hd._id);
     //Tìm ra bản ghi của idbill
