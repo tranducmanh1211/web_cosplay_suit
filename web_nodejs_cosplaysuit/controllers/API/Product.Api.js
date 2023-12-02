@@ -22,9 +22,28 @@ exports.getproductUser = async (req, res, next) => {
         if (typeof req.params.id_shop !== 'undefined') {
             dieu_kien_loc.id_shop = req.params.id_shop;
         }
-        if (typeof req.params.id_category !== 'undefined') {
-            dieu_kien_loc.id_category = req.params.id_category;
+
+
+        // Lấy danh sách sản phẩm kèm theo tên thể loại
+        const list = await myMDD.tb_productModel.find(dieu_kien_loc);
+
+        res.send(list);
+    } catch (error) {
+        // Xử lý lỗi nếu có
+        next(error);
+    }
+}
+exports.getproductCategory = async (req, res, next) => {
+    try {
+        let dieu_kien_loc = {};
+
+        if (typeof req.params.id_shop !== 'undefined') {
+            dieu_kien_loc.id_shop = req.params.id_shop;
         }
+        if (typeof req.query.id_category !== 'undefined') {
+            dieu_kien_loc.id_category = req.query.id_category;
+        }
+
 
         // Lấy danh sách sản phẩm kèm theo tên thể loại
         const list = await myMDD.tb_productModel.find(dieu_kien_loc).populate('id_category');
@@ -247,14 +266,14 @@ exports.getListProByIdCat = async (req, res, next) => {
     try {
         let idCat = req.params.id_category;
 
-    
+
         var list = await myMDD.tb_productModel.aggregate([
             {
                 $match: { id_category: new mongoose.Types.ObjectId(idCat) }
             },
             {
                 $lookup: {
-                    from: "comments", 
+                    from: "comments",
                     localField: "_id",
                     foreignField: "id_product",
                     as: "comments"
@@ -275,9 +294,9 @@ exports.getListProByIdCat = async (req, res, next) => {
                     size: 1,
                     status: 1,
                     time_product: 1,
-                    starCount: { $size: "$comments" }, 
-                    totalStars: { $sum: "$comments.star" }, 
-                    avgStars: { $avg: "$comments.star" } 
+                    starCount: { $size: "$comments" },
+                    totalStars: { $sum: "$comments.star" },
+                    avgStars: { $avg: "$comments.star" }
                 }
             }
         ]);
