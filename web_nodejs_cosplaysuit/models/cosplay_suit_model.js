@@ -19,7 +19,7 @@ const tb_product = new db.mongoose.Schema(
         id_category: { type: db.mongoose.Schema.Types.ObjectId, ref: 'categoryModel' },
         nameproduct: { type: String, require: true },
         price: { type: Number, require: true },
-        amount: { type: String, require: true },
+        amount: { type: Number, require: true },
         image: { type: String, require: true },
         listImage: { type: Array, require: true },
         listProp: { type: Array, require: true },
