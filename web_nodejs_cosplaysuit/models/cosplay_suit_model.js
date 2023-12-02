@@ -26,6 +26,7 @@ const tb_product = new db.mongoose.Schema(
         description: { type: String, require: true },
         size: { type: String, require: true },
         status: { type: Boolean, require: true },
+        sold: { type: Number, require: true },
         time_product: { type: String, require: true }
     },
     {
@@ -65,7 +66,7 @@ const tb_voucher = new db.mongoose.Schema(
         discount: { type: String, require: true },
         amount: { type: String, require: true },
         content: { type: String, require: true }
-      
+
     },
     {
         collection: 'voucher'
@@ -79,4 +80,4 @@ let tb_productModel = db.mongoose.model('prodcutModel', tb_product);
 let tb_propertiesModel = db.mongoose.model('properties', tb_properties);
 let tb_voucherModel = db.mongoose.model('voucherModel', tb_voucher);
 
-module.exports = { tb_categoryModel, tb_productModel, tb_propertiesModel, tb_commentsModel,tb_voucherModel };
+module.exports = { tb_categoryModel, tb_productModel, tb_propertiesModel, tb_commentsModel, tb_voucherModel };
