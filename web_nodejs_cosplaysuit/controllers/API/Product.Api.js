@@ -16,15 +16,43 @@ exports.getlListSanPham = async (req, res, next) => {
     res.send(list);
 }
 exports.getproductUser = async (req, res, next) => {
-    let dieu_kien_loc = null;
+    try {
+        let dieu_kien_loc = {};
 
-    if (typeof req.params.id_shop !== 'undefined') {
-        dieu_kien_loc = { id_shop: req.params.id_shop };
+        if (typeof req.params.id_shop !== 'undefined') {
+            dieu_kien_loc.id_shop = req.params.id_shop;
+        }
+        if (typeof req.params.id_category !== 'undefined') {
+            dieu_kien_loc.id_category = req.params.id_category;
+        }
+
+        // Lấy danh sách sản phẩm kèm theo tên thể loại
+        const list = await myMDD.tb_productModel.find(dieu_kien_loc).populate('id_category');
+
+        res.send(list);
+    } catch (error) {
+        // Xử lý lỗi nếu có
+        next(error);
     }
-    //lấy danh sách sản phẩm kèm theo tên thể loại
-    var list = await myMDD.tb_productModel.find(dieu_kien_loc);
+}
 
-    res.send(list);
+exports.SearchproductUser = async (req, res, next) => {
+    try {
+        let dieu_kien_loc = {};
+
+        if (typeof req.params.id_shop !== 'undefined') {
+            dieu_kien_loc.id_shop = req.params.id_shop;
+        }
+
+        if (typeof req.query.nameproduct !== 'undefined') {
+            dieu_kien_loc.nameproduct = new RegExp('.*' + req.query.nameproduct + '.*');
+        }
+
+        const list = await myMDD.tb_productModel.find(dieu_kien_loc);
+        res.send(list);
+    } catch (error) {
+        res.status(500).send({ error: 'Internal server error' });
+    }
 }
 exports.AddProduct = async (req, res, next) => {
 
@@ -202,12 +230,12 @@ exports.getproductByIdShopPage = async (req, res, next) => {
 
     let list1 = await myMDD.tb_productModel.find({ id_shop: req.params.id_shop });
     let page_length = Math.ceil(list1.length / limit);
-    console.log("page",page);
-    console.log("limit",limit);
-    console.log("skip",skip);
-    console.log("page_length",page_length);
+    console.log("page", page);
+    console.log("limit", limit);
+    console.log("skip", skip);
+    console.log("page_length", page_length);
     var list = await myMDD.tb_productModel.find({ id_shop: req.params.id_shop }).skip(skip)
-    .limit(limit);
+        .limit(limit);
 
     res.json({
         dtoSanPham: list,
