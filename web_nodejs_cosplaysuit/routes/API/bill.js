@@ -34,14 +34,20 @@ routes.get('/getstatuswait/:type/:id',tb_billdetailCtrl.getstatuswait);
 routes.get('/getstatusPack/:type/:id',tb_billdetailCtrl.getstatusPack);
 routes.get('/getstatusDelivery/:type/:id',tb_billdetailCtrl.getstatusDelivery);
 routes.get('/getstatusDone/:type/:id',tb_billdetailCtrl.getstatusDone);
+routes.get('/getstatusCancelled/:type/:id',tb_billdetailCtrl.getstatusCancelled);
+routes.get('/getstatusReturns/:type/:id',tb_billdetailCtrl.getstatusReturns);
+
 
 routes.post('/addbilldetail',tb_billdetailCtrl.AddBilldetail);
 routes.get('/getdsmualaisp/:id',tb_billdetailCtrl.Getdsmualaisp);
 routes.get('/getallmualaisp/:id',tb_billdetailCtrl.Getallmualaisp);
+routes.get('/getIdbilldetail/:id', tb_billdetailCtrl.GetIdbilldetail);
 
 //update số lượng trong sản phẩm
 routes.post('/upsoluongproduct', tb_billCtrl.upsoluongproduct);
 routes.post('/upproducts/:id', tb_billCtrl.upproductsl);
+
+routes.get('/checkspuser/:id', tb_billCtrl.checkspuser);
 
 
 module.exports = routes;

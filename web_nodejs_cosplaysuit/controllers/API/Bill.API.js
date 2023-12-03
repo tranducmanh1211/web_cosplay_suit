@@ -108,7 +108,6 @@ exports.upsoluongproduct = async(req, res, next) => {
         return updatedListProduct;
     });
 }
-
 exports.upproductsl = async (req, res, next) => {
     try {
         const _id = req.params.id;
@@ -140,6 +139,15 @@ exports.upproductsl = async (req, res, next) => {
         return res.status(500).json({ stu: 0, msg: "Internal server error" });
     }
 };
+exports.checkspuser = async (req, res, next) => {
+    let dieu_kien_loc = null;
+    if (typeof (req.params.id) != 'undefined') {
+        dieu_kien_loc = { _id: req.params.id};
+    }
+
+    let product = await mydbproduct.tb_productModel.findOne(dieu_kien_loc).select('id_shop').populate('id_shop');
+    res.json(product)
+}
 
 
 

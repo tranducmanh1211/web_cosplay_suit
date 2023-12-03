@@ -16,7 +16,6 @@ exports.getstatuswait = async (req, res, next) => {
     } else if (type === "shop") {
         if (typeof (req.params.id) != 'undefined') {
             const idshop = await myDBshop.tb_shopModel.findOne({id_user: req.params.id}).select('_id');
-
             dieu_kien_loc = { id_shop: idshop};
         }
     }else {
@@ -47,7 +46,6 @@ exports.getstatuswait = async (req, res, next) => {
     
     res.json(uniqueObjects);
 }
-
 exports.getstatusPack = async (req, res, next) => {
 
     let dieu_kien_loc = null;
@@ -91,51 +89,6 @@ exports.getstatusPack = async (req, res, next) => {
     
     res.json(uniqueObjects);
 }
-
-exports.getstatusDone = async (req, res, next) => {
-
-    let dieu_kien_loc = null;
-    const type = req.params.type;
-
-    if (type === "user") {   
-        if (typeof (req.params.id) != 'undefined') {
-            dieu_kien_loc = { id_user: req.params.id};
-        }
-    } else if (type === "shop") {
-        if (typeof (req.params.id) != 'undefined') {
-            const idshop = await myDBshop.tb_shopModel.findOne({id_user: req.params.id}).select('_id');
-
-            dieu_kien_loc = { id_shop: idshop};
-        }
-    }else {
-        console.log('Giá trị null không tìm thấy');
-    }
-
-    // Tìm danh sách hóa đơn theo idUser
-    const hoaDonList = await myMD.tb_billModel.find({$and: [dieu_kien_loc , {status: 'Done'}]}).select('_id').lean();
-    
-    // Lấy danh sách idHoaDon từ kết quả trên
-    const idHoaDonList = hoaDonList.map(hd => hd._id);
-
-    // Lấy danh sách id_bill duy nhất từ bảng tb_billdetailsModel
-    const distinctIdBillList = await myMD.tb_billdetailsModel.distinct('id_bill', { id_bill: { $in: idHoaDonList } });
-
-    // Lặp qua danh sách id_bill và lấy một đối tượng cho mỗi id_bill
-    const uniqueObjects = [];
-    for (const idBill of distinctIdBillList) {
-    const hoaDonChiTiet = await myMD.tb_billdetailsModel
-        .findOne({ id_bill: idBill })
-        .populate([
-        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
-        { path: 'id_product' }
-        ]);
-
-    uniqueObjects.push(hoaDonChiTiet);
-    }
-    
-    res.json(uniqueObjects);
-}
-
 exports.getstatusDelivery = async (req, res, next) => {
 
     let dieu_kien_loc = null;
@@ -179,7 +132,135 @@ exports.getstatusDelivery = async (req, res, next) => {
     
     res.json(uniqueObjects);
 }
+exports.getstatusDone = async (req, res, next) => {
 
+    let dieu_kien_loc = null;
+    const type = req.params.type;
+
+    if (type === "user") {   
+        if (typeof (req.params.id) != 'undefined') {
+            dieu_kien_loc = { id_user: req.params.id};
+        }
+    } else if (type === "shop") {
+        if (typeof (req.params.id) != 'undefined') {
+            const idshop = await myDBshop.tb_shopModel.findOne({id_user: req.params.id}).select('_id');
+
+            dieu_kien_loc = { id_shop: idshop};
+        }
+    }else {
+        console.log('Giá trị null không tìm thấy');
+    }
+
+    // Tìm danh sách hóa đơn theo idUser
+    const hoaDonList = await myMD.tb_billModel.find({$and: [dieu_kien_loc , {status: 'Done'}]}).select('_id').lean();
+    
+    // Lấy danh sách idHoaDon từ kết quả trên
+    const idHoaDonList = hoaDonList.map(hd => hd._id);
+
+    // Lấy danh sách id_bill duy nhất từ bảng tb_billdetailsModel
+    const distinctIdBillList = await myMD.tb_billdetailsModel.distinct('id_bill', { id_bill: { $in: idHoaDonList } });
+
+    // Lặp qua danh sách id_bill và lấy một đối tượng cho mỗi id_bill
+    const uniqueObjects = [];
+    for (const idBill of distinctIdBillList) {
+    const hoaDonChiTiet = await myMD.tb_billdetailsModel
+        .findOne({ id_bill: idBill })
+        .populate([
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_product' }
+        ]);
+
+    uniqueObjects.push(hoaDonChiTiet);
+    }
+    
+    res.json(uniqueObjects);
+}
+exports.getstatusCancelled = async (req, res, next) => {
+
+    let dieu_kien_loc = null;
+    const type = req.params.type;
+
+    if (type === "user") {   
+        if (typeof (req.params.id) != 'undefined') {
+            dieu_kien_loc = { id_user: req.params.id};
+        }
+    } else if (type === "shop") {
+        if (typeof (req.params.id) != 'undefined') {
+            const idshop = await myDBshop.tb_shopModel.findOne({id_user: req.params.id}).select('_id');
+
+            dieu_kien_loc = { id_shop: idshop};
+        }
+    }else {
+        console.log('Giá trị null không tìm thấy');
+    }
+
+    // Tìm danh sách hóa đơn theo idUser
+    const hoaDonList = await myMD.tb_billModel.find({$and: [dieu_kien_loc , {status: 'Cancelled'}]}).select('_id').lean();
+    
+    // Lấy danh sách idHoaDon từ kết quả trên
+    const idHoaDonList = hoaDonList.map(hd => hd._id);
+
+    // Lấy danh sách id_bill duy nhất từ bảng tb_billdetailsModel
+    const distinctIdBillList = await myMD.tb_billdetailsModel.distinct('id_bill', { id_bill: { $in: idHoaDonList } });
+
+    // Lặp qua danh sách id_bill và lấy một đối tượng cho mỗi id_bill
+    const uniqueObjects = [];
+    for (const idBill of distinctIdBillList) {
+    const hoaDonChiTiet = await myMD.tb_billdetailsModel
+        .findOne({ id_bill: idBill })
+        .populate([
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_product' }
+        ]);
+
+    uniqueObjects.push(hoaDonChiTiet);
+    }
+    
+    res.json(uniqueObjects);
+}
+exports.getstatusReturns = async (req, res, next) => {
+
+    let dieu_kien_loc = null;
+    const type = req.params.type;
+
+    if (type === "user") {   
+        if (typeof (req.params.id) != 'undefined') {
+            dieu_kien_loc = { id_user: req.params.id};
+        }
+    } else if (type === "shop") {
+        if (typeof (req.params.id) != 'undefined') {
+            const idshop = await myDBshop.tb_shopModel.findOne({id_user: req.params.id}).select('_id');
+
+            dieu_kien_loc = { id_shop: idshop};
+        }
+    }else {
+        console.log('Giá trị null không tìm thấy');
+    }
+
+    // Tìm danh sách hóa đơn theo idUser
+    const hoaDonList = await myMD.tb_billModel.find({$and: [dieu_kien_loc , {status: 'Returns'}]}).select('_id').lean();
+    
+    // Lấy danh sách idHoaDon từ kết quả trên
+    const idHoaDonList = hoaDonList.map(hd => hd._id);
+
+    // Lấy danh sách id_bill duy nhất từ bảng tb_billdetailsModel
+    const distinctIdBillList = await myMD.tb_billdetailsModel.distinct('id_bill', { id_bill: { $in: idHoaDonList } });
+
+    // Lặp qua danh sách id_bill và lấy một đối tượng cho mỗi id_bill
+    const uniqueObjects = [];
+    for (const idBill of distinctIdBillList) {
+    const hoaDonChiTiet = await myMD.tb_billdetailsModel
+        .findOne({ id_bill: idBill })
+        .populate([
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_product' }
+        ]);
+
+    uniqueObjects.push(hoaDonChiTiet);
+    }
+    
+    res.json(uniqueObjects);
+}
 exports.AddBilldetail = async (req, res, next) => {
 
     let add = new myMD.tb_billdetailsModel();
@@ -253,5 +334,19 @@ exports.Getallmualaisp = async(req, res, next) => {
         ]);
 
     res.json(list);
+
+}
+exports.GetIdbilldetail = async(req, res, next) =>{
+    let id_bill = req.params.id;
+    try{
+        let listbilldetail = await myMD.tb_billdetailsModel.find({id_bill: id_bill}).populate([
+            { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+            { path: 'id_product' }
+            ]);
+        res.json(listbilldetail);
+
+    }catch{
+        console.error(error);
+    }
 
 }
