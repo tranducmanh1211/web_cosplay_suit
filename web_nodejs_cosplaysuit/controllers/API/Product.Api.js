@@ -40,13 +40,13 @@ exports.getproductCategory = async (req, res, next) => {
         if (typeof req.params.id_shop !== 'undefined') {
             dieu_kien_loc.id_shop = req.params.id_shop;
         }
-        if (typeof req.query.id_category !== 'undefined') {
-            dieu_kien_loc.id_category = req.query.id_category;
+        if (typeof req.params.id_category !== 'undefined') {
+            dieu_kien_loc.id_category = req.params.id_category;
         }
 
 
         // Lấy danh sách sản phẩm kèm theo tên thể loại
-        const list = await myMDD.tb_productModel.find(dieu_kien_loc).populate('id_category');
+        const list = await myMDD.tb_productModel.find(dieu_kien_loc);
 
         res.send(list);
     } catch (error) {
