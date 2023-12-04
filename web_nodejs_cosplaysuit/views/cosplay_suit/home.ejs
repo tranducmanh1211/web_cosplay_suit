@@ -149,10 +149,10 @@
             </a>
           </li>
           <li><a class="nav-link" href="/billw/getbilldone" style="font-size: 16px;color: rgb(85, 83, 83);">
-            <i class="fa fa-kaaba"></i>
-            <span class="nav-item">Quản lý đơn hàng</span>
-          </a>
-        </li>
+              <i class="fa fa-kaaba"></i>
+              <span class="nav-item">Quản lý đơn hàng</span>
+            </a>
+          </li>
           <li><a class="nav-link" href="/salesman/home/quanlynguoiban" style="font-size: 16px;color: rgb(85, 83, 83);">
 
               <i class="fas fa-tasks"></i>
@@ -205,13 +205,29 @@
                         <path d="M9 17h.01"></path>
                         <path d="M12 16l1 1l3 -3"></path>
                       </svg>
-                      <h5 style="margin-left: 10px;margin-bottom: 0px;">Danh Sách Người Dùng</h5>
+                      <h5 style="margin-left: 10px;margin-bottom: 0px;">Danh Sách Sản Phẩm</h5>
                     </div>
+
+                    <form class="d-flex" role="search" action="/users/home" method="GET">
+                      <select class="form-select" aria-label="Default select example" name="id_category"
+                        style="margin-right: 10px; width: 150px;">
+                        <option value="all">Tất Cả</option>
+                        <% listTL.forEach((row)=> { %>
+                          <option value="<%= row._id  %>">
+                            <%= row.name %>
+                          </option>
+                          <% }) %>
+                      </select>
+
+                      <button class="btn btn-outline-success" type="submit">Lọc</button>
+                    </form>
+
+
                     <div>
-                      <form class="d-flex" role="search">
-                        <input style="width: 370px;" class="form-control me-2" type="search"
-                          placeholder="Search by email address, phone number" aria-label="Search" name="email">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                      <form class="d-flex" role="search" id="searchForm">
+                        <input class="form-control me-2" type="search" style="width: 300px;"
+                          placeholder="Enter Name Shop" aria-label="Search" name="nameShop" id="searchInput">
+                        <button class="btn btn-outline-success" type="button" onclick="search()">Search</button>
                       </form>
                     </div>
                   </div>
@@ -290,64 +306,97 @@
                   </td> -->
                 </tr>
                 <% count +=1; %>
-                  <% } ) %> -->
+                  <% } ) %>
 
           </body>
 
         </table>
       </div>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-12 col-sm-2 col-md-2">
-            <div class="row" style="margin-top: 8px;">
-              <h6>
+      <%if(!(listProduct===null || (Array.isArray(listProduct) && listProduct.length===0))){%>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-2 col-md-2">
+              <div class="row" style="margin-top: 8px;">
+                <h6>
+                  <%=page%>/<%=page_length%>
+                </h6>
+              </div>
+            </div>
+            <div class="col-12 col-sm-7 col-md-7">
+              <div class="row"></div>
+            </div>
+            <div class="col-12 col-sm-3 col-md-3">
+              <div class="row">
+                <nav aria-label="Page navigation example" style="height: 0px;">
+                  <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                      <%if(page>1){%>
+                        <a class="page-link" href="/users/home?page=<%=page-1%>" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <%}%>
 
-              </h6>
+                    </li>
+                    <%for(let i=1;i<=page_length;i++){%>
+                      <li class="page-item"><a class="page-link" href="/users/home?page=<%=i%>">
+                          <%=i%>
+                        </a></li>
+                      <%}%>
+                        <li class="page-item">
+                          <%if(page>=page_length){%>
+
+                            <%}else{%>
+                              <a class="page-link" href="/users/home?page=<%=page+1%>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                              </a>
+                              <%}%>
+
+                        </li>
+                  </ul>
+                </nav>
+              </div>
+
             </div>
           </div>
-          <div class="col-12 col-sm-7 col-md-7">
-            <div class="row"></div>
-          </div>
-          <div class="col-12 col-sm-3 col-md-3">
-            <div class="row">
-              <nav aria-label="Page navigation example" style="height: 0px;">
-                <ul class="pagination justify-content-end">
-                  <li class="page-item">
 
-                    <a class="page-link" href="/salesman/home/quanlynguoiban?page" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-
-
-                  </li>
-
-                  <li class="page-item"><a class="page-link" href="/salesman/home/quanlynguoiban?page">
-
-                    </a></li>
-
-                  <li class="page-item">
-
-
-
-                    <a class="page-link" href="/salesman/home/quanlynguoiban?page" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-
-
-                  </li>
-                </ul>
-              </nav>
-            </div>
-
-          </div>
         </div>
-
-      </div>
+        <%}%>
 
     </section>
 
   </div>
+
+  <script>
+    function search() {
+      var input = document.getElementById('searchInput');
+      var filter = input.value.toUpperCase();
+      var table = document.querySelector('table');
+      var rows = table.getElementsByTagName('tr');
+
+      for (var i = 0; i < rows.length; i++) {
+        var nameShopCell = rows[i].getElementsByClassName('td_name')[0];
+
+        if (nameShopCell) {
+          var nameShopText = nameShopCell.textContent || nameShopCell.innerText;
+
+          if (nameShopText.toUpperCase().indexOf(filter) > -1) {
+            rows[i].style.display = '';
+          } else {
+            rows[i].style.display = 'none';
+          }
+        }
+      }
+    }
+    document.getElementById('searchInput').addEventListener('keyup', function (event) {
+      if (event.key === 'Enter') {
+        search();
+      }
+    });
+
+
+
+  </script>
   <script src="/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
