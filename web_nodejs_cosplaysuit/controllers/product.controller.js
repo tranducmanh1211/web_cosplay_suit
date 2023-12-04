@@ -1,6 +1,9 @@
 var myMD = require('../models/cosplau_suit_user_model');
 var myUser = require('../models/cosplay_suit_model');
 
+const mongoose = require('mongoose');
+const { Types } = mongoose;
+
 exports.homeWeb = async (req, res, next) => {
     console.log(req.session.userU);
     var username = req.session.userU.fullname;
@@ -84,7 +87,6 @@ exports.quanlyKHVoHieuHoa = async (req, res, next) => {
     let list = await myMD.tb_userModel.find();
     let page_length = Math.ceil(list.length / limit);
     //page_length = 3
-
     let listUser = await myMD.tb_userModel.find({ $and: [{ role: { $ne: "Admin" } }, dieu_Kien] })
         .skip(skip)
         .limit(limit);
@@ -137,30 +139,32 @@ exports.deleteKHbyID = async (req, res, next) => {
     }
     res.render('navigation_view/quanlykhachhang');
 }
-
 exports.getProduct = async (req, res, next) => {
     let username = req.session.userU.fullname;
     let dieu_kien_loc = null;
     let page = Number(req.query.page) || 1;
     let limit = Number(req.query.limit) || 5;
     let skip = (page - 1) * limit;
-    if (typeof req.query.nameproduct !== 'undefined') {
-        const keyword = req.query.nameproduct;
-        const regex = new RegExp('.*' + keyword + '.*', 'i');
-        dieu_kien_loc = { nameproduct: regex };
+
+    let listTL = await myUser.tb_categoryModel.find();
+    if (typeof req.query.id_category !== 'undefined' && req.query.id_category !== 'all') {
+        dieu_kien_loc = { id_category: req.query.id_category };
     }
 
-    try {
-        var list = await myUser.tb_productModel.find()
-        let page_length = Math.ceil(list.length / limit);
 
-        var list = await myUser.tb_productModel.find(dieu_kien_loc).skip(skip).populate('id_shop').populate('id_category')
-            .limit(limit);;
-        res.render('cosplay_suit/home', { listProduct: list, username: username, page_length: page_length, page: page });
+    try {
+        var list = await myUser.tb_productModel.find(dieu_kien_loc)
+        let page_length = Math.ceil(list.length / limit);
+        var list = await myUser.tb_productModel.find(dieu_kien_loc)
+            .skip(skip)
+            .populate('id_shop')
+            .populate('id_category')
+            .limit(limit);
+
+        res.render('cosplay_suit/home', { listProduct: list, username: username, page_length: page_length, page: page, listTL: listTL });
+
     } catch (error) {
         console.error(error);
         return res.status(500).send('Lỗi khi truy vấn dữ liệu từ MongoDB.');
     }
 };
-
-
