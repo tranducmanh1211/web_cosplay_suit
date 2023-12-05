@@ -62,16 +62,25 @@ const tb_comments = new db.mongoose.Schema(
 const tb_voucher = new db.mongoose.Schema(
     {
         id_shop: { type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_shopModel' },
-        id_user: { type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel' },
         discount: { type: String, require: true },
         amount: { type: String, require: true },
         content: { type: String, require: true }
-
     },
     {
         collection: 'voucher'
     }
 );
+
+const tb_seen_voucher = new db.mongoose.Schema(
+    {
+        id_voucher: { type: db.mongoose.Schema.Types.ObjectId, ref: 'voucherModel'},
+        id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
+        amount : {type : String,require : true}
+    },
+    {
+        collation : "seenVoucher"
+    }
+)
 
 //tạo model
 let tb_commentsModel = db.mongoose.model('commentsModel', tb_comments);
