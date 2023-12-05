@@ -43,6 +43,7 @@ exports.AddBill = async (req, res, next) => {
     let add = new myMD.tb_billModel();
         add.id_user = req.body.id_user;
         add.id_shop = req.body.id_shop;
+        add.id_address = req.body.id_address;
         add.timestart = req.body.timestart;
         add.timeend = req.body.timeend;
         add.status = req.body.status; 
