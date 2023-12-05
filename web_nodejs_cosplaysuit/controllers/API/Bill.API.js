@@ -53,28 +53,37 @@ exports.AddBill = async (req, res, next) => {
     res.json(new_CMD);
 }
 exports.updateBill = async (req, res, next) => {
-    let _id = req.params.id;
+    let objReturn = {}; // Khởi tạo đối tượng kết quả
+    try {
+        const _id = req.params.id;
+        const { status, timeend } = req.body;
 
-    let sua = new myMD.tb_billModel();
-        sua.status = req.body.status; 
-        sua.timeend = req.body.timeend;
+        // Sử dụng findById để tìm bản ghi cần sửa đổi
+        let bill = await myMD.tb_billModel.findById(_id);
 
-    let newcart = await myMD.tb_billModel.findByIdAndUpdate(_id, req.body);
-        try{
-            if(newcart){
-                objReturn.data = newcart;
-                objReturn.stu = 1;
-                objReturn.msg = "Sửa thành công"
-            }else{
-                objReturn.stu = 0;
-                objReturn.msg = "Sửa thất bại"
-            }
-        }catch(error){
+        // Kiểm tra xem bản ghi có tồn tại không
+        if (!bill) {
             objReturn.stu = 0;
-            objReturn.msg = error.msg;
+            objReturn.msg = "Không tìm thấy bản ghi";
+            return res.json(objReturn);
         }
+
+        // Cập nhật thuộc tính
+        bill.status = status;
+        bill.timeend = timeend;
+
+        // Lưu thay đổi vào cơ sở dữ liệu
+        const updatedBill = await bill.save();
+
+        objReturn.data = updatedBill;
+        objReturn.stu = 1;
+        objReturn.msg = "Sửa thành công";
+    } catch (error) {
+        objReturn.stu = 0;
+        objReturn.msg = error.message || "Đã xảy ra lỗi";
+    }
     res.json(objReturn);
-}
+};
 exports.upsoluongproduct = async(req, res, next) => {
     //Lấy danh sách từ trên app gửi về, idList phải đúng tên
     const idList = req.body;
