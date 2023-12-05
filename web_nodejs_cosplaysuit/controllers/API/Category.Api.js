@@ -27,8 +27,20 @@ exports.AddCategory = async (req, res, next) => {
     res.json(objReturn);
 }
 exports.getCategory = async (req, res, next) => {
-   
+
     var list = await myMD.tb_categoryModel.find();
-    
+
+    res.send(list);
+}
+exports.getCategoryCtsp = async (req, res, next) => {
+
+    let dieu_kien_loc = {};
+
+    if (typeof req.params._id !== 'undefined') {
+        dieu_kien_loc.id = req.params._id;
+    }
+
+    var list = await myMD.tb_categoryModel.findOne(dieu_kien_loc);
+
     res.send(list);
 }

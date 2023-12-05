@@ -133,25 +133,15 @@ exports.AddProperties = async (req, res, next) => {
     res.json(objReturn);
 }
 
-exports.updateProduct = async (req, res, next) => {
+exports.updateProductNamePriceDes = async (req, res, next) => {
 
     try {
 
         const addCM = await myMDD.tb_productModel.findById(req.params.id);
 
-        addCM.id_shop = req.body.id_shop;
-        addCM.id_category = req.body.id_category;
         addCM.nameproduct = req.body.nameproduct;
         addCM.price = req.body.price;
-        addCM.amount = req.body.amount;
-        addCM.image = req.body.image;
-        addCM.listImage = req.body.listImage;
-        addCM.listProp = req.body.listProp;
         addCM.description = req.body.description;
-        addCM.size = req.body.size;
-        addCM.status = req.body.status;
-        addCM.sold = req.body.sold;
-        addCM.time_product = req.body.time_product;
 
         const mtSave = await addCM.save();
         res.json(mtSave);
@@ -162,6 +152,89 @@ exports.updateProduct = async (req, res, next) => {
     }
 
 }
+exports.updateProductPop = async (req, res, next) => {
+
+    try {
+        const _id = req.params.id;
+        const namePop = req.params.nameproperties; // Giá trị của trường nameproperties cần cập nhật
+        const newName = req.body.nameproperties; // Giá trị mới cho trường name
+        const newAmount = req.body.amount; // Giá trị mới cho trường amount
+        console.log(namePop + newName + newAmount);
+        // const newName = "ssss"; // Giá trị mới cho trường name
+        // const newAmount = 100;
+        // Lấy thông tin sản phẩm từ tb_productModel
+        const existingProduct = await myMDD.tb_productModel.findOne({ _id: _id });
+        existingProduct.amount = 0;
+        // Cập nhật trường name và amount trong listProp
+        existingProduct.listProp.forEach(prop => {
+            if (namePop === prop.nameproperties) {
+                prop.nameproperties = newName; // Cập nhật trường name
+                prop.amount = newAmount; // Cập nhật trường amount
+
+            }
+            existingProduct.amount += prop.amount
+        });
+
+        // Lưu lại thông tin sản phẩm đã cập nhật
+        const updatedProduct = await myMDD.tb_productModel.findByIdAndUpdate(_id, existingProduct);
+        console.log(updatedProduct);
+        return res.status(200).json(
+            updatedProduct
+        );
+    } catch (error) {
+        console.error("Error in upproductsl:", error);
+        return res.status(500).json({ stu: 0, msg: "Internal server error" });
+    }
+};
+
+// exports.updateProductNamePriceDes = async (req, res, next) => {
+
+//     try {
+
+//         const addCM = await myMDD.tb_productModel.findById(req.params.id);
+
+//         addCM.id_shop = req.body.id_shop;
+//         addCM.id_category = req.body.id_category;
+//         addCM.nameproduct = req.body.nameproduct;
+//         addCM.price = req.body.price;
+//         addCM.amount = req.body.amount;
+//         addCM.image = req.body.image;
+//         addCM.listImage = req.body.listImage;
+//         addCM.listProp = req.body.listProp;
+//         addCM.description = req.body.description;
+//         addCM.size = req.body.size;
+//         addCM.status = req.body.status;
+//         addCM.sold = req.body.sold;
+//         addCM.time_product = req.body.time_product;
+
+//         const mtSave = await addCM.save();
+//         res.json(mtSave);
+//     } catch (error) {
+//         res.send(error)
+//         console.log(error);
+
+//     }
+
+// }
+exports.updateStatus = async (req, res, next) => {
+
+    try {
+
+        const addCM = await myMDD.tb_productModel.findById(req.params.id);
+
+        addCM.status = req.body.status;
+
+        const mtSave = await addCM.save();
+        res.json(mtSave);
+    } catch (error) {
+        res.send(error)
+        console.log(error);
+
+    }
+}
+
+
+
 exports.delProduct = async (req, res, next) => {
     try {
         await myMDD.tb_productModel.findByIdAndDelete(req.params.id, req.body);
@@ -227,8 +300,8 @@ exports.productById = async (req, res, next) => {
 
 }
 
-exports.getproductTreding = async ( req,res,next) =>{
-    var list = await myMDD.tb_productModel.find().sort({sold : -1}).limit(10);
+exports.getproductTreding = async (req, res, next) => {
+    var list = await myMDD.tb_productModel.find().sort({ sold: -1 }).limit(10);
     res.send(list);
 }
 
@@ -244,8 +317,8 @@ exports.getproductByIdShop = async (req, res, next) => {
 
     res.send(list);
 }
-exports.getproductByIdShopTreding = async ( req,res,next) =>{
-    var list = await myMDD.tb_productModel.find({id_shop : req.params.id_shop}).sort({sold : -1}).limit(3);
+exports.getproductByIdShopTreding = async (req, res, next) => {
+    var list = await myMDD.tb_productModel.find({ id_shop: req.params.id_shop }).sort({ sold: -1 }).limit(3);
     res.send(list);
 }
 
@@ -259,7 +332,7 @@ exports.getproductByIdShopPage = async (req, res, next) => {
 
     let list1 = await myMDD.tb_productModel.find({ id_shop: req.params.id_shop });
     let page_length = Math.ceil(list1.length / limit);
- 
+
     var list = await myMDD.tb_productModel.find({ id_shop: req.params.id_shop }).skip(skip)
         .limit(limit);
 
