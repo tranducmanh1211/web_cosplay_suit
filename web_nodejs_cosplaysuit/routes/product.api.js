@@ -15,6 +15,8 @@ routes.get('/getlistsptrending', tb_productCtrl.getproductTreding);
 routes.get('/getlistsptrending/:id_shop', tb_productCtrl.getproductByIdShopTreding);
 
 routes.get('/getlistprobyidcat/:id_category', tb_productCtrl.getListProByIdCat);
+routes.get('/getlistNameSP',tb_productCtrl.getListNameSanPham);
+
 //lấy danh sách properties
 routes.get('/getproperties/:id_product', tb_productCtrl.getproperties);
 routes.get('/products/:id', tb_productCtrl.productById);
