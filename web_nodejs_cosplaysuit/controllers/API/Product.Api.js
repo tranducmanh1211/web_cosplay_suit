@@ -10,8 +10,16 @@ var objReturn1 = {
     msg: 'ok'
 }
 exports.getlListSanPham = async (req, res, next) => {
-    //lấy danh sách sản phẩm kèm theo tên thể loại
-    var list = await myMDD.tb_productModel.find();
+
+    let dieu_kien_loc = null;
+ 
+    if (typeof req.query.nameproduct !== 'undefined') {
+        const keyword = req.query.nameproduct;
+        const regex = new RegExp('.*' + keyword + '.*', 'i');
+        dieu_kien_loc = { nameproduct: regex };
+    }
+
+    var list = await myMDD.tb_productModel.find(dieu_kien_loc);
 
     res.send(list);
 }
@@ -314,3 +322,18 @@ exports.getListProByIdCat = async (req, res, next) => {
         res.status(500).send("Internal Server Error");
     }
 };
+exports.getListNameSanPham = async (req, res, next) => {
+    try {
+       
+        var list = await myMDD.tb_productModel.find();
+
+        var listTenSanPham = list.map(product => product.nameproduct);
+
+
+        res.send({nameproduct: listTenSanPham});
+    } catch (error) {
+ 
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+}
