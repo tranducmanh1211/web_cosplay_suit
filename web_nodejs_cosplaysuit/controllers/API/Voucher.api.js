@@ -87,3 +87,13 @@ exports.listUserByShop = async ( req,res,next) =>{
 
     res.send(list);
 }
+
+exports.seenVoucher = async ( req, res ,next) =>{
+    let seenVoucers = new myMDDD.tb_seenvoucher();
+    seenVoucers.id_user = req.body.id_user;
+    seenVoucers.id_voucher = req.body.id_voucher;
+    let new_CMD = await seenVoucers.save();
+    console.log(new_CMD);
+   
+    res.json(new_CMD);
+}
