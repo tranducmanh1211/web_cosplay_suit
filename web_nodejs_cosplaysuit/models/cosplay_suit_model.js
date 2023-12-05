@@ -74,13 +74,12 @@ const tb_voucher = new db.mongoose.Schema(
 const tb_seen_voucher = new db.mongoose.Schema(
     {
         id_voucher: { type: db.mongoose.Schema.Types.ObjectId, ref: 'voucherModel'},
-        id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
-        amount : {type : String,require : true}
+        id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'}
     },
     {
         collation : "seenVoucher"
     }
-)
+);
 
 //tạo model
 let tb_commentsModel = db.mongoose.model('commentsModel', tb_comments);

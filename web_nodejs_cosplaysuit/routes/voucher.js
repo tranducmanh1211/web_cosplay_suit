@@ -7,5 +7,6 @@ routes.get('/voucher/:id',tb_VcCtrl.getListVoucher);
 routes.put('/upvoucher/:id',tb_VcCtrl.updateProduct);
 routes.post('/postvoucher',tb_VcCtrl.AddVoucher);
 routes.delete('/delvoucher/:id',tb_VcCtrl.delVoucher);
+routes.get('/getdskhachvoucher/:id',tb_VcCtrl.listUserByShop);
 
 module.exports = routes;
