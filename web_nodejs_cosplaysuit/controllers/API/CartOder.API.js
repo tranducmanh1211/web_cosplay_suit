@@ -118,9 +118,13 @@ exports.updateCartOder = async (req, res, next) => {
     let id = req.params.id;
 
     let sua = new myMD.tb_cartoderModel();
+    if (typeof (req.body.amount) != 'undefined' && typeof (req.body.totalPayment) != 'undefined') {
         sua.amount = req.body.amount;
         sua.totalPayment = req.body.totalPayment; 
-
+    }
+    // if (typeof (req.body.amount) != 'undefined') {
+    //     sua.id_properties = req.body.nameproperties;
+    // }
     let newcart = await myMD.tb_cartoderModel.findByIdAndUpdate(id, req.body);
         try{
             if(newcart){
