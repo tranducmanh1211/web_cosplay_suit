@@ -74,13 +74,12 @@ const tb_voucher = new db.mongoose.Schema(
 const tb_seen_voucher = new db.mongoose.Schema(
     {
         id_voucher: { type: db.mongoose.Schema.Types.ObjectId, ref: 'voucherModel'},
-        id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
-        amount : {type : String,require : true}
+        id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'}
     },
     {
         collation : "seenVoucher"
     }
-)
+);
 
 //tạo model
 let tb_commentsModel = db.mongoose.model('commentsModel', tb_comments);
@@ -88,5 +87,5 @@ let tb_categoryModel = db.mongoose.model('categoryModel', tb_category);
 let tb_productModel = db.mongoose.model('prodcutModel', tb_product);
 let tb_propertiesModel = db.mongoose.model('properties', tb_properties);
 let tb_voucherModel = db.mongoose.model('voucherModel', tb_voucher);
-
-module.exports = { tb_categoryModel, tb_productModel, tb_propertiesModel, tb_commentsModel, tb_voucherModel };
+let tb_seenvoucher = db.mongoose.model('seenvoucherModel', tb_seen_voucher);
+module.exports = { tb_categoryModel, tb_productModel, tb_propertiesModel, tb_commentsModel, tb_voucherModel,tb_seenvoucher };
