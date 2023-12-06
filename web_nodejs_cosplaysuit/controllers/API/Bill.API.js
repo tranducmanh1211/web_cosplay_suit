@@ -18,7 +18,7 @@ exports.getidbill = async (req, res, next) => {
     if (typeof (req.params.id) != 'undefined') {
         dieu_kien_loc = { _id: req.params.id};
     }
-    var list = await myMD.tb_billModel.findOne(dieu_kien_loc).populate('id_shop').populate('id_user').populate('id_address');
+    var list = await myMD.tb_billModel.findOne(dieu_kien_loc).populate('id_shop').populate('id_user').populate('id_address').populate('id_thanhtoan');
 
     res.json(list);
 }
@@ -28,7 +28,7 @@ exports.getUserbill = async (req, res, next) => {
     if (typeof (req.params.id_user) != 'undefined') {
         dieu_kien_loc = { id_user: req.params.id_user};
     }
-    var list = await myMD.tb_billModel.find(dieu_kien_loc).populate('id_shop').populate('id_user').populate('id_address');
+    var list = await myMD.tb_billModel.find(dieu_kien_loc).populate('id_shop').populate('id_user').populate('id_address').populate('id_thanhtoan');
 
     res.send(list);
 }
@@ -53,12 +53,12 @@ exports.AddBill = async (req, res, next) => {
     let add = new myMD.tb_billModel();
         add.id_user = req.body.id_user;
         add.id_shop = req.body.id_shop;
+        add.id_thanhtoan = req.body.id_thanhtoan;
         add.id_address = req.body.id_address;
         add.timestart = req.body.timestart;
         add.timeend = req.body.timeend;
         add.status = req.body.status; 
         add.totalPayment = req.body.totalPayment;
-        add.vnp_TxnRef = req.body.vnp_TxnRef;
         add.ma_voucher = req.body.ma_voucher;
     let new_CMD = await add.save();
     res.json(new_CMD);
