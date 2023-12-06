@@ -20,7 +20,7 @@ var thanhtoanVnpayRouter = require('./routes/API/thanhtoanvnpay');
 var billweb = require('./routes/bill');
 var voucherRouter = require('./routes/voucher');
 var categoryApi = require('./routes/API/category');
-
+var tkebill = require('./routes/API/thongke')
 const { error } = require('console');
 
 var app = express();
@@ -56,7 +56,7 @@ app.use('/payment', thanhtoanVnpayRouter);
 app.use('/billw',billweb)
 app.use('/Voucher',voucherRouter);
 app.use('/category/api',categoryApi);
-
+app.use('/thongke', tkebill);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
