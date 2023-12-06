@@ -37,7 +37,7 @@ exports.getstatuswait = async (req, res, next) => {
     const hoaDonChiTiet = await myMD.tb_billdetailsModel
         .findOne({ id_bill: idBill })
         .populate([
-        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }] },
         { path: 'id_product' }
         ]);
 
@@ -80,7 +80,7 @@ exports.getstatusPack = async (req, res, next) => {
     const hoaDonChiTiet = await myMD.tb_billdetailsModel
         .findOne({ id_bill: idBill })
         .populate([
-        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }] },
         { path: 'id_product' }
         ]);
 
@@ -123,7 +123,7 @@ exports.getstatusDelivery = async (req, res, next) => {
     const hoaDonChiTiet = await myMD.tb_billdetailsModel
         .findOne({ id_bill: idBill })
         .populate([
-        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }] },
         { path: 'id_product' }
         ]);
 
@@ -166,7 +166,7 @@ exports.getstatusDone = async (req, res, next) => {
     const hoaDonChiTiet = await myMD.tb_billdetailsModel
         .findOne({ id_bill: idBill })
         .populate([
-        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }] },
         { path: 'id_product' }
         ]);
 
@@ -209,7 +209,7 @@ exports.getstatusCancelled = async (req, res, next) => {
     const hoaDonChiTiet = await myMD.tb_billdetailsModel
         .findOne({ id_bill: idBill })
         .populate([
-        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }] },
         { path: 'id_product' }
         ]);
 
@@ -252,7 +252,7 @@ exports.getstatusReturns = async (req, res, next) => {
     const hoaDonChiTiet = await myMD.tb_billdetailsModel
         .findOne({ id_bill: idBill })
         .populate([
-        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }] },
         { path: 'id_product' }
         ]);
 
@@ -305,7 +305,7 @@ exports.Getdsmualaisp = async(req, res, next) => {
     const list = await myMD.tb_billdetailsModel.find( {id_product: { $in: giaTriKhongTrungLap }, id_bill: { $in: idbilllist }})
     .limit(4)
     .populate([
-        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }] },
         { path: 'id_product' }
         ]);
 
@@ -329,7 +329,7 @@ exports.Getallmualaisp = async(req, res, next) => {
     //Lấy ds tb_billdetailsModel từ ds không trùng
     const list = await myMD.tb_billdetailsModel.find( {id_product: { $in: giaTriKhongTrungLap }, id_bill: { $in: idbilllist }})
     .populate([
-        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }] },
         { path: 'id_product' }
         ]);
 
@@ -340,7 +340,7 @@ exports.GetIdbilldetail = async(req, res, next) =>{
     let id_bill = req.params.id;
     try{
         let listbilldetail = await myMD.tb_billdetailsModel.find({id_bill: id_bill}).populate([
-            { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }] },
+            { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }] },
             { path: 'id_product' }
             ]);
         res.json(listbilldetail);

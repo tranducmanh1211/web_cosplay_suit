@@ -46,7 +46,6 @@ exports.getiduseraddress = async (req, res, next) => {
 exports.Add_address = async (req, res, next) => {
 
     let add = new myMD.tb_addressModel();
-        add.id_bill = req.body.id_bill;
         add.address = req.body.address;
         add.phone = req.body.phone;
         add.fullname = req.body.fullname; 
@@ -66,5 +65,5 @@ exports.Add_address = async (req, res, next) => {
         objReturn.msg = error.msg;
     }
 
-    res.json(objReturn);
+    res.json(new_CMD);
 }

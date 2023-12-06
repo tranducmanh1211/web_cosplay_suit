@@ -141,7 +141,7 @@
           width: 100%;
         }
 
-        .td_name {
+         /* .td_name {
           max-width: 0;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -152,6 +152,13 @@
           max-width: 0;
           overflow: visible;
           white-space: pre-line;
+        } */
+        .td_name{
+          color: black;
+          text-decoration: none;
+        }
+        .td_name:hover{
+          font-weight: bold;
         }
       </style>
     </head>
@@ -329,8 +336,8 @@
                     <td>
                       <%=sum%>
                     </td>
-                    <td class="td_name">
-                      <a href="/salesman/home/getCT/<%=i._id%>"><%= i.nameshop %></a>
+                    <td>
+                      <a class="td_name" href="/salesman/home/getCT/<%=i._id%>"><%= i.nameshop %></a>
                     </td>
                     <td>
                       <%=i.id_user.phone%>

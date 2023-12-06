@@ -18,6 +18,7 @@ const tb_bill = new db.mongoose.Schema(
     {
         id_shop: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_shopModel'},
         id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
+        id_address: {type: db.mongoose.Schema.Types.ObjectId, ref: 'address'},
         timestart: {type: String, require: true},
         timeend: {type: String, require: true},
         ma_voucher: {type: String, require: true},
@@ -62,7 +63,6 @@ const tb_thanhtoan = new db.mongoose.Schema(
 
 const tb_address = new db.mongoose.Schema(
     {
-        id_bill: {type: db.mongoose.Schema.Types.ObjectId, ref: 'bill'},
         address: {type: String, require: true},
         phone: {type: String, require: true},
         fullname: {type: String, require: true}

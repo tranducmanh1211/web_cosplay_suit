@@ -1,5 +1,6 @@
 var myMDDD = require('../../models/cosplay_suit_model');
-
+var myDBshop = require('../../models/cosplau_suit_user_model');
+var myMD = require('../../models/Bill.model');
 var objReturn = {
     stu: 1,
     msg: 'ok'
@@ -18,7 +19,6 @@ exports.getListVoucher = async (req, res, next) => {
     res.send(list);
 }
 exports.AddVoucher = async (req, res, next) => {
-
     let addCM = new myMDDD.tb_voucherModel;
     addCM.id_shop = req.body.id_shop;
     addCM.id_user = req.body.id_user;
@@ -72,4 +72,28 @@ exports.delVoucher = async (req, res, next) => {
         res.send('Error')
     }
 
+}
+
+exports.listUserByShop = async ( req,res,next) =>{
+    const idshop = await myDBshop.tb_shopModel.findOne({id_user: req.params.id}).select('_id');
+    
+    const cartlist = await myMD.tb_billModel.find({ id_shop: idshop }).select('id_user').lean();
+
+    const idshoplist = new Set(cartlist.map(hd => String(hd.id_user)));
+    const giaTriKhongTrungLap = [...idshoplist];
+
+    //Lấy ds user từ ds không trùng
+    const list = await myDBshop.tb_profileModel.find({id_user: { $in: giaTriKhongTrungLap }}).populate('id_user');
+
+    res.send(list);
+}
+
+exports.seenVoucher = async ( req, res ,next) =>{
+    let seenVoucers = new myMDDD.tb_seenvoucher();
+    seenVoucers.id_user = req.body.id_user;
+    seenVoucers.id_voucher = req.body.id_voucher;
+    let new_CMD = await seenVoucers.save();
+    console.log(new_CMD);
+   
+    res.json(new_CMD);
 }
