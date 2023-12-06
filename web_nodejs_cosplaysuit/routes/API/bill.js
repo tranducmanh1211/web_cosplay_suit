@@ -23,6 +23,7 @@ routes.delete('/deletecart/:id', tb_cartorderCtrl.deleteCartOder);
 var tb_billCtrl = require('../../controllers/API/Bill.API');
 
 routes.get('/getuserbill/:id_user',tb_billCtrl.getUserbill);
+routes.get('/getidbill/:id',tb_billCtrl.getidbill);
 routes.post('/addbill',tb_billCtrl.AddBill);
 routes.put('/upstatusbill/:id',tb_billCtrl.updateBill);
 routes.get('/getdskhach/:id',tb_billCtrl.getdskhach);

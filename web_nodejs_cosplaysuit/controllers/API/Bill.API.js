@@ -12,13 +12,23 @@ exports.getbill = async (req, res, next) => {
 
     res.send(list);
 }
+exports.getidbill = async (req, res, next) => {
+    //Lấy ds đơn hàng theo idbill
+    let dieu_kien_loc = null;
+    if (typeof (req.params.id) != 'undefined') {
+        dieu_kien_loc = { _id: req.params.id};
+    }
+    var list = await myMD.tb_billModel.findOne(dieu_kien_loc).populate('id_shop').populate('id_user').populate('id_address');
+
+    res.json(list);
+}
 exports.getUserbill = async (req, res, next) => {
     //Lấy ds đơn hàng theo id_user
     let dieu_kien_loc = null;
     if (typeof (req.params.id_user) != 'undefined') {
         dieu_kien_loc = { id_user: req.params.id_user};
     }
-    var list = await myMD.tb_billModel.find(dieu_kien_loc).populate('id_shop').populate('id_user');
+    var list = await myMD.tb_billModel.find(dieu_kien_loc).populate('id_shop').populate('id_user').populate('id_address');
 
     res.send(list);
 }
