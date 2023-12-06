@@ -93,16 +93,13 @@ exports.seenVoucher = async (req, res, next) => {
     let msg = '';
     let dieu_kien_loc = null;
     try {
-        const existingVoucher = await myMDDD.tb_seenvoucher.findOne({id_user : req.body.id_user});
-
-        if (!existingVoucher) {
+    
             const seenVoucers = new myMDDD.tb_seenvoucher();
             seenVoucers.id_user = req.body.id_user;
             seenVoucers.id_voucher = req.body.id_voucher;
     
             let new_CMD = await seenVoucers.save();
             return res.status(201).json({ seenVoucher: new_CMD, msg: "Gửi voucher thành công!" });
-        }
 
     } catch (error) {
         console.error(error);
