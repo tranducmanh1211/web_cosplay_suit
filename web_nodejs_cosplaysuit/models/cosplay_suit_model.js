@@ -77,7 +77,7 @@ const tb_seen_voucher = new db.mongoose.Schema(
         id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'}
     },
     {
-        collation : "seenVoucher"
+        collection : 'seenVoucher'
     }
 );
 
