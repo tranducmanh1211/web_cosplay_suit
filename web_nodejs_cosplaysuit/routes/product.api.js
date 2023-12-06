@@ -7,7 +7,8 @@ routes.get('/getlistsp', tb_productCtrl.getlListSanPham);
 routes.get('/getlistsp/:id_shop', tb_productCtrl.getproductUser);
 routes.get('/getlistsplimit/:id_shop', tb_productCtrl.getproductByIdShop);
 routes.get('/getlistsp/:id_shop/:page', tb_productCtrl.getproductByIdShopPage);
-routes.put('/updateSP/:id', tb_productCtrl.updateProduct);
+routes.put('/updateSP/:id', tb_productCtrl.updateProductNamePriceDes);
+routes.put('/updateStatus/:id', tb_productCtrl.updateStatus);
 routes.delete('/delSP/:id', tb_productCtrl.delProduct);
 routes.post('/addSP', tb_productCtrl.AddProduct);
 // routes.get('/listImage/:id', tb_productCtrl.getlListImage);
@@ -27,8 +28,7 @@ routes.get('/getproductCategory/:id_shop/:id_category', tb_productCtrl.getproduc
 
 
 
-
 // properties
 routes.post("/addProperties", tb_productCtrl.AddProperties);
-
+routes.put("/updateProductPop/:nameproperties/:id", tb_productCtrl.updateProductPop);
 module.exports = routes;
