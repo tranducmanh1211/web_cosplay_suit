@@ -151,7 +151,8 @@ exports.updateProductNamePriceDes = async (req, res, next) => {
         addCM.nameproduct = req.body.nameproduct;
         addCM.price = req.body.price;
         addCM.description = req.body.description;
-
+        addCM.id_category = req.body.id_category;
+        addCM.listImage = req.body.listImage;
         const mtSave = await addCM.save();
         res.json(mtSave);
     } catch (error) {
