@@ -14,6 +14,7 @@ routes.post('/getCategory', check_login.yeu_cau_login, tb_productCtrl.addTL);
 // routes.post('/addcategory', tb_productCtrl.AddCategory);
 
 // routes.get('/getProduct/:idTL', tb_productCtrl.editTL);
-routes.get('/getProduct', tb_productCtrl.getProduct);
+// routes.get('/getProduct', tb_productCtrl.getProduct);
+// routes.post('/getProduct', tb_productCtrl.getProduct);
 
 module.exports = routes;

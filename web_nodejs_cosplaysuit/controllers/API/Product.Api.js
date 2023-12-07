@@ -12,7 +12,7 @@ var objReturn1 = {
 exports.getlListSanPham = async (req, res, next) => {
 
     let dieu_kien_loc = null;
- 
+
     if (typeof req.query.nameproduct !== 'undefined') {
         const keyword = req.query.nameproduct;
         const regex = new RegExp('.*' + keyword + '.*', 'i');
@@ -115,6 +115,7 @@ exports.AddProduct = async (req, res, next) => {
 
     res.json(objReturn);
 }
+
 exports.AddProperties = async (req, res, next) => {
 
     let addCM = new myMDD.tb_propertiesModel();
@@ -397,15 +398,15 @@ exports.getListProByIdCat = async (req, res, next) => {
 };
 exports.getListNameSanPham = async (req, res, next) => {
     try {
-       
+
         var list = await myMDD.tb_productModel.find();
 
         var listTenSanPham = list.map(product => product.nameproduct);
 
 
-        res.send({nameproduct: listTenSanPham});
+        res.send({ nameproduct: listTenSanPham });
     } catch (error) {
- 
+
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
