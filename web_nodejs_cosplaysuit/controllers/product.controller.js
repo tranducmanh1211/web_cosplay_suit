@@ -152,19 +152,43 @@ exports.getProduct = async (req, res, next) => {
     }
 
 
-    try {
-        var list = await myUser.tb_productModel.find(dieu_kien_loc)
-        let page_length = Math.ceil(list.length / limit);
-        var list = await myUser.tb_productModel.find(dieu_kien_loc)
-            .skip(skip)
-            .populate('id_shop')
-            .populate('id_category')
-            .limit(limit);
+    var list = await myUser.tb_productModel.find(dieu_kien_loc)
+    let page_length = Math.ceil(list.length / limit);
+    var list = await myUser.tb_productModel.find(dieu_kien_loc)
+        .skip(skip)
+        .populate('id_shop')
+        .populate('id_category')
+        .limit(limit);
 
-        res.render('cosplay_suit/home', { listProduct: list, username: username, page_length: page_length, page: page, listTL: listTL });
 
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send('Lỗi khi truy vấn dữ liệu từ MongoDB.');
+
+    if (req.method == 'POST') {
+        let v = req.body.id_status;
+        let id = req.body.id_product;
+        console.log('Type of v:', typeof v);
+        let objU = new myUser.tb_productModel();
+        v = (v === 'true');
+        if (v) {
+
+            objU.status = false;
+            console.log('111111:' + objU.status);
+        } else {
+            objU.status = true;
+            console.log('22222' + objU.status);
+        }
+
+        objU._id = id;
+
+        try {
+            await myUser.tb_productModel.findByIdAndUpdate({ _id: id }, objU);
+
+            return res.redirect('/users/home');
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    res.render('cosplay_suit/home', { listProduct: list, username: username, page_length: page_length, page: page, listTL: listTL });
+
+
 };

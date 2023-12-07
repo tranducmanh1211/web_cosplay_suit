@@ -249,7 +249,7 @@
               <!-- <th scope="col"> Image</th> -->
               <th scope="col"> Description</th>
               <th scope="col"> Time Product</th>
-
+              <th scope="col"></th>
             </tr>
           </thead>
 
@@ -265,7 +265,8 @@
                   <td class="td_id">
                     <%= row.id_shop.nameshop %>
                   </td>
-                  <td class="td_name">
+                  <td class="td_name"
+                    style="max-width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
                     <%= row.nameproduct %>
                   </td>
                   <td class="td_price">
@@ -275,11 +276,18 @@
                     <%= row.id_category.name %>
                       <!-- row.id_category.name -->
                   </td>
-                  <td class="td_Description">
+                  <td class="td_Description"
+                    style="max-width: 150px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
                     <%= row.description %>
                   </td>
                   <td>
                     <%= row.time_product %>
+                  </td>
+
+                  <td>
+                    <%if(row.status==false){%>
+                      <p style="color: red;margin: 0px;">Disabled</p>
+                      <%}%>
                   </td>
 
                   <!-- <td>
@@ -295,15 +303,109 @@
                     </a>
                     <ul class="dropdown-menu">
                       <li style="padding: 0;">
-                        <a type="button" class="dropdown-item" data-bs-toggle="modal" id="" data-bs-target="">Sửa Thể
-                          Loại</a>
+                        <a type="button" class="dropdown-item" data-bs-toggle="modal" id="vohieuButton"
+                          data-bs-target="#vohieuModal<%= row._id %>">
+                          <%if(row.status==false){%>
+                            Hiển thị sản phẩm
+                            <%}else{%>
+                              Ẩn sản phẩm
+                              <%}%>
+                        </a>
                       </li>
-                      <li style="padding: 0;">
-                        <a type="button" class="dropdown-item delete-category-button" data-bs-toggle="modal"
-                          data-bs-target="#deleteConfirmationModal" data-category-id="<%= row._id %>">Xóa Thể Loại</a>
-                      </li>
+
                     </ul>
                   </td> -->
+                  <td>
+
+                    <a id="a_none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical"
+                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                      </svg>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li style="padding: 0;">
+                        <a type="button" class="dropdown-item" data-bs-toggle="modal" id="vohieuButton"
+                          data-bs-target="#vohieuModal<%= row._id %>">
+                          <%if(row.status==false){%>
+                            Hiển thị sản phẩm
+                            <%}else{%>
+                              Ẩn sản phẩm
+                              <%}%>
+                        </a>
+                      </li>
+
+                    </ul>
+                  </td>
+                  <div class="modal fade" id="vohieuModal<%= row._id %>" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            <%if(row.status==false){%>
+                              Hiển thị sản phẩm
+                              <%}else{%>
+                                Ẩn sản phẩm
+                                <%}%>
+                          </h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: left;">
+                          <%if(row.status==true){%>
+                            <h6 style="text-align: left;color: red;"><svg xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-alert-triangle" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 9v4"></path>
+                                <path
+                                  d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z">
+                                </path>
+                                <path d="M12 16h.01"></path>
+                              </svg> Bạn muốn ẩn sản phẩm này đi không ?</h6>
+
+                            <%}else{%>
+                              <h6 style="text-align: left;color: #1b3a57;">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                  class="icon icon-tabler icon-tabler-alert-circle-filled" width="24" height="24"
+                                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                  stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                  <path
+                                    d="M12 2c5.523 0 10 4.477 10 10a10 10 0 0 1 -19.995 .324l-.005 -.324l.004 -.28c.148 -5.393 4.566 -9.72 9.996 -9.72zm.01 13l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -8a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z"
+                                    stroke-width="0" fill="currentColor"></path>
+                                </svg> Bạn có muốn hiển thị sản phẩm này không.
+                              </h6>
+                              <%}%>
+                                <p style="margin-top: 40px;margin-bottom:0px;color: #a7a4a4">Sản phẩm:</p>
+                                <p style="margin-bottom: 0px;">
+                                  <%=row.nameproduct%>
+                                </p>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy bỏ</button>
+                          <form action="" method="post">
+                            <input type="hidden" name="id_product" value="<%= row._id %>" style="display: none;" />
+                            <input type="hidden" name="id_status" value="<%= row.status %>" style="display: none;" />
+                            <%if(row.status==true){%>
+                              <button class="btn btn-danger" type="submit">Ẩn</button>
+                              <%}else{%>
+                                <button class="btn btn-primary" type="submit">Hiện</button>
+                                <%}%>
+
+                          </form>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </tr>
                 <% count +=1; %>
                   <% } ) %>

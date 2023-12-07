@@ -32,6 +32,7 @@ router.get('/account', check_login.yeu_cau_login, tb_userCtrl.account);
 router.post('/account', check_login.yeu_cau_login, tb_userCtrl.account);
 
 router.get('/home', check_login.yeu_cau_login, tb_productCtrl.getProduct);
+router.post('/home', check_login.yeu_cau_login, tb_productCtrl.getProduct);
 router.get('/home/quanlykhachhang', check_login.yeu_cau_login, tb_productCtrl.quanlyKH);
 router.post('/home/quanlykhachhang', check_login.yeu_cau_login, tb_productCtrl.quanlyKH)
 
