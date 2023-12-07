@@ -35,6 +35,10 @@ exports.getBillDone = async (req, res, next) => {
             path: 'id_user',
             model: 'tb_userModel'
         })
+        .populate({
+            path: 'id_thanhtoan',  // Update the field to check for thanhtoan
+            model: 'thanhtoan'
+        })
         .skip(skip)
         .limit(limit);
 
@@ -51,7 +55,7 @@ exports.getBillDone = async (req, res, next) => {
 
         // Thêm trường kiểm tra thanh toán khi nhận hàng dưới dạng chuỗi và định dạng số tiền
         listDH = listDH.map((bill, index) => {
-            const paymentMethod = bill.vnp_TxnRef.length > 10 ? "Thanh toán khi nhận hàng" : "Thanh toán bằng VNPay";
+            const paymentMethod = bill.id_thanhtoan ? "Thanh toán bằng VNPay" : "Thanh toán khi nhận hàng";
             return {
                 ...bill._doc,
                 totalBillDetails: totalBillDetailsArray[index],
@@ -105,11 +109,15 @@ exports.getBillCancelled = async (req, res, next) => {
             path: 'id_user',
             model: 'tb_userModel'
         })
+        .populate({
+            path: 'id_thanhtoan',  
+            model: 'thanhtoan'
+        })
         .skip(skip)
         .limit(limit);
 
         if (listDH.length === 0) {
-            return res.render('navigation_view/quanlydonhang', { listDH: [], username: username, page_length: 1, page: 1 });
+            return res.render('cosplay_suit/billCancelled', { listDH: [], username: username, page_length: 1, page: 1 });
         }
 
         const totalBillDetailsArray = await Promise.all(
@@ -119,9 +127,9 @@ exports.getBillCancelled = async (req, res, next) => {
             })
         );
 
-        // Thêm trường kiểm tra thanh toán khi nhận hàng dưới dạng chuỗi
+        // Thêm trường kiểm tra thanh toán khi nhận hàng dưới dạng chuỗi và định dạng số tiền
         listDH = listDH.map((bill, index) => {
-            const paymentMethod = bill.vnp_TxnRef.length > 10 ? "Thanh toán khi nhận hàng" : "Thanh toán bằng VNPay";
+            const paymentMethod = bill.id_thanhtoan ? "Thanh toán bằng VNPay" : "Thanh toán khi nhận hàng";
             return {
                 ...bill._doc,
                 totalBillDetails: totalBillDetailsArray[index],
