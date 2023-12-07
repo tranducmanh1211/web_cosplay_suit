@@ -139,6 +139,7 @@ exports.deleteKHbyID = async (req, res, next) => {
     }
     res.render('navigation_view/quanlykhachhang');
 }
+
 exports.getProduct = async (req, res, next) => {
     let username = req.session.userU.fullname;
     let dieu_kien_loc = null;
