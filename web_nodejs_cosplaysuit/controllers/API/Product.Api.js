@@ -318,12 +318,44 @@ exports.getproductTreding = async (req, res, next) => {
 
 
 exports.getproductByIdShop = async (req, res, next) => {
-    let dieu_kien_loc = null;
+    let idshop = req.params.id_shop;
 
-    if (typeof req.params.id_shop !== 'undefined') {
-        dieu_kien_loc = { id_shop: req.params.id_shop };
-    }
-    var list = await myMDD.tb_productModel.find(dieu_kien_loc).limit(6);
+    var list = await myMDD.tb_productModel.aggregate([
+        { 
+            $match: { id_shop: new mongoose.Types.ObjectId(idshop) }
+        },
+        {
+            $lookup: {
+                from: "comments",
+                localField: "_id",
+                foreignField: "id_product",
+                as: "comments"
+            }
+        },
+        {
+            $project: {
+                _id: 1,
+                id_shop: 1,
+                id_category: 1,
+                nameproduct: 1,
+                price: 1,
+                amount: 1,
+                image: 1,
+                listImage: 1,
+                listProp: 1,
+                description: 1,
+                size: 1,
+                status: 1,
+                time_product: 1,
+                starCount: { $size: "$comments" },
+                totalStars: { $sum: "$comments.star" },
+                avgStars: { $avg: "$comments.star" }
+            }
+        },
+        {
+            $limit: 6
+        }
+    ]);
 
     res.send(list);
 }
@@ -338,19 +370,57 @@ exports.getproductByIdShopPage = async (req, res, next) => {
     let page = Number(req.params.page) || 1;
     let limit = Number(req.query.limit) || 10;
     let skip = (page - 1) * limit;
+    let idshop = req.params.id_shop;
 
-
-    let list1 = await myMDD.tb_productModel.find({ id_shop: req.params.id_shop });
+    let list1 = await myMDD.tb_productModel.find({ id_shop: idshop });
     let page_length = Math.ceil(list1.length / limit);
 
-    var list = await myMDD.tb_productModel.find({ id_shop: req.params.id_shop }).skip(skip)
-        .limit(limit);
+    var list = await myMDD.tb_productModel.aggregate([
+        { 
+            $match: { id_shop: new mongoose.Types.ObjectId(idshop) }
+        },
+        {
+            $lookup: {
+                from: "comments",
+                localField: "_id",
+                foreignField: "id_product",
+                as: "comments"
+            }
+        },
+        {
+            $project: {
+                _id: 1,
+                id_shop: 1,
+                id_category: 1,
+                nameproduct: 1,
+                price: 1,
+                amount: 1,
+                image: 1,
+                listImage: 1,
+                listProp: 1,
+                description: 1,
+                size: 1,
+                status: 1,
+                time_product: 1,
+                starCount: { $size: "$comments" },
+                totalStars: { $sum: "$comments.star" },
+                avgStars: { $avg: "$comments.star" }
+            }
+        },
+        {
+            $skip: skip
+        },
+        {
+            $limit: limit
+        }
+    ]);
 
+    console.log(list);
     res.json({
         dtoSanPham: list,
         page_length: page_length
     });
-}
+};
 
 exports.getListProByIdCat = async (req, res, next) => {
     try {
