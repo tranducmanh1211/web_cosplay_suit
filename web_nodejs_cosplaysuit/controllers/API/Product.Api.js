@@ -11,15 +11,7 @@ var objReturn1 = {
 }
 exports.getlListSanPham = async (req, res, next) => {
 
-    let dieu_kien_loc = null;
-
-    if (typeof req.query.nameproduct !== 'undefined') {
-        const keyword = req.query.nameproduct;
-        const regex = new RegExp('.*' + keyword + '.*', 'i');
-        dieu_kien_loc = { nameproduct: regex };
-    }
-
-    var list = await myMDD.tb_productModel.find(dieu_kien_loc);
+    var list = await myMDD.tb_productModel.find({$and: [{amount: {$gt: 0}}, {status: true}]});
 
     res.send(list);
 }
@@ -62,7 +54,6 @@ exports.getproductCategory = async (req, res, next) => {
         next(error);
     }
 }
-
 exports.SearchproductUser = async (req, res, next) => {
     try {
         let dieu_kien_loc = {};
@@ -115,7 +106,6 @@ exports.AddProduct = async (req, res, next) => {
 
     res.json(objReturn);
 }
-
 exports.AddProperties = async (req, res, next) => {
 
     let addCM = new myMDD.tb_propertiesModel();
@@ -141,7 +131,6 @@ exports.AddProperties = async (req, res, next) => {
 
     res.json(objReturn);
 }
-
 exports.updateProductNamePriceDes = async (req, res, next) => {
 
     try {
@@ -196,7 +185,6 @@ exports.updateProductPop = async (req, res, next) => {
         return res.status(500).json({ stu: 0, msg: "Internal server error" });
     }
 };
-
 // exports.updateProductNamePriceDes = async (req, res, next) => {
 
 //     try {
@@ -242,9 +230,6 @@ exports.updateStatus = async (req, res, next) => {
 
     }
 }
-
-
-
 exports.delProduct = async (req, res, next) => {
     try {
         await myMDD.tb_productModel.findByIdAndDelete(req.params.id, req.body);
@@ -263,7 +248,6 @@ exports.getproperties = async (req, res, next) => {
 
     res.send(list);
 }
-
 exports.getlListImage = async (req, res, next) => {
     const truyen = await myMDD.tb_productModel.findById(req.params.id);
 
@@ -284,8 +268,6 @@ exports.getlListImage = async (req, res, next) => {
     }
     res.json(objReturn.listImage);
 }
-
-
 exports.productById = async (req, res, next) => {
 
     let pro = null;
@@ -309,14 +291,10 @@ exports.productById = async (req, res, next) => {
     res.json(objReturn1.data);
 
 }
-
 exports.getproductTreding = async (req, res, next) => {
     var list = await myMDD.tb_productModel.find().sort({ sold: -1 }).limit(10);
     res.send(list);
 }
-
-
-
 exports.getproductByIdShop = async (req, res, next) => {
     let idshop = req.params.id_shop;
 
@@ -363,9 +341,6 @@ exports.getproductByIdShopTreding = async (req, res, next) => {
     var list = await myMDD.tb_productModel.find({ id_shop: req.params.id_shop }).sort({ sold: -1 }).limit(3);
     res.send(list);
 }
-
-
-
 exports.getproductByIdShopPage = async (req, res, next) => {
     let page = Number(req.params.page) || 1;
     let limit = Number(req.query.limit) || 10;
@@ -421,7 +396,6 @@ exports.getproductByIdShopPage = async (req, res, next) => {
         page_length: page_length
     });
 };
-
 exports.getListProByIdCat = async (req, res, next) => {
     try {
         let idCat = req.params.id_category;

@@ -226,13 +226,12 @@
           <thead>
             <tr>
               <th scope="col">STT</th>
-              <th scope="col">Name Shop
+              <th scope="col">Tên shop
               </th>
-              <th scope="col">Name User</th>
-              <th scope="col">Time</th>
-              <th scope="col">Số lượng SP</th>
+              <th scope="col">Thời gian hoàn thành</th>
+              <th scope="col">Tổng tiền</th>
               <th scope="col">Phương Thức TT</th>
-              <th scope="col">Total Price</th>
+              <th scope="col">Số tiền thanh toán</th>
             </tr>
           </thead>
           <tbody>
@@ -246,22 +245,17 @@
                     <%= row.id_shop.nameshop %>
                   </td>
                   <td>
-                    <%= row.id_user.fullname %>
-                  </td>
-                  <td>
                     <%= row.timeend %>
                   </td>
                   <td>
-                    <%= row.totalBillDetails%>
-                  </td>
+                    <%= row.totalPaymentFormatted %>
+                    </td>
                   <td>
                     <%= row.paymentMethod%>
                   </td>
                   <td>
-                   <%= row.totalPaymentFormatted %>
-                  
-                   </td>
-             
+                    <%= row.id_user.fullname %>
+                  </td>
                 </tr>
                 <% count +=1; %>
                 <% } ) %>
