@@ -21,6 +21,8 @@ var billweb = require('./routes/bill');
 var voucherRouter = require('./routes/voucher');
 var categoryApi = require('./routes/API/category');
 var tkebill = require('./routes/API/thongke')
+var vitrunggianRouter = require('./routes/vitrunggian');
+
 const { error } = require('console');
 
 var app = express();
@@ -57,6 +59,8 @@ app.use('/billw',billweb)
 app.use('/Voucher',voucherRouter);
 app.use('/category/api',categoryApi);
 app.use('/thongke', tkebill);
+app.use('/vitrunggian', vitrunggianRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -168,6 +168,20 @@ exports.checkspuser = async (req, res, next) => {
     let product = await mydbproduct.tb_productModel.findOne(dieu_kien_loc).select('id_shop').populate('id_shop');
     res.json(product)
 }
+exports.getvoucher = async (req, res, next) => {
+    let dieu_kien_loc = null;
+    if (typeof (req.params.id) != 'undefined') {
+        dieu_kien_loc = { id_user: req.params.id};
+    }
+
+    let product = await mydbproduct.tb_seenvoucher.find(dieu_kien_loc)
+    .populate([
+        { path: 'id_voucher', populate: [{ path: 'id_shop' }] },
+        { path: 'id_user' }
+        ]);
+    res.json(product)
+}
+
 
 
 

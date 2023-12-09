@@ -50,5 +50,9 @@ routes.post('/upproducts/:id', tb_billCtrl.upproductsl);
 
 routes.get('/checkspuser/:id', tb_billCtrl.checkspuser);
 
+//Voucher
+routes.get('/getvoucher/:id', tb_billCtrl.getvoucher);
+
+
 
 module.exports = routes;
