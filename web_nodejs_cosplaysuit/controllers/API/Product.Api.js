@@ -11,7 +11,14 @@ var objReturn1 = {
 }
 exports.getlListSanPham = async (req, res, next) => {
 
-    var list = await myMDD.tb_productModel.find({$and: [{amount: {$gt: 0}}, {status: true}]});
+    let dieu_kien_loc = null;
+
+    if (typeof req.query.nameproduct !== 'undefined') {
+        const keyword = req.query.nameproduct;
+        const regex = new RegExp('.*' + keyword + '.*', 'i');
+        dieu_kien_loc = { nameproduct: regex };
+    }
+    var list = await myMDD.tb_productModel.find({$and: [{dieu_kien_loc},{amount: {$gt: 0}}, {status: true}]});
 
     res.send(list);
 }
