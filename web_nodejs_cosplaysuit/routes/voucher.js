@@ -11,4 +11,9 @@ routes.get('/getdskhachvoucher/:id',tb_VcCtrl.listUserByShop);
 routes.post('/seenvoucher',tb_VcCtrl.seenVoucher);
 routes.put('/updatevoucherSeen/:id',tb_VcCtrl.updateVoucherSeen);
 routes.get('/listvoucher/:id_voucher',tb_VcCtrl.listSeenByIdVoucher);
+
+routes.get('/getlistseenvoucheruser/:id_user', tb_VcCtrl.getlistseenvoucheruser);
+routes.delete('/deleteseenvoucher/:id', tb_VcCtrl.deleteseenvoucher);
+
+
 module.exports = routes;

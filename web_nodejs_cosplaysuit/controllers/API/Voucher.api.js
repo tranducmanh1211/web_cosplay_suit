@@ -74,7 +74,6 @@ exports.delVoucher = async (req, res, next) => {
     }
 
 }
-
 exports.listUserByShop = async (req, res, next) => {
     const idshop = await myDBshop.tb_shopModel.findOne({ id_user: req.params.id }).select('_id');
 
@@ -88,7 +87,6 @@ exports.listUserByShop = async (req, res, next) => {
 
     res.send(list);
 }
-
 exports.seenVoucher = async (req, res, next) => {
     let msg = '';
     let dieu_kien_loc = null;
@@ -125,4 +123,33 @@ exports.updateVoucherSeen = async (req, res, next) => {
         console.log(error);
 
     }
+}
+exports.deleteseenvoucher = async (req, res, next) => {
+    let deletecart = await myMDDD.tb_seenvoucher.findByIdAndDelete(req.params.id, req.body);
+    console.log(deletecart);
+    try {
+        if(deletecart){
+            objReturn.data = deletecart;
+            objReturn.stu = 1;
+            objReturn.msg = 'Xóa thành công';
+        }else{
+            objReturn.stu = 0;
+            objReturn.msg = "Xóa thất bại";
+        }
+    } catch (error) {
+        objReturn.stu = 0;
+        objReturn.msg = error.msg;
+    }
+    res.json(objReturn);
+}
+exports.getlistseenvoucheruser = async (req, res, next) => {
+    let dieu_kien_loc = null;
+
+
+    if (typeof req.params.id_user !== 'undefined') {
+        dieu_kien_loc = { id_user: req.params.id_user };
+    }
+    var list = await myMDDD.tb_seenvoucher.find(dieu_kien_loc).populate('id_voucher').populate('id_user');
+
+    res.send(list);
 }
