@@ -20,9 +20,9 @@ const tb_bill = new db.mongoose.Schema(
         id_user: {type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
         id_address: {type: db.mongoose.Schema.Types.ObjectId, ref: 'address'},
         id_thanhtoan: {type: db.mongoose.Schema.Types.ObjectId, ref: 'thanhtoan'},
+        ma_voucher: {type: db.mongoose.Schema.Types.ObjectId, ref: 'voucher'},
         timestart: {type: String, require: true},
         timeend: {type: String, require: true},
-        ma_voucher: {type: String, require: true},
         status: {type: String, require: true},
         totalPayment: {type: Number, require: true}
     },

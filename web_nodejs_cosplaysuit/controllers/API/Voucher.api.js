@@ -149,7 +149,11 @@ exports.getlistseenvoucheruser = async (req, res, next) => {
     if (typeof req.params.id_user !== 'undefined') {
         dieu_kien_loc = { id_user: req.params.id_user };
     }
-    var list = await myMDDD.tb_seenvoucher.find(dieu_kien_loc).populate('id_voucher').populate('id_user');
+    var list = await myMDDD.tb_seenvoucher.find(dieu_kien_loc)
+    .populate([
+        { path: 'id_voucher', populate: [{ path: 'id_shop' }] },
+        { path: 'id_user' }
+        ]);
 
     res.send(list);
 }
