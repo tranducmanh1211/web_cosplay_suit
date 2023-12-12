@@ -3,7 +3,7 @@ var routes = express.Router();
 
 var tb_thanhtoanCtrl = require('../../controllers/API/thanhtoan.Api');
 
-routes.get('/getidthanhtoan/:idbill',tb_thanhtoanCtrl.getidthanhtoan);
+routes.get('/getidthanhtoan/:id',tb_thanhtoanCtrl.getidthanhtoan);
 
 routes.post('/Addthanhtoan',tb_thanhtoanCtrl.Addthanhtoan);
 

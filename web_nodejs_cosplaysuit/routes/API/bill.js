@@ -27,6 +27,8 @@ routes.get('/getidbill/:id',tb_billCtrl.getidbill);
 routes.post('/addbill',tb_billCtrl.AddBill);
 routes.put('/upstatusbill/:id',tb_billCtrl.updateBill);
 routes.get('/getdskhach/:id',tb_billCtrl.getdskhach);
+routes.get('/getidthanhtoan/:id',tb_billCtrl.getidthanhtoan);
+
 
 //router hóa đơn chi tiết
 var tb_billdetailCtrl = require('../../controllers/API/Billdetail.API');

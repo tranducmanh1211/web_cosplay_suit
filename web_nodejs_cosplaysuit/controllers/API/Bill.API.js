@@ -60,6 +60,7 @@ exports.AddBill = async (req, res, next) => {
         add.status = req.body.status; 
         add.totalPayment = req.body.totalPayment;
         add.ma_voucher = req.body.ma_voucher;
+        add.discount = req.body.discount;
     let new_CMD = await add.save();
     res.json(new_CMD);
 }
@@ -181,7 +182,17 @@ exports.getvoucher = async (req, res, next) => {
         ]);
     res.json(product)
 }
+exports.getidthanhtoan = async (req, res, next) =>{
+    //Lấy ds đơn hàng theo idbill
+    let dieu_kien_loc = null;
+    if (typeof (req.params.id) != 'undefined') {
+        dieu_kien_loc = { id_thanhtoan: req.params.id};
+    }
+    var list = await myMD.tb_billModel.find(dieu_kien_loc)
+    .populate('id_shop').populate('id_user').populate('id_address').populate('id_thanhtoan');
 
+    res.json(list);
+}
 
 
 

@@ -11,7 +11,7 @@ exports.getidthanhtoan = async (req, res, next) => {
     if (typeof (req.params.id) != 'undefined') {
         dieu_kien_loc = { id_bill: req.params.id};
     }
-    var list = await myMD.tb_thanhtoanModel.find(dieu_kien_loc).populate('id_bill');
+    var list = await myMD.tb_thanhtoanModel.find(dieu_kien_loc);
 
     res.send(list);
 }
