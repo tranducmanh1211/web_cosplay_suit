@@ -7,7 +7,7 @@ routes.use ( (req,res,next)=>{
     next();
 });
 routes.get('/thanhtoantruoc', check_login.yeu_cau_login,tb_vitrunggian.getHome);
-routes.get('/thanhtoansau', tb_vitrunggian.getthanhtoansau);
-routes.get('/lichsuthuchien', tb_vitrunggian.getlichsuthuchien);
+routes.get('/thanhtoansau', check_login.yeu_cau_login,tb_vitrunggian.getthanhtoansau);
+routes.get('/lichsuthuchien', check_login.yeu_cau_login,tb_vitrunggian.getlichsuthuchien);
 
 module.exports = routes;   
