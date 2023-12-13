@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Home | Coplay Suit</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css">
+  <style>
+
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      outline: none;
+      border: none;
+      text-decoration: none;
+      list-style: none;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .container-fluid {
+      display: flex;
+      padding: 0;
+      margin: 0 auto;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 310px;
+      height: 110vh;
+      background: rgb(246, 246, 246);
+    }
+
+    .navbar {
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .logo {
+      margin: 2rem 0 1rem 0;
+      padding-bottom: 3rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .logo h1 {
+      margin-left: 1rem;
+      text-transform: lowercase;
+    }
+
+    li {
+      padding-bottom: 2rem;
+    }
+
+    li a {
+      font-size: 16px;
+      color: rgb(85, 83, 83);
+    }
+
+    nav i {
+      font-size: 18px;
+    }
+
+    .logout {
+      position: absolute;
+      top: 20px;
+      bottom: 20px;
+    }
+
+    .main {
+      width: 100%;
+    }
+
+    .main-top {
+      background: rgb(246, 246, 246);
+      width: 100%;
+      padding: 40px 10px 20px 10px;
+      text-align: center;
+      font-size: 18px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .main-top1 {
+      margin-top: 60px;
+      width: 100%;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .main-body {
+      padding: 10px 10px 10px 20px;
+    }
+
+    h1 {
+      margin: 20px 10px;
+    }
+    .formatted-price::after {
+  content: "vnđ";
+}
+
+  </style>
+  
+</head>
+
+<body>
+  <div class="container-fluid">
+    <nav class="nav flex-column">
+      <div class="navbar">
+        <div class="logo">
+          <img src="https://cdn.dribbble.com/users/17621009/avatars/small/data?1695481321" alt="">
+          <h6 style="margin-left: 10px;width: 110%;">
+            <%=username%>
+          </h6>
+        </div>
+
+        <ul style="display: inline-block;text-align: left;padding-left: 0px;">
+          <li><a class="nav-link" href="/users/home" style="font-size: 16px;color: rgb(85, 83, 83);">
+              <i class="fas fa-user"></i>
+              <span class="nav-item">Quản lý sản phẩm</span>
+            </a>
+          </li>
+          <li><a class="nav-link" href="/category/getCategory" style="font-size: 16px;color: rgb(85, 83, 83);">
+              <i class="fas fa-industry"></i>
+              <span class="nav-item">Quản lý thể loại</span>
+            </a>
+          </li>
+          <li><a class="nav-link" href="/users/home/quanlykhachhang" style="font-size: 16px;color: rgb(85, 83, 83);">
+              <i class="fas fa-chart-bar"></i>
+              <span class="nav-item">Quản lý khách hàng</span>
+            </a>
+          </li>
+          <li><a class="nav-link" href="/billw/getbilldone" style="font-size: 16px;color: rgb(85, 83, 83);">
+            <i class="fa fa-kaaba"></i>
+            <span class="nav-item">Quản lý đơn hàng</span>
+          </a>
+        </li>
+          <li><a class="nav-link" href="/salesman/home/quanlynguoiban" style="font-size: 16px;color: rgb(85, 83, 83);">
+
+              <i class="fas fa-tasks"></i>
+              <span class="nav-item">Quản lý người bán</span>
+            </a>
+          </li>
+
+          <li><a class="nav-link" href="#" style="font-size: 16px;color: rgb(85, 83, 83);">
+              <i class="fab fa-dochub"></i>
+              <span class="nav-item">Thống kê</span>
+            </a>
+          </li>
+          <li><a class="nav-link" href="/users/account" style="font-size: 16px;color: rgb(85, 83, 83);">
+              <i class="fab fa-dochub"></i>
+              <span class="nav-item">Account</span>
+            </a>
+          </li>
+          <li><a class="nav-link" href="/logout" class="logout" style="font-size: 16px;color: rgb(85, 83, 83);">
+              <i class="fas fa-sign-out-alt"></i>
+              <span class="nav-item">Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <section class="main">
+      <div class="main-top">
+        <h3 style="font-size: 20px;margin-bottom: 0px;">Quản lý đơn hàng</h3>
+      </div>
+      <div class="main-top1">
+
+        <div class="d-flex justify-content-start mb-3">
+          <ul class="nav nav-tabs">
+              <li class="nav-item">
+                  <a class="nav-link active" href="/vitrunggian/thanhtoantruoc">Thanh toán trước</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/vitrunggian/thanhtoansau">Thanh toán sau</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/vitrunggian/lichsuthuchien">Lịch sử thực hiện</a>
+            </li>
+          </ul>
+      </div>
+        <table class="table table-bordered" style="border: 1px solid rgb(234, 226, 226);">
+          <thead>
+            <tr>
+              <th colspan="7">
+                <div class="container" style="text-align: center;">
+                  <div class="" style="display: flex;padding: 10px;justify-content: space-between;align-items: center;">
+                    <div style="display: flex;">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkup-list"
+                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2">
+                        </path>
+                        <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z">
+                        </path>
+                        <path d="M9 14h.01"></path>
+                        <path d="M9 17h.01"></path>
+                        <path d="M12 16l1 1l3 -3"></path>
+                      </svg>
+                      <h5 style="margin-left: 10px;">Đơn hàng được thanh toán sau/h5>
+                    </div>
+                    <div>
+                      <form class="d-flex" role="search" id="searchForm">
+                        <input class="form-control me-2" type="search" style="width: 300px;"
+                            placeholder="Enter Name Shop" aria-label="Search" name="nameShop" id="searchInput">
+                        <button class="btn btn-outline-success" type="button" onclick="search()">Search</button>
+                    </form>
+                    
+                    </div>
+                  </div>
+                </div>
+              </th>
+            </tr>
+      
+          <thead>
+            <tr>
+              <th scope="col">STT</th>
+              <th scope="col">Tên shop
+              </th>
+              <th scope="col">Thời gian hoàn thành</th>
+              <th scope="col">Tổng tiền</th>
+              <th scope="col">Phương Thức TT</th>
+              <th scope="col">Số tiền thanh toán</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let count=1; %>
+            <% listDH.forEach( ( row )=> { %>
+                <tr class="tr_hover">
+                  <td>
+                    <%= count %>
+                  </td>
+                  <td class="td_name">
+                    <%= row.id_shop.nameshop %>
+                  </td>
+                  <td>
+                    <%= row.timeend %>
+                  </td>
+                  <td>
+                    <%= row.totalPaymentFormatted %>
+                    </td>
+                  <td>
+                    <%= row.paymentMethod%>
+                  </td>
+                  <td>
+                    <%= row.id_user.fullname %>
+                  </td>
+                </tr>
+                <% count +=1; %>
+                <% } ) %>
+          </tbody>
+        </table>
+      </div>
+
+  
+    
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-sm-2 col-md-2">
+            <div class="row" style="margin-top: 8px;">
+              <h6></h6>
+            </div>
+          </div>
+          <div class="col-12 col-sm-7 col-md-7">
+            <div class="row"></div>
+          </div>
+          <div class="col-12 col-sm-3 col-md-3"></div>
+        </div>
+      </div>
+     
+      <%if(!(listDH===null || (Array.isArray(listDH) && listDH.length===0))){%>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-2 col-md-2">
+              <div class="row" style="margin-top: 8px;">
+                <h6>
+                  <%=page%>/<%=page_length%>
+                </h6>
+              </div>
+            </div>
+            <div class="col-12 col-sm-7 col-md-7">
+              <div class="row"></div>
+            </div>
+            <div class="col-12 col-sm-3 col-md-3">
+              <div class="row">
+                <nav aria-label="Page navigation example" style="height: 0px;">
+                  <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                      <%if(page>1){%>
+                        <a class="page-link" href="/billw/getbilldone?page=<%=page-1%>" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <%}%>
+
+                    </li>
+                    <%for(let i=1;i<=page_length;i++){%>
+                      <li class="page-item"><a class="page-link" href="/billw/getbilldone?page=<%=i%>">
+                          <%=i%>
+                        </a></li>
+                      <%}%>
+                        <li class="page-item">
+                          <%if(page>=page_length){%>
+
+                            <%}else{%>
+                              <a class="page-link" href="/billw/getbilldone?page=<%=page+1%>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                              </a>
+                              <%}%>
+
+                        </li>
+                  </ul>
+                </nav>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        <%}%>
+    </section>
+  </div>
+  <script>
+    function search() {
+        var input = document.getElementById('searchInput');
+        var filter = input.value.toUpperCase();
+        var table = document.querySelector('table');
+        var rows = table.getElementsByTagName('tr');
+        
+        for (var i = 0; i < rows.length; i++) {
+            var nameShopCell = rows[i].getElementsByClassName('td_name')[0];
+            
+            if (nameShopCell) {
+                var nameShopText = nameShopCell.textContent || nameShopCell.innerText;
+                
+                if (nameShopText.toUpperCase().indexOf(filter) > -1) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        }
+    }
+    document.getElementById('searchInput').addEventListener('keyup', function (event) {
+        if (event.key === 'Enter') {
+            search();
+        }
+    });
+</script>
+
+
+  <script src="/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

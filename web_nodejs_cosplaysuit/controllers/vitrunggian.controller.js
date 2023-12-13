@@ -79,8 +79,8 @@ exports.getHome = async (req, res, next) => {
     }
 };
 exports.getthanhtoansau = async (req, res, next) => {
-    res.render('thanhtoansau');
+    res.render('vitrunggian/thanhtoansau');
 };
 exports.getlichsuthuchien = async (req, res, next) => {
-    res.render('lichsuthuchien');
+    res.render('vitrunggian/lichsuthuchien');
 };
