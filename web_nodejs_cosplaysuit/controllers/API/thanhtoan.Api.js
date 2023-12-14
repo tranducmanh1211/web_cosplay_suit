@@ -27,6 +27,7 @@ exports.Addthanhtoan = async (req, res, next) => {
         add.vnp_TmnCode = req.body.vnp_TmnCode;
         add.vnp_SecureHash = req.body.vnp_SecureHash; 
         add.vnp_TxnRef = req.body.vnp_TxnRef; 
+        add.status = req.body.status; 
     let new_CMD = await add.save();
     console.log(new_CMD);
     res.json(new_CMD);

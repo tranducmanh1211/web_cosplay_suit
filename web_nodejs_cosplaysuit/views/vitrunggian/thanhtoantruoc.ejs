@@ -234,6 +234,7 @@
               <th scope="col">Tổng tiền</th>
               <th scope="col">Phương Thức TT</th>
               <th scope="col">Số tiền thanh toán</th>
+              <th scope="col">Trạng thái</th>
             </tr>
           </thead>
           <tbody>
@@ -254,6 +255,9 @@
                     </td>
                   <td>
                     <%= row.paymentMethod%>
+                  </td>
+                  <td>
+                    <%= row.id_user.fullname %>
                   </td>
                   <td>
                     <%= row.id_user.fullname %>

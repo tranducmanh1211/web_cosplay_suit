@@ -47,6 +47,7 @@ const tb_billdetails = new db.mongoose.Schema(
 const tb_thanhtoan = new db.mongoose.Schema(
     {
         id_bill: {type: db.mongoose.Schema.Types.ObjectId, ref: 'bill'},
+        status: {type: String, require: true},
         vnp_Amount: {type: Number, require: true},
         vnp_CardType: {type: String, require: true},
         vnp_BankTranNo: {type: String, require: true},

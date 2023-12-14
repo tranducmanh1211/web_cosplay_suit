@@ -22,6 +22,7 @@ var voucherRouter = require('./routes/voucher');
 var categoryApi = require('./routes/API/category');
 var tkebill = require('./routes/API/thongke')
 var vitrunggianRouter = require('./routes/vitrunggian');
+var APIVitrunggianRouter = require('./routes/API/vitrunggian.API');
 
 const { error } = require('console');
 
@@ -60,6 +61,7 @@ app.use('/Voucher',voucherRouter);
 app.use('/category/api',categoryApi);
 app.use('/thongke', tkebill);
 app.use('/vitrunggian', vitrunggianRouter);
+app.use('/vitrunggianapi', APIVitrunggianRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

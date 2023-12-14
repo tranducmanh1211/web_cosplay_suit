@@ -37,7 +37,7 @@ const tb_banklink = new db.mongoose.Schema(
 );
 
 //tạo model
-let tb_banklinkModel = db.mongoose.model('commentsModel', tb_banklink);
-let tb_walletModel = db.mongoose.model('commentsModel', tb_wallet);
-let tb_transaction_historyModel = db.mongoose.model('commentsModel', tb_transaction_history);
+let tb_banklinkModel = db.mongoose.model('banklinkModel', tb_banklink);
+let tb_walletModel = db.mongoose.model('walletModel', tb_wallet);
+let tb_transaction_historyModel = db.mongoose.model('transaction_historyModel', tb_transaction_history);
 module.exports = { tb_banklinkModel, tb_walletModel, tb_transaction_historyModel};

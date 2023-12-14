@@ -43,7 +43,7 @@ exports.getHome = async (req, res, next) => {
         .limit(limit);
 
         if (listDH.length === 0) {
-            return res.render('navigation_view/quanlydonhang', { listDH: [], username: username, page_length: 1, page: 1 });
+            return res.render('vitrunggian/thanhtoantruoc', { listDH: [], username: username, page_length: 1, page: 1 });
         }
 
         const totalBillDetailsArray = await Promise.all(
@@ -112,7 +112,7 @@ exports.getthanhtoansau = async (req, res, next) => {
         .limit(limit);
 
         if (listDH.length === 0) {
-            return res.render('navigation_view/quanlydonhang', { listDH: [], username: username, page_length: 1, page: 1 });
+            return res.render('vitrunggian/thanhtoansau', { listDH: [], username: username, page_length: 1, page: 1 });
         }
 
         const totalBillDetailsArray = await Promise.all(
@@ -181,7 +181,7 @@ exports.getlichsuthuchien = async (req, res, next) => {
         .limit(limit);
 
         if (listDH.length === 0) {
-            return res.render('navigation_view/quanlydonhang', { listDH: [], username: username, page_length: 1, page: 1 });
+            return res.render('vitrunggian/lichsuthuchien', { listDH: [], username: username, page_length: 1, page: 1 });
         }
 
         const totalBillDetailsArray = await Promise.all(
