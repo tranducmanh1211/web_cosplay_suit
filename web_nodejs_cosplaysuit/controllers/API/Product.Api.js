@@ -18,7 +18,7 @@ exports.getlListSanPham = async (req, res, next) => {
         const regex = new RegExp('.*' + keyword + '.*', 'i');
         dieu_kien_loc = { nameproduct: regex };
     }
-    var list = await myMDD.tb_productModel.find({$and: [{dieu_kien_loc},{amount: {$gt: 0}}, {status: true}]});
+    var list = await myMDD.tb_productModel.find({ $and: [{ dieu_kien_loc }, { amount: { $gt: 0 } }, { status: true }] });
 
     res.send(list);
 }
@@ -149,6 +149,8 @@ exports.updateProductNamePriceDes = async (req, res, next) => {
         addCM.description = req.body.description;
         addCM.id_category = req.body.id_category;
         addCM.listImage = req.body.listImage;
+        addCM.listProp = req.body.listProp;
+        addCM.amount = req.body.amount;
         const mtSave = await addCM.save();
         res.json(mtSave);
     } catch (error) {
@@ -306,7 +308,7 @@ exports.getproductByIdShop = async (req, res, next) => {
     let idshop = req.params.id_shop;
 
     var list = await myMDD.tb_productModel.aggregate([
-        { 
+        {
             $match: { id_shop: new mongoose.Types.ObjectId(idshop) }
         },
         {
@@ -358,7 +360,7 @@ exports.getproductByIdShopPage = async (req, res, next) => {
     let page_length = Math.ceil(list1.length / limit);
 
     var list = await myMDD.tb_productModel.aggregate([
-        { 
+        {
             $match: { id_shop: new mongoose.Types.ObjectId(idshop) }
         },
         {
