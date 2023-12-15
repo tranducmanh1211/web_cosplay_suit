@@ -38,3 +38,14 @@ exports.AddWallet = async (req, res, next) => {
 
     res.json(objReturn);
 }
+exports.UpWalletAdmin = async (req, res, next) => {
+    const totalPaymentWithDiscount = parseFloat(req.body.money);
+    //tìm _id wallet của selman thực hiện sửa luôn
+    let idwalletselman = await myvitrunggian.tb_walletModel.findOne({id_user: "6561f52b685f243b220b498b"});
+    const idWalletselmanString = idwalletselman._id.toString();
+    const moneyValueselman = parseFloat(idwalletselman.money);
+    let suawalletselman = new myvitrunggian.tb_walletModel();
+        suawalletselman.money += totalPaymentWithDiscount;
+    let a3 = await myvitrunggian.tb_walletModel.findByIdAndUpdate(idWalletselmanString, { money: moneyValueselman + totalPaymentWithDiscount }, req.body);
+    res.json(a3);
+}
