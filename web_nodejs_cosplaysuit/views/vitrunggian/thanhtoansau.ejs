@@ -111,8 +111,21 @@
   content: "vnđ";
 }
 
+.rounded-button {
+        display: inline-block;
+        padding: 10px 20px; /* Tùy chỉnh kích thước của button */
+        text-align: center;
+        text-decoration: none;
+        background-color: #3498db; /* Màu nền của button */
+        color: #ffffff; /* Màu chữ của button */
+        border-radius: 8px; /* Bán kính của góc tròn */
+        transition: background-color 0.3s ease;
+    }
+
+    .rounded-button:hover {
+        background-color: #2980b9; /* Màu nền khi hover */
+    }
   </style>
-  
 </head>
 
 <body>
@@ -174,17 +187,17 @@
     </nav>
     <section class="main">
       <div class="main-top">
-        <h3 style="font-size: 20px;margin-bottom: 0px;">Quản lý thanh toán</h3>
+        <h3 style="font-size: 20px;margin-bottom: 0px;">Quản lý thanh toán chuyển khoản</h3>
       </div>
       <div class="main-top1">
 
         <div class="d-flex justify-content-start mb-3">
           <ul class="nav nav-tabs">
               <li class="nav-item">
-                  <a class="nav-link" href="/vitrunggian/thanhtoantruoc">Thanh toán trước</a>
+                  <a class="nav-link" href="/vitrunggian/thanhtoantruoc">Chưa giải ngân</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link active" href="/vitrunggian/thanhtoansau">Thanh toán sau</a>
+                  <a class="nav-link active" href="/vitrunggian/thanhtoansau">Đã giải ngân</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/vitrunggian/lichsuthuchien">Lịch sử thực hiện</a>
@@ -210,7 +223,7 @@
                         <path d="M9 17h.01"></path>
                         <path d="M12 16l1 1l3 -3"></path>
                       </svg>
-                      <h5 style="margin-left: 10px;">Đơn hàng được thanh toán sau</h5>
+                      <h5 style="margin-left: 10px;">Đơn hàng được thanh toán trước</h5>
                     </div>
                     <div>
                       <form class="d-flex" role="search" id="searchForm">
@@ -228,12 +241,12 @@
           <thead>
             <tr>
               <th scope="col">STT</th>
-              <th scope="col">Tên shop
-              </th>
+              <th scope="col">Tên shop</th>
               <th scope="col">Thời gian hoàn thành</th>
               <th scope="col">Tổng tiền</th>
               <th scope="col">Phương Thức TT</th>
               <th scope="col">Số tiền thanh toán</th>
+              <th scope="col">Trạng thái</th>
             </tr>
           </thead>
           <tbody>
@@ -256,7 +269,16 @@
                     <%= row.paymentMethod%>
                   </td>
                   <td>
-                    <%= row.id_user.fullname %>
+                    <% if (row.discount == null) { %>
+                      <%= row.totalPaymentFormatted %>
+                    <% } else { %>
+                        <%= (row.totalPaymentFormatted - (row.totalPaymentFormatted * (row.discount / 100))).toFixed(2) %>
+                    <% } %>
+                  </td>
+                  <td>
+                    <% if (row.id_thanhtoan && row.id_thanhtoan.status === 'Disbursed') { %>
+                      Đã giải ngân
+                    <% }  %>
                   </td>
                 </tr>
                 <% count +=1; %>
@@ -264,10 +286,6 @@
           </tbody>
         </table>
       </div>
-
-  
-    
-
       <div class="container">
         <div class="row">
           <div class="col-12 col-sm-2 col-md-2">

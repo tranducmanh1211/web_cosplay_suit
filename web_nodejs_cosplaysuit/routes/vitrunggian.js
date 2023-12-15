@@ -10,4 +10,6 @@ routes.get('/thanhtoantruoc', check_login.yeu_cau_login,tb_vitrunggian.getHome);
 routes.get('/thanhtoansau', check_login.yeu_cau_login,tb_vitrunggian.getthanhtoansau);
 routes.get('/lichsuthuchien', check_login.yeu_cau_login,tb_vitrunggian.getlichsuthuchien);
 
+routes.post('/giaingan/:id_bill', tb_vitrunggian.giaingan);
+
 module.exports = routes;   

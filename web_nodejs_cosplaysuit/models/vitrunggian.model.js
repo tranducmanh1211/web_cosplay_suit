@@ -7,7 +7,8 @@ const tb_transaction_history = new db.mongoose.Schema(
         sender_wallet: { type: db.mongoose.Schema.Types.ObjectId, ref: 'wallets' },
         receiver_wallet: { type: db.mongoose.Schema.Types.ObjectId, ref: 'wallets' },
         status: { type: String, require: true },
-        implementer: { type: String ,require: true},
+        transaction_amount: { type: String, require: true },
+        implementer: { type: db.mongoose.Schema.Types.ObjectId, ref: 'User'},
         time_transaction: { type: String ,require: true},
     },
     {
@@ -16,7 +17,7 @@ const tb_transaction_history = new db.mongoose.Schema(
 );
 const tb_wallet = new db.mongoose.Schema(
     {
-        id_user: { type: db.mongoose.Schema.Types.ObjectId, ref: 'wallets' },
+        id_user: { type: db.mongoose.Schema.Types.ObjectId, ref: 'User' },
         money: { type: String ,require: true },
         currency: { type: String, require: true },
         passwd: { type: String, require: true }

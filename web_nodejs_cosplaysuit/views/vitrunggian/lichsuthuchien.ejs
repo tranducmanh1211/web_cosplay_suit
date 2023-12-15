@@ -228,12 +228,12 @@
           <thead>
             <tr>
               <th scope="col">STT</th>
-              <th scope="col">Tên shop
-              </th>
-              <th scope="col">Thời gian hoàn thành</th>
-              <th scope="col">Tổng tiền</th>
-              <th scope="col">Phương Thức TT</th>
-              <th scope="col">Số tiền thanh toán</th>
+              <th scope="col">Người gửi</th>
+              <th scope="col">Người nhận</th>
+              <th scope="col">Số tiền giải ngân</th>
+              <th scope="col">Người giải ngân</th>
+              <th scope="col">Trạng thái</th>
+              <th scope="col">Thời gian</th>
             </tr>
           </thead>
           <tbody>
@@ -244,19 +244,22 @@
                     <%= count %>
                   </td>
                   <td class="td_name">
-                    <%= row.id_shop.nameshop %>
+                    <%= row.sender_wallet.id_user.fullname %>
                   </td>
                   <td>
-                    <%= row.timeend %>
+                    <%= row.receiver_wallet.id_user.fullname %>
                   </td>
                   <td>
-                    <%= row.totalPaymentFormatted %>
+                    <%= row.transaction_amount %>
                     </td>
                   <td>
-                    <%= row.paymentMethod%>
+                    <%= row.implementer.fullname %>
                   </td>
                   <td>
-                    <%= row.id_user.fullname %>
+                    <%= row.status %>
+                  </td>
+                  <td>
+                    <%= row.time_transaction %>
                   </td>
                 </tr>
                 <% count +=1; %>
@@ -264,10 +267,6 @@
           </tbody>
         </table>
       </div>
-
-  
-    
-
       <div class="container">
         <div class="row">
           <div class="col-12 col-sm-2 col-md-2">
