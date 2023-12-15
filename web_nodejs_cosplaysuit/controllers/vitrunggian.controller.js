@@ -191,8 +191,8 @@ exports.getlichsuthuchien = async (req, res, next) => {
               }
         })
         .populate({
-            path: 'id_thanhtoan',  // Update the field to check for thanhtoan
-            model: 'thanhtoan'
+            path: 'id_bill', 
+            model: 'bill'
         }).populate({
             path: 'implementer',  // Update the field to check for thanhtoan
             model: 'tb_userModel'
@@ -226,6 +226,7 @@ exports.giaingan = async (req, res, next) =>{
             let billw = await myMD.tb_billModel.findOne(dieu_kien_loc);
             const id_user = billw.id_user;
             const id_thanhtoan = billw.id_thanhtoan;
+            const id_bill = billw._id;
             const totalPaymentWithDiscount = billw.totalPayment;
             //sửa trạng thái của bảng thanh toán
             let suaPay = new myMD.tb_thanhtoanModel();
@@ -263,7 +264,7 @@ exports.giaingan = async (req, res, next) =>{
         //2. thêm bảng lịch sử giao dịch
         let add = new myMDvitrunggian.tb_transaction_historyModel();
             const idthanhtoan = suaPay._id;
-            add.id_thanhtoan = idthanhtoan;
+            add.id_bill = id_bill;
             //người gửi
             add.sender_wallet = idWalletAdminString;
             //người nhận

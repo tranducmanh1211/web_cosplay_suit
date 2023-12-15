@@ -136,20 +136,35 @@ exports.getstatusDone = async (req, res, next) => {
 
     let dieu_kien_loc = null;
     const type = req.params.type;
-
+    let locthanhtoan = null;
     if (type === "user") {   
         if (typeof (req.params.id) != 'undefined') {
             dieu_kien_loc = { id_user: req.params.id};
         }
     } else if (type === "shop") {
         if (typeof (req.params.id) != 'undefined') {
-            const idshop = await myDBshop.tb_shopModel.findOne({id_user: req.params.id}).select('_id');
+            const idshop = await myDBshop.tb_shopModel.findOne({ id_user: req.params.id }).select('_id');
+            dieu_kien_loc = { id_shop: idshop };
+        }
+    }else if (type === "shopstatus") {
+        if (typeof (req.params.id) != 'undefined') {
+            const idshop = await myDBshop.tb_shopModel.findOne({ id_user: req.params.id }).select('_id');
 
-            dieu_kien_loc = { id_shop: idshop};
+            const idBillList = await myMD.tb_thanhtoanModel.find({vnp_CardType: 'ATM'});
+
+            const idHoa = idBillList.map(hd => hd._id);
+
+            const hoaDonList = await myMD.tb_billModel.find({ id_thanhtoan: { $in: idHoa }}, { id_shop: idshop });
+
+            const idHoaDonList = hoaDonList.map(hd => hd._id);
+
+            dieu_kien_loc = { _id: { $in: idHoaDonList } };
+
         }
     }else {
         console.log('Giá trị null không tìm thấy');
     }
+    console.log("Điều kiện lọc:", {$and: [dieu_kien_loc, {status: 'Done'}]});
 
     // Tìm danh sách hóa đơn theo idUser
     const hoaDonList = await myMD.tb_billModel.find({$and: [dieu_kien_loc , {status: 'Done'}]}).select('_id').lean();
@@ -169,7 +184,6 @@ exports.getstatusDone = async (req, res, next) => {
         { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }, { path: 'id_thanhtoan' }] },
         { path: 'id_product' }
         ]);
-
     uniqueObjects.push(hoaDonChiTiet);
     }
     

@@ -1,5 +1,6 @@
 var myvitrunggian = require('../../models/vitrunggian.model');
-
+var myMD = require('../../models/Bill.model');
+var myDBshop = require('../../models/cosplau_suit_user_model');
 var objReturn = {
     stu: 1,
     msg: 'ok'
@@ -48,4 +49,24 @@ exports.UpWalletAdmin = async (req, res, next) => {
         suawalletselman.money += totalPaymentWithDiscount;
     let a3 = await myvitrunggian.tb_walletModel.findByIdAndUpdate(idWalletselmanString, { money: moneyValueselman + totalPaymentWithDiscount }, req.body);
     res.json(a3);
+}
+exports.Getlichsuthuchien = async (req, res, next) => {
+    const idshop = await myDBshop.tb_shopModel.findOne({id_user: req.params.id_user}).select('_id');
+    console.log("idshop" + idshop);
+    //lấy danh sách id_thanhtoan
+    const hoaDonList = await myMD.tb_billModel.find({id_shop: idshop}).select('_id').lean();
+    console.log("hoaDonList" + hoaDonList);
+    // Lấy danh sách id_thanhtoan từ kết quả trên
+    const idHoaDonList = hoaDonList.map(hd => hd._id);
+    console.log("idHoaDonList" + idHoaDonList);
+    const listhistory = await myvitrunggian.tb_transaction_historyModel.find({ id_bill: { $in: idHoaDonList } })
+    .populate([
+        { path: 'id_bill', populate: [{ path: 'id_user' }, { path: 'id_shop' }, { path: 'id_address' }, { path: 'id_thanhtoan' }] },
+        { path: 'implementer' },
+        { path: 'receiver_wallet' },
+        { path: 'sender_wallet' }
+        ]);
+    console.log("listhistory" + listhistory);
+    res.json(listhistory);
+
 }

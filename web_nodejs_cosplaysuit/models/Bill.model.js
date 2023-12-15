@@ -61,7 +61,7 @@ const tb_thanhtoan = new db.mongoose.Schema(
     {
         collection: 'thanhtoan'
     }
-)
+);
 
 const tb_address = new db.mongoose.Schema(
     {

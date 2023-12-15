@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 
 const tb_transaction_history = new db.mongoose.Schema(
     {
-        id_thanhtoan: { type: db.mongoose.Schema.Types.ObjectId, ref: 'thanhtoan' },
-        sender_wallet: { type: db.mongoose.Schema.Types.ObjectId, ref: 'wallets' },
-        receiver_wallet: { type: db.mongoose.Schema.Types.ObjectId, ref: 'wallets' },
+        id_bill: { type: db.mongoose.Schema.Types.ObjectId, ref: 'bill' },
+        sender_wallet: { type: db.mongoose.Schema.Types.ObjectId, ref: 'walletModel' },
+        receiver_wallet: { type: db.mongoose.Schema.Types.ObjectId, ref: 'walletModel' },
         status: { type: String, require: true },
         transaction_amount: { type: String, require: true },
-        implementer: { type: db.mongoose.Schema.Types.ObjectId, ref: 'User'},
+        implementer: { type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel'},
         time_transaction: { type: String ,require: true},
     },
     {
@@ -17,7 +17,7 @@ const tb_transaction_history = new db.mongoose.Schema(
 );
 const tb_wallet = new db.mongoose.Schema(
     {
-        id_user: { type: db.mongoose.Schema.Types.ObjectId, ref: 'User' },
+        id_user: { type: db.mongoose.Schema.Types.ObjectId, ref: 'tb_userModel' },
         money: { type: String ,require: true },
         currency: { type: String, require: true },
         passwd: { type: String, require: true }
@@ -28,7 +28,7 @@ const tb_wallet = new db.mongoose.Schema(
 );
 const tb_banklink = new db.mongoose.Schema(
     {
-        id_wallet: { type: db.mongoose.Schema.Types.ObjectId, ref: 'wallets' },
+        id_wallet: { type: db.mongoose.Schema.Types.ObjectId, ref: 'walletModel' },
         account_number: { type: String, require: true },
         card_type: { type: String ,require: true }
     },
