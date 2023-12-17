@@ -247,8 +247,10 @@ exports.otpcheck = async (req, res, next) => {
             temp++;
         } else if (String(req.body.otppass) !== OTP) {
             otp = "OTP code is incorrect!"
+            temp++;
         } else {
             otp = "OTP code is corect!";
+            OTP = "";
             res.redirect('/users/forgotPass/otpcheck/passwdnew');
         }
     }
